@@ -1,4 +1,5 @@
 module.exports =
 {
-    token: ""
+    token: "",
+    ident: ';'
 }
