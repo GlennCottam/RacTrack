@@ -56,7 +56,7 @@ client.on('message', msg =>
     else if(message[0] === ";help")
     {
         console.log("Helping: ", + username);
-        msg.reply("No.");
+        msg.reply(":middle_finger: :neutral_face: :middle_finger:");
     }
 
     // Current test statement
@@ -86,14 +86,22 @@ client.on('message', msg =>
     }
 });
 
-// Destroys client for Bot Logout
-process.on('exit', () =>
-{
+// Destroys Client on kill
+process.on('SIGTERM', function() {
     client.destroy();
+    process.exit(0);
 });
 
 // Destroys client on [CTRL-C] / kill commands
 process.on('SIGINT', () =>
 {
     client.destroy();
+    process.exit(0);
+});
+
+// Destroys client for Bot Logout
+process.on('exit', () =>
+{
+    client.destroy();
+    process.exit(0);
 });
