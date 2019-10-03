@@ -4,7 +4,8 @@
   "description": "Scraping the trash for music you desire!",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "test": "node index.js",
+    "install-dep": "npm install dependencies"
   },
   "repository": {
     "type": "git",
@@ -27,5 +28,7 @@
     "discord.js": "^11.5.1",
     "node": "^12.11.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "dependencies": "0.0.1"
+  }
 }
