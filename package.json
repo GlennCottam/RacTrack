@@ -1,0 +1,30 @@
+{
+  "name": "ractrack",
+  "version": "1.0.0",
+  "description": "Scraping the trash for music you desire!",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GlennCottam/RacTrack.git"
+  },
+  "keywords": [
+    "RacTrack",
+    "Discord",
+    "Music",
+    "YouTube",
+    "Search"
+  ],
+  "author": "Raccoon's Goons",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/GlennCottam/RacTrack/issues"
+  },
+  "homepage": "https://github.com/GlennCottam/RacTrack#readme",
+  "devDependencies": {
+    "discord.js": "^11.5.1",
+    "node": "^12.11.0"
+  }
+}

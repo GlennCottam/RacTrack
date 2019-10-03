@@ -59,3 +59,12 @@ typings/
 
 # next.js build output
 .next
+
+# VSCODE
+.vscode
+
+# JSON Package Lock
+package-lock.json
+
+# Not Posting that Token online
+token.txt
