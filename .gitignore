@@ -62,6 +62,7 @@ typings/
 
 # VSCODE
 .vscode
+*.code-workspace
 
 # JSON Package Lock
 package-lock.json

@@ -4,8 +4,9 @@
   "description": "Scraping the trash for music you desire!",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js",
-    "install-dep": "npm install dependencies"
+    "start": "node index.js",
+    "install-dep": "npm install dependencies",
+    "kill": "killall node"
   },
   "repository": {
     "type": "git",
