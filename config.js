@@ -1,9 +1,8 @@
 module.exports =
 {
 	token: "",
-	ident: ';',
-	channel: 'bot-channel',
-	help:   "> Current Commands: \n"
+	ident: ";",
+	help:	"> Current Commands: \n"
 			+ "```yaml\n"
 			+ ";help # Display This Message"
 			+ "\n;search # Search for sounds / music\n"

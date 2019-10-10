@@ -1,55 +1,50 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
-
+const Discord = require('discord.js');			// Grabs Discord.js API
+const client = new Discord.Client();			// Creates Discord Client
 const config = require('./config');				// Grabs Config File
 const functions = require('./functions');		// Grabs Functions File
-const token = config.token;						// Sets Token
+const token = config.token;						// Gets Token
+const ident = config.ident;						// Command Identifier EG: ";"
+const help = config.help;						// Help Message
 
-// Server Identifier
-//      Eg: ;ping
-//      @user pong
-const ident = config.ident;
-
-
-const help = config.help;										// Help Message
-const channel = client.channels.find('name', config.channel); 	// Gets channel for bot
-
-
-// If token is missing, close the program
-if(config.token === "")
+// Checks to see if the token is present
+if(token === "")
 {
 	console.log("No token, please get token to run.");
 	process.exit(1);
 }
 
-// Logs in RacTrack bot
-client.login(token);
+client.login(token);		// Logs in RacTrack bot
 
-// When Bot is ready
+// When client is ready:
 client.on('ready', () => 
 {
-	console.log('Logged in as: ' + client.user.tag + "\nBot Ready!");
-	
+	console.log('Logged in as: ' + client.user.tag + "\nBot Ready!");	// Indicates that bot is ready
 });
 
-// Each time someone sends a message, the bot will scan it
-// This is where we will be putting our main functions for searching etc...
-// If functions are long and complex, add them to the "functions.js" file.
+// When a new message arrives in server
 client.on('message', msg =>
 {
 	// Function that returns an array in order to declare functions
 	// depending on what the discord bot needs to do.
 	// Returning array: [0] = command, [1] = argument.
-	var message = functions.split_message(msg);     // Splits message
-	var username = msg.author.username;             // Gets username of user that posted the message
+	var message = functions.split_message(msg);
+	var username = msg.author.username;
 
 	// If it finds the term we wanted to search for:
 	if(message[0] === ident + "search")
 	{
 		console.log("\nSearch Command Found: " + message[1] + "\nSent by: " + username);
-		msg.reply("Searching for: " + message[1]);
+		msg.reply("Searching for: ```" + message[1] + "```");
 		// ACTUALLY SEARCH SOMETHING
 	}
+
+	if(message[0] === ident + "uptime")
+	{
+		var uptime = client.uptime;
+		console.log("Requested Uptime: " + uptime);
+		msg.reply("Uptime is `" + uptime + "s`");
+	}
+
 	// Testing
 	else if(message[0] === ident + "thanks")
 	{
@@ -59,9 +54,8 @@ client.on('message', msg =>
 	// Sends list of 
 	else if(message[0] === ident + "help")
 	{
-		console.log("Helping: ", + username);
-
-		channel.send(help);													// Sends help message
+		console.log("Sending Help To: ", + msg.channel.name);
+		msg.channel.send(help);
 	}
 
 	// Current test statement
@@ -71,21 +65,17 @@ client.on('message', msg =>
 		msg.reply('pong');
 	}
 
-	// Prints out something just horrible. 
-	// Don't include this in the final code...
-	// This is an example on how to use the functions method
+	// Method for testing additional functions
 	else if(msg.content === ident + 'penis')
 	{
-		message = functions.get_YouTube_Buddy();
-		msg.reply(message); 
+		message = functions.get_YouTube_Buddy();		// Grabs "YouTube Buddy" from functions
+		msg.reply(message); 							// Replys with YouTube Buddy
 	}
 });
 
-// Opens console for the node
-var stdin = process.openStdin();
-
-// When inputting "kill" in terminal, it will kill the program softly
-stdin.addListener("data", function(data)
+// Scans for input on the command line
+var stdin = process.openStdin();				// Opens console for the node
+stdin.addListener("data", function(data)		// Adds listener to the terminal
 {
 	if(data.toString().trim() === "kill")
 	{
@@ -93,18 +83,20 @@ stdin.addListener("data", function(data)
 	}
 });
 
-// Destroys Client on kill
-process.on('SIGTERM', function() {kill_server();});
+process.on('SIGTERM', function() {kill_server();}); 				// Destroys Client on kill
+process.on('SIGINT', () => {console.log("\n"); kill_server();});	// Destroys client on [CTRL-C] / kill commands
 
-// Destroys client on [CTRL-C] / kill commands
-process.on('SIGINT', () => {kill_server();});
+// Catches errors and kills server
+process.on('uncaughtException', err => 
+{
+	console.error("Error, Closing Server", err);
+	kill_server();
+});
 
-// Kills server softly:
-//      - Logs bot out
-//      - Exits Node
+// Kills server softly
 function kill_server()
 {
 	console.log("Logging bot out, killing server.");
-	client.destroy();
-	process.exit(0);
+	client.destroy();		// Destroys Client Connection (logs bot out)
+	process.exit(0);		// Kills Node
 }

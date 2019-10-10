@@ -1,7 +1,7 @@
 var methods = {};
 
-//      Function to search a message for a specific term
-// at the beginning of the string.
+// Function to search a message for a specific term
+// 		at the beginning of the string.
 methods.split_message = function(msg)
 {
 	var array = [1];
@@ -17,12 +17,11 @@ methods.split_message = function(msg)
 	return array;
 }
 
+// Returns YouTube buddy
 methods.get_YouTube_Buddy = function()
 {
 	var length = (Math.random() * 10) + 1;
-	// console.log("Someone got a small thingy: " + length);
 	var message = "8";
-	console.log(username + " has a " + length + " penis");
 	while(length > 0)
 	{
 		message += "="
