@@ -1,3 +1,11 @@
+/*
+File:		config.js
+Type:		exports
+Comments:	Exports various global - changeable variables.
+			If the application needs a variable that can be used across 
+			.js files, use this.
+*/
+
 module.exports =
 {
 	token: "",

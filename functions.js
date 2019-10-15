@@ -1,3 +1,10 @@
+/*
+File:		functions.js
+Type:		methods
+Comments:	Different functions that will be used for the discord bot itself.
+			Use this to handle retrieving of YouTube / search requests.
+*/
+
 var methods = {};
 
 // Function to search a message for a specific term
