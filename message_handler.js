@@ -4,11 +4,12 @@ Type:		methods
 Comments:	Handles messages that the users post.
 */
 
-const config = require("./config");
-const functions = require('./functions');
-const ident = config.ident;
-const help = config.help;
-const methods = {};
+// Variables && imported files
+const config = require("./config");			// Imports Global Config
+const functions = require('./functions');	// Imports Functions File
+const ident = config.ident;					// Imports global server command identifer
+const help = config.help;					// Imports help text
+const methods = {};							// Sets global methods for export (check below for export)
 
 methods.message = function(msg)
 {
@@ -71,6 +72,7 @@ methods.message = function(msg)
 		message = functions.get_YouTube_Buddy();		// Grabs "YouTube Buddy" from functions
 		msg.reply(message); 							// Replies with YouTube Buddy
 	}
+
 }
 
-module.exports = methods;
+module.exports = methods;			// Exports functions for global usage

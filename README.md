@@ -37,6 +37,21 @@ $ npm install dependencies
 sudo apt install npm
 ```
 
+# Starting and Stopping the Node.
+In order to start the node server, simply use
+```bash
+npm start
+```
+or
+```bash
+node index.js
+```
+To kill the node we have a few options.
+- Send kill signal in terminal: `[CTRL-C]`.
+- npm script **NOTE WILL KILL ALL NODES**: `npm kill`
+- `kill <pid>` where `<pid>` is the process id of the node.
+- If terminal has node running, type in `kill` and it will kill the server.
+
 # Where the hell is the token?
 The token is not being uploaded with the repo since the repo is public. This is cause for a security issue. If you need the token, contact Glenn.
 
