@@ -16,11 +16,33 @@ module.exports =
 	ident: ";",
 	terminal: {
 		success: "✅ ",
-		info: "● node>",
+		info: "● node> ",
 		error: "⛔️ ",
 		warn: "⚠️ ",
 		dead: "💀 "
 	},
+	status: [
+		{
+			status: 'online',
+			text: ''
+		},
+		{
+			status: 'online',
+			text: 'WITH YOUR MOM'
+		},
+		{
+			status: 'dnd',
+			text: 'Rainbow Six Siege'
+		},
+		{
+			status: 'dnd',
+			text: 'Minecraft'
+		},
+		{
+			status: 'dnd',
+			text: 'Fortnite'
+		},
+	],
 	help:	"> Current Commands: \n"
 			+ "```yaml\n"
 			+ ";help \t # Display This Message\n"
@@ -28,6 +50,5 @@ module.exports =
 			+ ";uptime \t # Show uptime of Bot in seconds.\n"
 			+ ";thanks \t # thank the bot\n"
 			+ ";ping \t # Ping the bot\n"
-			+ ";penis \t # Guess what it does....\n"
 			+ "```"
 }

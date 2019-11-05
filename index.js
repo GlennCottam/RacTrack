@@ -9,6 +9,7 @@ Comments:	Index.js is used as a start-point for the discord bot itself.
 const Discord = require('discord.js');			// Grabs Discord.js API
 const client = new Discord.Client();			// Creates Discord Client
 const config = require('./config');				// Grabs Config File
+const functions = require('./functions');		// Grabs functions
 const term = config.terminal;					// Shortened version for terminal emoji's
 const handle = require('./message_handler');	// Message Handler
 const token = config.token;						// Gets Token
@@ -25,10 +26,17 @@ client.login(token);		// Logs in RacTrack bot
 // Prints in console when server is ready
 client.on('ready', () => 
 {
+	var status = functions.get_random_status();
 	console.log(term.success + 'Logged in as: ' + client.user.tag + '\n' + term.success + 'Bot Ready!');	// Indicates that bot is ready
+	client.user.setStatus(status.status);			// Sets status to Online (green dot)
+	client.user.setActivity(status.text);		// Sets "Playing: " status
 });
 
-client.on('message', msg => handle.message(msg)); // Handles all messages in message_handler.js
+client.on('message', msg => 
+	{
+		handle.message(msg); 
+	}
+); // Handles all messages in message_handler.js
 
 // Scans for input on the command line
 var stdin = process.openStdin();				// Opens console for the node
@@ -57,6 +65,17 @@ stdin.addListener("data", function(data)		// Adds listener to the terminal
 	// NOTE: Since this is not a message, replies will be null.
 	// handle.message(data.toString().trim());
 });
+
+// Sets Random Status after a random time (between 1 to 6 hours)
+var time = functions.random_int(1, 6) * 3600000;
+console.log(config.terminal.warn + "Waiting for " + time/3600000 + "hr(s) to change status");
+setInterval(function()
+{
+	var status = functions.get_random_status();
+	console.log("Status Changed");
+	client.user.setStatus(status.status);			// Sets status to Online (green dot)
+	client.user.setActivity(status.text);		// Sets "Playing: " status
+}, time);
 
 process.on('SIGTERM', function() {kill_server();}); 				// Destroys Client on kill
 process.on('SIGINT', () => {console.log("\n"); kill_server();});	// Destroys client on [CTRL-C] / kill commands

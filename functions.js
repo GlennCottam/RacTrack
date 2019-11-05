@@ -6,6 +6,7 @@ Comments:	Different functions that will be used for the discord bot itself.
 */
 
 var methods = {};
+const config = require('./config');
 
 // Function to search a message for a specific term
 // 		at the beginning of the string.
@@ -37,6 +38,20 @@ methods.get_YouTube_Buddy = function()
 	message += "D"
 
 	return message;
+}
+
+methods.get_random_status = function()
+{
+	var length = Math.floor(Math.random() * 4);		// Gets random from 1 to 3
+	var status = config.status[length];
+
+	return status;
+}
+
+methods.random_int = function(lower, upper)
+{
+	var value = Math.floor(Math.random() * upper) + lower;
+	return value;
 }
 
 // Exports functions to be used by other programs
