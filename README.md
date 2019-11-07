@@ -1,6 +1,8 @@
 # RacTrack
 RacTrack: Scraping the trash for music you desire!
 
+# [Invite RacTrack to your Server!](https://discordapp.com/api/oauth2/authorize?client_id=629333981778804739&permissions=0&scope=bot)
+
 # Installing Node and Dependencies:
 Since we are developing in Node, NPM will be required in order to use node and the packages we will be using for development.
 

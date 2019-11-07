@@ -34,6 +34,7 @@ client.on('ready', () =>
 
 client.on('message', msg => 
 	{
+		
 		handle.message(msg); 
 	}
 ); // Handles all messages in message_handler.js
