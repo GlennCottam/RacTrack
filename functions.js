@@ -27,7 +27,7 @@ methods.split_message = function(msg)
 
 methods.human_delay = function()
 {
-	var time = this.random_double(200, 800);		// Gets human delay
+	var time = this.random_int(100, 500);		// Gets human delay
 	console.log("Waiting: " + time + "ms");
 	return new Promise(resolve => 
 		{
@@ -61,11 +61,6 @@ methods.get_random_status = function()
 methods.random_int = function(lower, upper)
 {
 	var value = Math.floor(Math.random() * upper) + lower;
-	return value;
-}
-methods.random_double = function(lower, upper)
-{
-	var value = Math.random() * upper + lower;
 	return value;
 }
 
