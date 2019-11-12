@@ -28,7 +28,7 @@ methods.split_message = function(msg)
 methods.human_delay = function()
 {
 	var time = this.random_int(100, 500);		// Gets human delay
-	console.log("Waiting: " + time + "ms");
+	console.log(config.terminal.info + "Waiting: " + time + "ms");
 	return new Promise(resolve => 
 		{
 			setTimeout(() => {resolve('resolved');}, time);

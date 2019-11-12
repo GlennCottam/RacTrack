@@ -7,6 +7,7 @@ Comments:	Handles messages that the users post.
 // Variables && imported files
 const config = require("./config");			// Imports Global Config
 const functions = require('./functions');	// Imports Functions File
+const client = require('./index');			// Gets client
 const ident = config.ident;					// Imports global server command identifer
 const help = config.help;					// Imports help text
 const methods = {};							// Sets global methods for export (check below for export)
@@ -19,12 +20,24 @@ methods.message = async function(msg)
 	var message = functions.split_message(msg);
 	var username = msg.author.username;
 
-	// If it finds the term we wanted to search for:
+	/*
+		The following if statements do the following:
+			1. msg.channel.startTyping()		This will start the bot typing indicator
+			2. await functions.human_delay() 	will wait for a random time interval
+			3. msg.channel.stopTyping()			This will stop the bot typing indicator
+		These are used to get the bot to appear to be typing a response. You dont have to use these for
+		other if statements, but feel free to do so
+	*/
+
+	// Main search function
+	// This is where you want to put in the actual youtube / service search
+	// Use get_data.js to host the additional functions
 	if(message[0] === ident + "search")
 	{
 		msg.channel.startTyping();
 		await functions.human_delay();
 
+		// If search is empty, post error
 		if(message[1] === "" || message[1] === " ")
 		{
 			msg.reply("\n:no_entry_sign: Please tell me what to search for!");
@@ -37,7 +50,6 @@ methods.message = async function(msg)
 				+ "\nhttps://www.youtube.com\n"
 				+ "> Duration:\t 0:00:00\n> :thumbsdown:: \t 0\n> :thumbsup:: \t 0\n"
 				);
-			// ACTUALLY SEARCH SOMETHING
 		}
 		msg.channel.stopTyping();
 	}
@@ -89,6 +101,21 @@ methods.message = async function(msg)
 		await functions.human_delay();
 		message = functions.get_YouTube_Buddy();		// Grabs "YouTube Buddy" from functions
 		msg.reply(message); 							// Replies with YouTube Buddy
+		msg.channel.stopTyping();
+	}
+
+	// Bot will freak out
+	else if(msg.content === ident + 'freakout')
+	{
+		msg.channel.startTyping();
+		await functions.human_delay();
+		msg.channel.send("OH GOD NO PLEASE NO GOD NO!");
+
+		await functions.human_delay();
+		msg.channel.send("FUCK FUCK FUCK FUCK");
+
+		await functions.human_delay();
+		msg.channel.send("WHY DOES EVERYTHING SUCK?")
 		msg.channel.stopTyping();
 	}
 }

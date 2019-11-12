@@ -32,9 +32,8 @@ client.on('ready', () =>
 	client.user.setActivity(status.text);		// Sets "Playing: " status
 });
 
-client.on('message', msg => 
+client.on('message', msg =>
 	{
-		
 		handle.message(msg); 
 	}
 ); // Handles all messages in message_handler.js
@@ -50,14 +49,20 @@ stdin.addListener("data", function(data)		// Adds listener to the terminal
 
 	// JSON array for listener (so reply will work)
 	// This is honestly just for testing
-	message = {
+	message = 
+	{
 		content: data.toString().trim(),
 		author:
 		{
 			username: 'terminal'
 		},
 		split: function() {return text},
-		reply: function (msg) {console.log(term.info + msg)}
+		reply: function (msg) {console.log(term.out + msg)},
+		channel:
+		{
+			startTyping: function() {console.log(term.type + "typing")},
+			stopTyping: function() {console.log(term.type + "not typing")}
+		}
 	}
 
 	handle.message(message);
@@ -69,7 +74,7 @@ stdin.addListener("data", function(data)		// Adds listener to the terminal
 
 // Sets Random Status after a random time (between 1 to 6 hours)
 var time = functions.random_int(1, 6) * 3600000;
-console.log(config.terminal.warn + "Waiting for " + time/3600000 + "hr(s) to change status");
+console.log(config.terminal.info + "Waiting for " + time/3600000 + "hr(s) to change status");
 setInterval(function()
 {
 	var status = functions.get_random_status();
@@ -96,3 +101,5 @@ function kill_server()
 	console.log(term.dead + "Bot Killed.")
 	process.exit(0);		// Kills Node
 }
+
+module.exports.client = client;

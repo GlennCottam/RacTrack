@@ -16,9 +16,11 @@ module.exports =
 	ident: ";",
 	terminal: {
 		success: "✅ ",
-		info: "● node> ",
-		error: "⛔️ ",
-		warn: "⚠️ ",
+		info: "ℹ️ ",
+		out: "📩 node> ",
+		type: "💬 ",
+		error: "🆘 ",
+		warn: "🔶 ",
 		dead: "💀 "
 	},
 	status: [
@@ -45,10 +47,10 @@ module.exports =
 	],
 	help:	"> Current Commands: \n"
 			+ "```yaml\n"
-			+ ";help \t # Display This Message\n"
+			+ ";help   \t # Display This Message\n"
 			+ ";search \t # Search for sounds / music\n"
 			+ ";uptime \t # Show uptime of Bot in seconds.\n"
 			+ ";thanks \t # thank the bot\n"
-			+ ";ping \t # Ping the bot\n"
+			+ ";ping   \t # Ping the bot\n"
 			+ "```"
 }
