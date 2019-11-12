@@ -3,6 +3,20 @@ RacTrack: Scraping the trash for music you desire!
 
 # [Invite RacTrack to your Server!](https://discordapp.com/api/oauth2/authorize?client_id=629333981778804739&permissions=0&scope=bot)
 
+# Options!
+Currently, all the options are inside the config.js file. With this being said, here are some examples:
+
+> ## tts (T/F)
+- Turns off global text to speech
+
+> ## ident (string)
+- Sets global identifier for the bot to listen too
+
+> ## Status (Objects)
+- Various unique status that can be configured.
+- Bot will select one every couple of hours
+- NOTE: Make sure to change total amount in functions file
+
 # Installing Node and Dependencies:
 Since we are developing in Node, NPM will be required in order to use node and the packages we will be using for development.
 

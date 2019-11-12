@@ -19,6 +19,10 @@ methods.message = async function(msg)
 	// Returning array: [0] = command, [1] = argument.
 	var message = functions.split_message(msg);
 	var username = msg.author.username;
+	var options = 
+	{
+		tts: config.tts
+	}
 
 	/*
 		The following if statements do the following:
@@ -49,7 +53,7 @@ methods.message = async function(msg)
 				"\n`Playing:` " + message[1]
 				+ "\nhttps://www.youtube.com\n"
 				+ "> Duration:\t 0:00:00\n> :thumbsdown:: \t 0\n> :thumbsup:: \t 0\n"
-				);
+				, options);
 		}
 		msg.channel.stopTyping();
 	}
@@ -61,7 +65,7 @@ methods.message = async function(msg)
 		await functions.human_delay();
 		var uptime = client.uptime;
 		console.log("Requested Uptime: " + uptime);
-		msg.reply("Uptime is `" + uptime + "s`");
+		msg.reply("Uptime is `" + uptime + "s`", options);
 		msg.channel.stopTyping();
 	}
 
@@ -70,7 +74,7 @@ methods.message = async function(msg)
 	{
 		msg.channel.startTyping();
 		await functions.human_delay();
-		msg.reply("No probs fam");
+		msg.reply("No probs fam", options);
 		msg.channel.stopTyping();
 	}
 
@@ -80,7 +84,7 @@ methods.message = async function(msg)
 		msg.channel.startTyping();
 		await functions.human_delay();
 		console.log("Sending Help To: ", + msg.channel.name);
-		msg.channel.send(help);
+		msg.channel.send(help, options);
 		msg.channel.stopTyping();
 	}
 
@@ -90,7 +94,7 @@ methods.message = async function(msg)
 		msg.channel.startTyping();
 		await functions.human_delay();
 		console.log("\nPinged by: " + username);
-		msg.reply('pong');
+		msg.reply('pong', options);
 		msg.channel.stopTyping();
 	}
 
@@ -100,7 +104,7 @@ methods.message = async function(msg)
 		msg.channel.startTyping();
 		await functions.human_delay();
 		message = functions.get_YouTube_Buddy();		// Grabs "YouTube Buddy" from functions
-		msg.reply(message); 							// Replies with YouTube Buddy
+		msg.reply(message, options); 							// Replies with YouTube Buddy
 		msg.channel.stopTyping();
 	}
 
@@ -109,13 +113,13 @@ methods.message = async function(msg)
 	{
 		msg.channel.startTyping();
 		await functions.human_delay();
-		msg.channel.send("OH GOD NO PLEASE NO GOD NO!");
+		msg.channel.send("OH GOD NO PLEASE NO GOD NO!", options);
 
 		await functions.human_delay();
-		msg.channel.send("FUCK FUCK FUCK FUCK");
+		msg.channel.send("FUCK FUCK FUCK FUCK", options);
 
 		await functions.human_delay();
-		msg.channel.send("WHY DOES EVERYTHING SUCK?")
+		msg.channel.send("WHY DOES EVERYTHING SUCK?", options)
 		msg.channel.stopTyping();
 	}
 }

@@ -14,6 +14,7 @@ module.exports =
 {
 	token: "",
 	ident: ";",
+	tts: false,
 	terminal: {
 		success: "✅ ",
 		info: "ℹ️ ",
