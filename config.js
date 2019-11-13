@@ -34,6 +34,26 @@ module.exports =
 			text: 'WITH YOUR MOM'
 		},
 		{
+			status: 'online',
+			text: 'NNN'
+		},
+		{
+			status: 'online',
+			text: 'Music'
+		},
+		{
+			status: 'online',
+			text: 'Node.js'
+		},
+		{
+			status: 'online',
+			text: "Daddy?"
+		},
+		{
+			status: 'online',
+			text: 'UwU'
+		},
+		{
 			status: 'dnd',
 			text: 'Rainbow Six Siege'
 		},

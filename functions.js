@@ -50,12 +50,30 @@ methods.get_YouTube_Buddy = function()
 	return message;
 }
 
+// Gets random status
 methods.get_random_status = function()
 {
-	var length = Math.floor(Math.random() * 4);		// Gets random from 1 to 3
+	var total = Object.keys(config.status).length;
+	var length = Math.floor(Math.random() * (total - 1));		// Gets random number between max config values and 0
 	var status = config.status[length];
 
 	return status;
+}
+
+methods.set_status = function(value)
+{
+	var max = Object.keys(config.status).length;
+	if(value > max|| value < 0)
+	{
+		console.log(config.terminal.error + "Invalid Status Value: Please enter a int between 0 and " + max);
+		return null;
+	}
+	else
+	{
+		var status = config.status[value];
+		return status;
+	}
+	
 }
 
 methods.random_int = function(lower, upper)

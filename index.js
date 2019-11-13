@@ -14,6 +14,7 @@ const term = config.terminal;					// Shortened version for terminal emoji's
 const handle = require('./message_handler');	// Message Handler
 const token = config.token;						// Gets Token
 
+
 // Checks to see if the token is present
 if(token === "")
 {
@@ -73,14 +74,19 @@ stdin.addListener("data", function(data)		// Adds listener to the terminal
 });
 
 // Sets Random Status after a random time (between 1 to 6 hours)
-var time = functions.random_int(1, 6) * 3600000;
+var time = functions.random_int(1, 4) * 3600000;
 console.log(config.terminal.info + "Waiting for " + time/3600000 + "hr(s) to change status");
 setInterval(function()
 {
+	var date = new Date();
 	var status = functions.get_random_status();
-	console.log("Status Changed");
+	console.log(term.info + "[" + date + "] Status Changed: { status: \"" + status.status + "\" , Playing \"" + status.text + "\"},  Changing in: " + time/3600000 + "hr(s)");
 	client.user.setStatus(status.status);			// Sets status to Online (green dot)
 	client.user.setActivity(status.text);		// Sets "Playing: " status
+
+	time = functions.random_int(1, 4) * 3600000;		// Updates random time value
+	// console.log(config.terminal.info + "Now Waiting for " + time/3600000 + "hr(s) to change status");
+
 }, time);
 
 process.on('SIGTERM', function() {kill_server();}); 				// Destroys Client on kill

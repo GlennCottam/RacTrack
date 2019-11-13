@@ -48,7 +48,7 @@ methods.message = async function(msg)
 		}
 		else
 		{
-			console.log("\nSearching for: " + message[1] + "\nSearched By: " + username);
+			console.log(config.terminal.info + "Searching for: " + message[1] + " | Searched By: " + username);
 			msg.reply(
 				"\n`Playing:` " + message[1]
 				+ "\nhttps://www.youtube.com\n"
@@ -58,12 +58,33 @@ methods.message = async function(msg)
 		msg.channel.stopTyping();
 	}
 
+	if(message[0] === ident + "status")
+	{
+		var value = message[1];
+		var array = value.split(' ');
+		var status = functions.set_status(array[0]);
+
+		if(status === null)
+		{
+			msg.reply("Status doesn't exist...");
+		}
+		else
+		{
+			client.client.user.setStatus(status.status);
+			client.client.user.setActivity(status.text);
+	
+			msg.reply("If I have to...");
+	
+			console.log("Status Changed: " + status.text);
+		}
+	}
+
 	// Replies with Uptime
 	if(message[0] === ident + "uptime")
 	{
 		msg.channel.startTyping();
 		await functions.human_delay();
-		var uptime = client.uptime;
+		var uptime = client.client.uptime;
 		console.log("Requested Uptime: " + uptime);
 		msg.reply("Uptime is `" + uptime + "s`", options);
 		msg.channel.stopTyping();
