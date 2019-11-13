@@ -14,7 +14,18 @@ module.exports =
 {
 	token: "",
 	ident: ";",
-	version: "ALPHA - 1.0.3",
+	version:
+	{
+		type: "ALPHA",
+		id: "1.0.3",
+		diff: 
+		"+ \`;version\` Command added\n"
+		+ "+ \`;uptime`\ Command working\n"
+		+ "+ Built in command inside terminal\n"
+		+ "+ TTS working (enable / disable in global config)\n"
+		+ "+ Totally Human Delay\n"
+		+ "+ Console icons!"
+	},
 	tts: false,
 	terminal: {
 		success: "✅ ",

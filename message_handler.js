@@ -95,7 +95,7 @@ methods.message = async function(msg)
 		msg.channel.startTyping();
 		await functions.human_delay();
 		var version = config.version;
-		msg.reply("Current version is \`" + version + "\`");
+		msg.channel.send("**Current Version:** \t \`" + version.id + version.type + "\`\nVersion Information:\n```diff\n" + version.diff + "\n```");
 		msg.channel.stopTyping();
 	}
 
