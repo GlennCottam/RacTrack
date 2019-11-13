@@ -90,6 +90,15 @@ methods.message = async function(msg)
 		msg.channel.stopTyping();
 	}
 
+	if(message[0] === ident + "version")
+	{
+		msg.channel.startTyping();
+		await functions.human_delay();
+		var version = config.version;
+		msg.reply("Current version is \`" + version + "\`");
+		msg.channel.stopTyping();
+	}
+
 	// Thank the bot
 	else if(message[0] === ident + "thanks")
 	{

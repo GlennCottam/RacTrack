@@ -14,6 +14,7 @@ module.exports =
 {
 	token: "",
 	ident: ";",
+	version: "ALPHA - 1.0.3",
 	tts: false,
 	terminal: {
 		success: "✅ ",
