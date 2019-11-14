@@ -81,6 +81,12 @@ methods.random_int = function(lower, upper)
 	return value;
 }
 
+methods.log = function(text)
+{
+	var log = config.terminal.log + "[" + new Date() + "]:\t";
+	console.log(log + text);
+}
+
 // Exports functions to be used by other programs
 // Check out require('./functions.js') under index.js
 module.exports = methods;

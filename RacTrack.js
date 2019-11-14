@@ -81,7 +81,8 @@ setInterval(function()
 {
 	var date = new Date();
 	var status = functions.get_random_status();
-	console.log(term.info + "[" + date + "] Status Changed: { status: \"" + status.status + "\" , Playing \"" + status.text + "\"},  Changing in: " + time/3600000 + "hr(s)");
+	// console.log(term.info + "[" + date + "] Status Changed: { status: \"" + status.status + "\" , Playing \"" + status.text + "\"},  Changing in: " + time/3600000 + "hr(s)");
+	functions.log("Status Changed: { status: \"" + status.status + "\" , Playing \"" + status.text + "\"},  Changing in: " + time/3600000 + "hr(s)");
 	client.user.setStatus(status.status);			// Sets status to Online (green dot)
 	client.user.setActivity(status.text);		// Sets "Playing: " status
 
