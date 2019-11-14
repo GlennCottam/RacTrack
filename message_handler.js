@@ -5,13 +5,12 @@ Comments:	Handles messages that the users post.
 */
 
 // Variables && imported files
-const config = require("./config");			// Imports Global Config
-const functions = require('./functions');	// Imports Functions File
+const config = require("./config");				// Imports Global Config
+const functions = require('./functions');		// Imports Functions File
 const client = require('./RacTrack');			// Gets client
-const ident = config.ident;					// Imports global server command identifer
-const help = config.help;					// Imports help text
-const term = config.terminal;				// Gets all terminal icons
-const methods = {};							// Sets global methods for export (check below for export)
+const ident = config.ident;						// Imports global server command identifer
+const help = config.help;						// Imports help text
+const methods = {};								// Sets global methods for export (check below for export)
 
 methods.message = async function(msg)
 {

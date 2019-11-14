@@ -1,6 +1,6 @@
 {
   "name": "ractrack",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Scraping the trash for music you desire!",
   "main": "RacTrack.js",
   "scripts": {
