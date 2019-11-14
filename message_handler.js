@@ -63,7 +63,11 @@ methods.message = async function(msg)
 				msg.reply(
 					"\n**Playing:** \`" + response.title + "\`\n"
 					+ "**Link:** " + response.url  + "\n"
-					+ "> Duration:\t " + response.duration  + "s\n> :thumbsdown:: \t " + response.dislikes  + "\n> :thumbsup:: \t " + response.likes + "\n"
+					+ "**Duration**: " + response.duration  + "s\n"
+					+ "```diff\n"
+					+ "+ Likes " + response.likes  + "\n"
+					+ "- Dislikes " + response.dislikes + "\n"
+					+ "```"
 					, options);
 			}
 
