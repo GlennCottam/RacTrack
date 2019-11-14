@@ -80,10 +80,13 @@ module.exports =
 	],
 	help:	"> Current Commands: \n"
 			+ "```yaml\n"
-			+ ";help   \t # Display This Message\n"
-			+ ";search \t # Search for sounds / music\n"
-			+ ";uptime \t # Show uptime of Bot in seconds.\n"
-			+ ";thanks \t # thank the bot\n"
-			+ ";ping   \t # Ping the bot\n"
+			+ ";help 				# Display This Message\n"
+			+ ";search 			  # Search for sounds / music\n"
+			+ ";version 			 # Sends version information\n"
+			+ ";uptime 			  # Show uptime of Bot in seconds.\n"
+			+ ";status {0-10} 	   # Sets status of bot\n"
+			+ ";thanks 			  # thank the bot\n"
+			+ ";ping 				# Ping the bot\n"
+			+ ";freakout 			# Bot will freakout\n"
 			+ "```"
 }
