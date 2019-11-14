@@ -8,6 +8,8 @@ Comments:	Handles messages that the users post.
 const config = require("./config");				// Imports Global Config
 const functions = require('./functions');		// Imports Functions File
 const client = require('./RacTrack');			// Gets client
+const data = require('./get_data');				// Imports Searching Functions
+const term = config.terminal;					// Terminal Icons
 const ident = config.ident;						// Imports global server command identifer
 const help = config.help;						// Imports help text
 const methods = {};								// Sets global methods for export (check below for export)
@@ -49,11 +51,25 @@ methods.message = async function(msg)
 		else
 		{
 			functions.log("Searching for: \"" + message[1] + "\" | From: \"" + username + "\"");
-			msg.reply(
-				"\n`Playing:` " + message[1]
-				+ "\nhttps://www.youtube.com\n"
-				+ "> Duration:\t 0:00:00\n> :thumbsdown:: \t 0\n> :thumbsup:: \t 0\n"
-				, options);
+
+			var response = data.search_youtube(message[1]);
+
+			if(response === null)
+			{
+				console.log(term.error + "Response is null, something is wrong!");
+			}
+			else
+			{
+				msg.reply(
+					"\n**Playing:** \`" + response.title + "\`\n"
+					+ "**Link:** " + response.url  + "\n"
+					+ "> Duration:\t " + response.duration  + "s\n> :thumbsdown:: \t " + response.dislikes  + "\n> :thumbsup:: \t " + response.likes + "\n"
+					, options);
+			}
+
+			// console.log(config.terminal.info + "Response: " + response.title);
+
+			
 		}
 		msg.channel.stopTyping();
 	}
@@ -72,9 +88,7 @@ methods.message = async function(msg)
 		{
 			client.client.user.setStatus(status.status);
 			client.client.user.setActivity(status.text);
-	
-			msg.reply("If I have to...");
-	
+			msg.reply("Status Changed!");
 			functions.log("Status Changed: \"" + status.text + "\" | From : \"" + username + "\"");
 		}
 	}

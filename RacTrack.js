@@ -1,5 +1,5 @@
 /*
-File:		index.js
+File:		RacTack.js
 Type:		node application
 Comments:	Index.js is used as a start-point for the discord bot itself.
 			It handles the connections, messages, and errors.
