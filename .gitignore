@@ -69,3 +69,7 @@ package-lock.json
 
 # Not Posting that Token online
 token.txt
+
+# Server Data
+nohup.out
+*.log

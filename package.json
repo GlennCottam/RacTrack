@@ -2,10 +2,10 @@
   "name": "ractrack",
   "version": "1.0.3",
   "description": "Scraping the trash for music you desire!",
-  "main": "index.js",
+  "main": "RacTrack.js",
   "scripts": {
-    "start": "node index.js",
-    "start-server": "nohup node index.js &",
+    "start": "node RacTrack.js",
+    "start-server": "nohup node RackTrack.js &",
     "kill": "killall node"
   },
   "repository": {

@@ -7,7 +7,7 @@ Comments:	Handles messages that the users post.
 // Variables && imported files
 const config = require("./config");			// Imports Global Config
 const functions = require('./functions');	// Imports Functions File
-const client = require('./index');			// Gets client
+const client = require('./RacTrack');			// Gets client
 const ident = config.ident;					// Imports global server command identifer
 const help = config.help;					// Imports help text
 const methods = {};							// Sets global methods for export (check below for export)
@@ -29,12 +29,12 @@ methods.message = async function(msg)
 			1. msg.channel.startTyping()		This will start the bot typing indicator
 			2. await functions.human_delay() 	will wait for a random time interval
 			3. msg.channel.stopTyping()			This will stop the bot typing indicator
-		These are used to get the bot to appear to be typing a response. You dont have to use these for
+		These are used to get the bot to appear to be typing a response. You don't have to use these for
 		other if statements, but feel free to do so
 	*/
 
 	// Main search function
-	// This is where you want to put in the actual youtube / service search
+	// This is where you want to put in the actual YouTube / service search
 	// Use get_data.js to host the additional functions
 	if(message[0] === ident + "search")
 	{
@@ -95,7 +95,7 @@ methods.message = async function(msg)
 		msg.channel.startTyping();
 		await functions.human_delay();
 		var version = config.version;
-		msg.channel.send("**Current Version:** \t \`" + version.id + version.type + "\`\nVersion Information:\n```diff\n" + version.diff + "\n```");
+		msg.channel.send("**Current Version:** \t \`\`\`" + version.id + " - " +  version.type + "\`\`\`\nVersion Information:\n```diff\n" + version.diff + "\n```", options);
 		msg.channel.stopTyping();
 	}
 
@@ -113,8 +113,8 @@ methods.message = async function(msg)
 	{
 		msg.channel.startTyping();
 		await functions.human_delay();
-		console.log("Sending Help To: ", + msg.channel.name);
-		msg.channel.send(help, options);
+		var version = config.version;
+		msg.channel.send("**Current Version:** \t \`\`\`" + version.id + " - " + version.type + "\`\`\`\n" + help, options);
 		msg.channel.stopTyping();
 	}
 

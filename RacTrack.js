@@ -33,11 +33,12 @@ client.on('ready', () =>
 	client.user.setActivity(status.text);		// Sets "Playing: " status
 });
 
+// Handles all messages in message_handler.js
 client.on('message', msg =>
 	{
 		handle.message(msg); 
 	}
-); // Handles all messages in message_handler.js
+);
 
 // Scans for input on the command line
 var stdin = process.openStdin();				// Opens console for the node

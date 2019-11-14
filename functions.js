@@ -28,11 +28,10 @@ methods.split_message = function(msg)
 methods.human_delay = function()
 {
 	var time = this.random_int(100, 500);		// Gets human delay
-	console.log(config.terminal.info + "Waiting: " + time + "ms");
 	return new Promise(resolve => 
-		{
-			setTimeout(() => {resolve('resolved');}, time);
-		});
+	{
+		setTimeout(() => {resolve('resolved');}, time);
+	});
 }
 
 // Returns YouTube buddy

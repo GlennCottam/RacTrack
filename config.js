@@ -78,7 +78,7 @@ module.exports =
 			text: 'Fortnite'
 		},
 	],
-	help:	"> Current Commands: \n"
+	help:	"**Current Commands:** \n"
 			+ "```yaml\n"
 			+ ";help 				# Display This Message\n"
 			+ ";search 			  # Search for sounds / music\n"

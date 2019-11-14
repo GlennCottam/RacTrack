@@ -4,18 +4,42 @@ RacTrack: Scraping the trash for music you desire!
 # [Invite RacTrack to your Server!](https://discordapp.com/api/oauth2/authorize?client_id=629333981778804739&permissions=0&scope=bot)
 
 # Options!
-Currently, all the options are inside the config.js file. With this being said, here are some examples:
+Currently, all the options are inside the config.js file. With this being said, here are some examples.
 
 > ## tts (T/F)
-- Turns off global text to speech
+Turns off global text to speech for the bot. When turned on, all messages will be read out loud to the user that is sent from the bot.
+
+Default: `false`
+```json
+tts: false 		// Or
+tts: true
+```
 
 > ## ident (string)
-- Sets global identifier for the bot to listen too
+Will set the global value of what the bot will listen for. Acts as the command string. Can be set to individual character or any string.
 
-> ## Status (Objects)
+Default: `";"`
+```json
+ident: ";"		// Or
+ident: "bot"	// Or
+ident: "RacTrack"
+```
+
+> ## Status (JSON Objects)
 - Various unique status that can be configured.
 - Bot will select one every couple of hours
 - NOTE: Make sure to change total amount in functions file
+
+Example: 
+```json
+status:
+{
+	{
+		status: "online / idle / dnd / invisible",		// Sets indicator for bot
+		text: "String"									// Sets string of "Playing"
+	}
+}
+```
 
 # Installing Node and Dependencies:
 Since we are developing in Node, NPM will be required in order to use node and the packages we will be using for development.
@@ -62,10 +86,17 @@ or
 ```bash
 node index.js
 ```
+If you want to start the server that is not attached to the terminal (running as a background process), we can start it using `nohup`
+```bash
+nohup node index.js &
+```
+
+
 To kill the node we have a few options.
 - Send kill signal in terminal: `[CTRL-C]`.
 - npm script **NOTE WILL KILL ALL NODES**: `npm kill`
 - `kill <pid>` where `<pid>` is the process id of the node.
+  - To find the pid, use `ps -aux | grep node` and it should be the node running index.js
 - If terminal has node running, type in `kill` and it will kill the server.
 
 # Where the hell is the token?
