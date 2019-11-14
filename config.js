@@ -17,14 +17,17 @@ module.exports =
 	version:
 	{
 		type: "ALPHA",
-		id: "1.0.4",
+		id: "1.0.5",
 		diff: 
 		"+ \`;version\` Command added\n"
 		+ "+ \`;uptime`\ Command working\n"
 		+ "+ Built in command inside terminal\n"
 		+ "+ TTS working (enable / disable in global config)\n"
 		+ "+ Totally Human Delay\n"
-		+ "+ Console icons!"
+		+ "+ Console icons!\n"
+		+ "+ Better logs in the terminal!\n"
+		+ "+ Search now looks better!"
+
 	},
 	tts: false,
 	terminal: {
