@@ -32,6 +32,7 @@ module.exports =
 		info: "ℹ️ ",
 		out: "📩 node> ",
 		type: "💬 ",
+		log: "📝 ",
 		error: "🆘 ",
 		warn: "🔶 ",
 		dead: "💀 "

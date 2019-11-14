@@ -10,6 +10,7 @@ const functions = require('./functions');	// Imports Functions File
 const client = require('./RacTrack');			// Gets client
 const ident = config.ident;					// Imports global server command identifer
 const help = config.help;					// Imports help text
+const term = config.terminal;				// Gets all terminal icons
 const methods = {};							// Sets global methods for export (check below for export)
 
 methods.message = async function(msg)
@@ -23,6 +24,9 @@ methods.message = async function(msg)
 	{
 		tts: config.tts
 	}
+
+	// Gets log icon, with the current date of the message to be used in the output.
+	var log = term.log + new Date() + ":\t";
 
 	/*
 		The following if statements do the following:
@@ -48,7 +52,7 @@ methods.message = async function(msg)
 		}
 		else
 		{
-			console.log(config.terminal.info + "Searching for: " + message[1] + " | Searched By: " + username);
+			console.log(log + "Searching for: \"" + message[1] + "\" | From: \"" + username + "\"");
 			msg.reply(
 				"\n`Playing:` " + message[1]
 				+ "\nhttps://www.youtube.com\n"
@@ -75,7 +79,7 @@ methods.message = async function(msg)
 	
 			msg.reply("If I have to...");
 	
-			console.log("Status Changed: " + status.text);
+			console.log(log + "Status Changed: \"" + status.text + "\" | From : \"" + username + "\"");
 		}
 	}
 
@@ -85,9 +89,9 @@ methods.message = async function(msg)
 		msg.channel.startTyping();
 		await functions.human_delay();
 		var uptime = client.client.uptime;
-		console.log("Requested Uptime: " + uptime);
 		msg.reply("Uptime is `" + uptime + "s`", options);
 		msg.channel.stopTyping();
+		console.log(log + "Requested Uptime: \"" + uptime + "s\" | From: \"" + username + "\"");
 	}
 
 	if(message[0] === ident + "version")
@@ -97,6 +101,7 @@ methods.message = async function(msg)
 		var version = config.version;
 		msg.channel.send("**Current Version:** \t \`\`\`" + version.id + " - " +  version.type + "\`\`\`\nVersion Information:\n```diff\n" + version.diff + "\n```", options);
 		msg.channel.stopTyping();
+		console.log(log + "Version requested by: \"" + username + "\" | Version: \"" + version.id + version.type + "\"");
 	}
 
 	// Thank the bot
@@ -106,6 +111,7 @@ methods.message = async function(msg)
 		await functions.human_delay();
 		msg.reply("No probs fam", options);
 		msg.channel.stopTyping();
+		console.log(log + "Thanked by: \"" + username + "\"");
 	}
 
 	// Sends list of commands
@@ -116,6 +122,7 @@ methods.message = async function(msg)
 		var version = config.version;
 		msg.channel.send("**Current Version:** \t \`\`\`" + version.id + " - " + version.type + "\`\`\`\n" + help, options);
 		msg.channel.stopTyping();
+		console.log(log + "Help requested by: \"" + username + "\" | Version: \"" + version.id + version.type + "\"");
 	}
 
 	// Current test statement
@@ -123,9 +130,9 @@ methods.message = async function(msg)
 	{
 		msg.channel.startTyping();
 		await functions.human_delay();
-		console.log("\nPinged by: " + username);
 		msg.reply('pong', options);
 		msg.channel.stopTyping();
+		console.log(log + "Pinged by: \"" + username + "\"");
 	}
 
 	// Method for testing additional functions
@@ -136,6 +143,7 @@ methods.message = async function(msg)
 		message = functions.get_YouTube_Buddy();		// Grabs "YouTube Buddy" from functions
 		msg.reply(message, options); 							// Replies with YouTube Buddy
 		msg.channel.stopTyping();
+		console.log(log + "YouTube Buddy Sent to : \"" + username + "\"");
 	}
 
 	// Bot will freak out
@@ -151,6 +159,7 @@ methods.message = async function(msg)
 		await functions.human_delay();
 		msg.channel.send("WHY DOES EVERYTHING SUCK?", options)
 		msg.channel.stopTyping();
+		console.log(log + "Freaking out! Requested by: \"" + username + "\"");
 	}
 }
 
