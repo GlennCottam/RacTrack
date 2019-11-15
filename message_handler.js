@@ -175,6 +175,15 @@ methods.message = async function(msg)
 		msg.channel.stopTyping();
 		functions.log("Freaking out! Requested by: \"" + username + "\"");
 	}
+
+	else if(msg.content === ident + 'meatballman')
+	{
+		functions.log("Pasting Meat Ball Man");
+		msg.channel.startTyping();
+		await functions.human_delay();
+		msg.channel.send("", {files: ["images/meat-ball-man.png"]});
+		msg.channel.stopTyping();
+	}
 }
 
 module.exports = methods;			// Exports functions for global usage
