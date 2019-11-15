@@ -17,6 +17,7 @@ Comments:	File that is meant to be used to access various API's to search though
 */
 
 const func = require('./functions');
+const key = require('./config').key;
 const request = require('request');
 
 var methods = {}
@@ -43,7 +44,7 @@ methods.search_youtube = function(term)
 		{
 			'part': 'snippet',
 			'maxrResults': 1,
-			'key': 'AIzaSyB_6xm23_Ld6CvHkWW8jDSJJrTaH0aBBAs',
+			'key': key,
 			'q': term
 		}
 	}

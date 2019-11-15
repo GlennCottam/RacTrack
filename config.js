@@ -18,7 +18,7 @@ module.exports =
 	version:
 	{
 		type: "ALPHA",
-		id: "1.0.5",
+		id: "1.0.6",
 		diff: 
 		"+ \`;version\` Command added\n"
 		+ "+ \`;uptime`\ Command working\n"

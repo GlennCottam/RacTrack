@@ -182,6 +182,7 @@ methods.message = async function(msg)
 		msg.channel.startTyping();
 		await functions.human_delay();
 		msg.channel.send("", {files: ["images/meat-ball-man.png"]});
+		msg.channel.stopTyping();
 	}
 }
 
