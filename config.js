@@ -13,6 +13,7 @@ Note:		If you have problems displaying emoji's in the terminal, set the terminal
 module.exports =
 {
 	token: "",
+	key: "",
 	ident: ";",
 	version:
 	{
