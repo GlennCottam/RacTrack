@@ -17,6 +17,7 @@ Comments:	File that is meant to be used to access various API's to search though
 */
 
 const func = require('./functions');
+const request = require('request');
 
 var methods = {}
 // Put your code below, but before module.exports = methods
@@ -24,6 +25,30 @@ var methods = {}
 
 methods.search_youtube = function(term)
 {
+
+	// Get Request From YouTube
+
+	var headers = 
+	{
+		'User-Agent': 'Super Agent/0.0.1',
+		'Content-Type': 'applications/x-www-form-urlencoded'
+	}
+
+	var options =
+	{
+		url: "https://www.googleapis.com/youtube/v3/search",
+		method: 'GET',
+		headers: headers,
+		qs: 
+		{
+			'part': 'snippet',
+			'maxrResults': 1,
+			'key': 'AIzaSyB_6xm23_Ld6CvHkWW8jDSJJrTaH0aBBAs',
+			'q': term
+		}
+	}
+
+
 	// Test response for an example
 	var response = 
 	{
