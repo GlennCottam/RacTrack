@@ -52,7 +52,10 @@ methods.message = async function(msg)
 		{
 			functions.log("Searching for: \"" + message[1] + "\" | From: \"" + username + "\"");
 
-			var response = data.search_youtube(message[1]);
+			await data.search_youtube(message[1]);
+			var response = data.response;
+
+			console.log("Search Finished");
 
 			if(response === null)
 			{
@@ -60,15 +63,16 @@ methods.message = async function(msg)
 			}
 			else
 			{
-				msg.reply(
-					"\n**Playing:** \`" + response.title + "\`\n"
-					+ "**Link:** " + response.url  + "\n"
-					+ "**Duration**: " + response.duration  + "s\n"
-					+ "```diff\n"
-					+ "+ Likes " + response.likes  + "\n"
-					+ "- Dislikes " + response.dislikes + "\n"
-					+ "```"
-					, options);
+				console.log(JSON.stringify(response));
+				// msg.reply(
+				// 	"\n**Playing:** \`" + response.title + "\`\n"
+				// 	+ "**Link:** " + response.url  + "\n"
+				// 	+ "**Duration**: " + response.duration  + "s\n"
+				// 	+ "```diff\n"
+				// 	+ "+ Likes " + response.likes  + "\n"
+				// 	+ "- Dislikes " + response.dislikes + "\n"
+				// 	+ "```"
+				// 	, options);
 			}
 
 			// console.log(config.terminal.info + "Response: " + response.title);

@@ -17,50 +17,64 @@ Comments:	File that is meant to be used to access various API's to search though
 */
 
 const func = require('./functions');
-const key = require('./config').key;
+const config = require('./config');
+const key = config.key;
 const request = require('request');
 
 var methods = {}
 // Put your code below, but before module.exports = methods
 // Use this file to grab information from YouTube etc...
 
+methods.response = null;
+
 methods.search_youtube = function(term)
 {
-
-	// Get Request From YouTube
-
-	var headers = 
+	return new Promise(resolve => 
 	{
-		'User-Agent': 'Super Agent/0.0.1',
-		'Content-Type': 'applications/x-www-form-urlencoded'
-	}
+		// Get Request From YouTube
 
-	var options =
-	{
-		url: "https://www.googleapis.com/youtube/v3/search",
-		method: 'GET',
-		headers: headers,
-		qs: 
+		var headers = 
 		{
-			'part': 'snippet',
-			'maxrResults': 1,
-			'key': key,
-			'q': term
+			'User-Agent': 'Super Agent/0.0.1',
+			'Content-Type': 'applications/x-www-form-urlencoded'
 		}
-	}
+
+		var search = "?part=snippet&maxrResults=1&key=" + key  + "&; q=" + term;
+
+		var options =
+		{
+			url: "https://www.googleapis.com/youtube/v3/search" + search,
+			method: 'GET',
+			headers: headers,
+		}
 
 
-	// Test response for an example
-	var response = 
-	{
-		url: "https://www.youtube.com/watch?v=szby7ZHLnkA",
-		title: term,
-		likes: func.random_int(0, 10000),
-		dislikes: func.random_int(0, 10000),
-		duration: func.random_int(0, 100000),
-	}
+		request(options, function(err, res, body)
+		{
+			if(err)
+			{
+				console.log(config.terminal.error + "Error getting data: " + err)
+			}
+			else
+			{
+				console.log("Retrieved Response");
+				methods.response = JSON.parse(body);
+				console.log("Parsed JSON");
+			}
+		});
 
-	return response;
+		// Test response for an example
+		// var response = 
+		// {
+		// 	url: "https://www.youtube.com/watch?v=szby7ZHLnkA",
+		// 	title: term,
+		// 	likes: func.random_int(0, 10000),
+		// 	dislikes: func.random_int(0, 10000),
+		// 	duration: func.random_int(0, 100000),
+		// }
+
+		resolve('resolved');
+		});
 }
 
 module.exports = methods;

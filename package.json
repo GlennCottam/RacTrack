@@ -25,11 +25,11 @@
     "url": "https://github.com/GlennCottam/RacTrack/issues"
   },
   "homepage": "https://github.com/GlennCottam/RacTrack#readme",
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "dependencies": {
     "dependencies": "0.0.1",
     "discord.js": "^11.5.1",
-    "node": "^12.13.0"
+    "node": "^12.13.0",
+    "request": "^2.88.0"
   }
 }
