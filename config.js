@@ -18,7 +18,7 @@ module.exports =
 	version:
 	{
 		type: "ALPHA",
-		id: "1.0.7",
+		id: "1.0.8",
 		diff: 
 		"```diff\n"
 		+ "+ Basic search functionally added.\n"
@@ -43,44 +43,8 @@ module.exports =
 	status: [
 		{
 			status: 'online',
-			text: ''
-		},
-		{
-			status: 'online',
-			text: 'WITH YOUR MOM'
-		},
-		{
-			status: 'online',
-			text: 'NNN'
-		},
-		{
-			status: 'online',
-			text: 'Music'
-		},
-		{
-			status: 'online',
-			text: 'Node.js'
-		},
-		{
-			status: 'online',
-			text: "Daddy?"
-		},
-		{
-			status: 'online',
-			text: 'UwU'
-		},
-		{
-			status: 'dnd',
-			text: 'Rainbow Six Siege'
-		},
-		{
-			status: 'dnd',
-			text: 'Minecraft'
-		},
-		{
-			status: 'dnd',
-			text: 'Fortnite'
-		},
+			text: "1.0.8 - ALPHA"
+		}
 	],
 	help:	"```yaml\n"
 			+ ";help 				# Display This Message\n"
@@ -90,6 +54,5 @@ module.exports =
 			+ ";status {0-10} 	   # Sets status of bot\n"
 			+ ";thanks 			  # thank the bot\n"
 			+ ";ping 				# Ping the bot\n"
-			+ ";freakout 			# Bot will freakout\n"
 			+ "```"
 }

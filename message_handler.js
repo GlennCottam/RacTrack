@@ -145,7 +145,7 @@ methods.message = async function(msg)
 	{
 		msg.channel.startTyping();
 		await functions.human_delay();
-		msg.reply("No probs fam", options);
+		msg.reply("Any Time!", options);
 		msg.channel.stopTyping();
 		functions.log("Thanked by: \"" + username + "\"");
 	}
@@ -182,41 +182,6 @@ methods.message = async function(msg)
 		functions.log("Pinged by: \"" + username + "\"");
 	}
 
-	// Method for testing additional functions
-	else if(msg.content === ident + 'penis')
-	{
-		msg.channel.startTyping();
-		await functions.human_delay();
-		message = functions.get_YouTube_Buddy();		// Grabs "YouTube Buddy" from functions
-		msg.reply(message, options); 							// Replies with YouTube Buddy
-		msg.channel.stopTyping();
-		functions.log("YouTube Buddy Sent to : \"" + username + "\"");
-	}
-
-	// Bot will freak out
-	else if(msg.content === ident + 'freakout')
-	{
-		msg.channel.startTyping();
-		await functions.human_delay();
-		msg.channel.send("OH GOD NO PLEASE NO GOD NO!", options);
-
-		await functions.human_delay();
-		msg.channel.send("FUCK FUCK FUCK FUCK", options);
-
-		await functions.human_delay();
-		msg.channel.send("WHY DOES EVERYTHING SUCK?", options)
-		msg.channel.stopTyping();
-		functions.log("Freaking out! Requested by: \"" + username + "\"");
-	}
-
-	else if(msg.content === ident + 'meatballman')
-	{
-		functions.log("Sending The Meat Ball...");
-		msg.channel.startTyping();
-		await functions.human_delay();
-		msg.channel.send("", {files: ["images/meat-ball-man.png"]});
-		msg.channel.stopTyping();
-	}
 }
 
 module.exports = methods;			// Exports functions for global usage
