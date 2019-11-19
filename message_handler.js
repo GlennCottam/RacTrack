@@ -54,24 +54,39 @@ methods.message = async function(msg)
 			functions.log("Searching for: \"" + message[1] + "\" | From: \"" + username + "\"");
 
 			var response = await data.search_youtube(message[1]);
-
-			console.log("Search Finished");
-
+			
 			if(response === null)
 			{
 				console.log(term.error + "Response is null, something is wrong!");
 			}
-			else
+			else if(response.kind === 'channel')
 			{
+				// Reply for Channel
 				var embed = new Discord.RichEmbed();
-				embed.setColor('#FF0000')				// Red
-				.setTitle("YouTube Search Result")
-				.addField('Title', response.title)
+				embed.setColor('#FF0000')
+				.setTitle("Channel Search Result")
+				.setDescription(response.title)
 				.addField('Description', response.desc)
 				.addField('Link', response.url)
-				.setImage(response.thumb);
-
+				.setURL(response.url)
+				.setThumbnail(response.thumb)
+				.setFooter('RacTrack - 2019, Version ' + config.version.id + config.version.type);
+				
 				msg.channel.send(embed);
+			}
+			else if(response.kind === 'video')
+			{
+
+				msg.reply(
+					"\n**Video:** \`" + response.title + "\`\n"
+					+ "**Link:** " + response.url  + "\n"
+					+ "**Description: **" + response.desc + "\n"
+					, options);
+
+			}
+			else
+			{
+				msg.reply("Unknown Search Result. Please send command to Admin.");
 			}
 			
 		}

@@ -73,13 +73,30 @@ methods.search_youtube = function(term)
 				var data = JSON.parse(body);		// Parses to JSON object
 				data = data.items[0];				// Removes garbage we don't want.
 
-				// Parses response to get rid of un-needed information being passed back to main function.
-				response =
+				// Below code will deliver the proper response depending on what the person searched for
+				if(data.id.kind === 'youtube#channel')
 				{
-					title: data.snippet.title,
-					desc: data.snippet.description,
-					url: 'https://youtube.com/watch?v=' + data.id.videoID,
-					thumb: data.snippet.thumbnails.default.url
+					// Parse for YouTube Channel
+					response = 
+					{
+						kind: 'channel',
+						title: data.snippet.title,
+						desc: data.snippet.description,
+						url: 'https://youtube.com/user/' + data.channelTitle,
+						thumb: data.snippet.thumbnails.default.url
+					}
+				}
+				else if(data.id.kind === 'youtube#video')
+				{
+					// Parses for YouTube Video
+					response =
+					{
+						kind: 'video',
+						title: data.snippet.title,
+						desc: data.snippet.description,
+						url: 'https://www.youtube.com/watch?v=' + data.id.videoId,
+						thumb: data.snippet.thumbnails.default.url
+					}
 				}
 
 				resolve(response);
