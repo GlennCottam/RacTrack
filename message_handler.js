@@ -64,9 +64,8 @@ methods.message = async function(msg)
 				// Reply for Channel
 				var embed = new Discord.RichEmbed();
 				embed.setColor('#FF0000')
-				.setTitle("Channel Search Result")
-				.setDescription(response.title)
-				.addField('Description', response.desc)
+				.setTitle(response.title)
+				.setDescription(response.desc)
 				.addField('Link', response.url)
 				.setURL(response.url)
 				.setThumbnail(response.thumb)
@@ -78,9 +77,9 @@ methods.message = async function(msg)
 			{
 
 				msg.reply(
-					"\n**Video:** \`" + response.title + "\`\n"
-					+ "**Link:** " + response.url  + "\n"
-					+ "**Description: **" + response.desc + "\n"
+					"\n**" + response.title + "**\n"
+					+ "> *" + response.desc + "*\n"
+					+ "> " + response.url  + "\n"
 					, options);
 
 			}

@@ -82,7 +82,7 @@ methods.search_youtube = function(term)
 						kind: 'channel',
 						title: data.snippet.title,
 						desc: data.snippet.description,
-						url: 'https://youtube.com/user/' + data.channelTitle,
+						url: 'https://youtube.com/user/' + data.snippet.channelTitle,
 						thumb: data.snippet.thumbnails.default.url
 					}
 				}
