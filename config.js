@@ -18,16 +18,15 @@ module.exports =
 	version:
 	{
 		type: "ALPHA",
-		id: "1.0.6",
+		id: "1.0.7",
 		diff: 
-		"+ \`;version\` Command added\n"
-		+ "+ \`;uptime`\ Command working\n"
-		+ "+ Built in command inside terminal\n"
-		+ "+ TTS working (enable / disable in global config)\n"
-		+ "+ Totally Human Delay\n"
-		+ "+ Console icons!\n"
-		+ "+ Better logs in the terminal!\n"
-		+ "+ Search now looks better!"
+		"```diff\n"
+		+ "+ Basic search functionally added.\n"
+		+ "+ Changed message replies to embeds to better looking responses \n"
+		+ "+ Typing indicator with REAL HUMAN delay.\n"
+		+ "+ Squashed some bugs\n"
+		+ "- When searching, only grabs first result."
+		+ "```"
 
 	},
 	tts: false,
@@ -83,8 +82,7 @@ module.exports =
 			text: 'Fortnite'
 		},
 	],
-	help:	"**Current Commands:** \n"
-			+ "```yaml\n"
+	help:	"```yaml\n"
 			+ ";help 				# Display This Message\n"
 			+ ";search 			  # Search for sounds / music\n"
 			+ ";version 			 # Sends version information\n"

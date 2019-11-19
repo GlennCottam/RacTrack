@@ -16,31 +16,42 @@ Comments:	File that is meant to be used to access various API's to search though
 			}
 */
 
-const func = require('./functions');
+/*
+	Example response from YouTube where [data] is the response:
+	data.items[]							// Array of results
+	data.items[0].snippet.title				// Title for video
+	data.items[0].snippet.description		// Description of video
+	data.items[0].id.videoID				// Video ID, used as video URL
+
+	Video Url: https://youtube.com/watch?v= + data.items[0].id.videoID
+*/
+
 const config = require('./config');
 const key = config.key;
 const request = require('request');
 
 var methods = {}
+
 // Put your code below, but before module.exports = methods
 // Use this file to grab information from YouTube etc...
-
-methods.response = null;
-
 methods.search_youtube = function(term)
 {
+	var response = null;
+
 	return new Promise(resolve => 
 	{
 		// Get Request From YouTube
-
+		// Headers to be sent to YouTube
 		var headers = 
 		{
 			'User-Agent': 'Super Agent/0.0.1',
 			'Content-Type': 'applications/x-www-form-urlencoded'
 		}
 
-		var search = "?part=snippet&maxrResults=1&key=" + key  + "&; q=" + term;
+		// Search query
+		var search = "?part=snippet&maxrResults=1&key=" + key  + "&q=" + term;
 
+		// Options to be sent in the GET request to YouTube
 		var options =
 		{
 			url: "https://www.googleapis.com/youtube/v3/search" + search,
@@ -48,33 +59,33 @@ methods.search_youtube = function(term)
 			headers: headers,
 		}
 
-
+		// Sending GET request to YouTube
 		request(options, function(err, res, body)
-		{
+		{	
+			// On error (no response / invalid response)
 			if(err)
 			{
-				console.log(config.terminal.error + "Error getting data: " + err)
+				console.log(config.terminal.error + "Error getting data: " + err);
+				resolve(null);
 			}
 			else
 			{
-				console.log("Retrieved Response");
-				methods.response = JSON.parse(body);
-				console.log("Parsed JSON");
-			}
-		});
+				var data = JSON.parse(body);		// Parses to JSON object
+				data = data.items[0];				// Removes garbage we don't want.
 
-		// Test response for an example
-		// var response = 
-		// {
-		// 	url: "https://www.youtube.com/watch?v=szby7ZHLnkA",
-		// 	title: term,
-		// 	likes: func.random_int(0, 10000),
-		// 	dislikes: func.random_int(0, 10000),
-		// 	duration: func.random_int(0, 100000),
-		// }
+				// Parses response to get rid of un-needed information being passed back to main function.
+				response =
+				{
+					title: data.snippet.title,
+					desc: data.snippet.description,
+					url: 'https://youtube.com/watch?v=' + data.id.videoID,
+					thumb: data.snippet.thumbnails.default.url
+				}
 
-		resolve('resolved');
+				resolve(response);
+			}	
 		});
+	});
 }
 
 module.exports = methods;

@@ -5,6 +5,7 @@ Comments:	Handles messages that the users post.
 */
 
 // Variables && imported files
+const Discord = require('discord.js');			// Discord API (For Embeds and other things)
 const config = require("./config");				// Imports Global Config
 const functions = require('./functions');		// Imports Functions File
 const client = require('./RacTrack');			// Gets client
@@ -52,8 +53,7 @@ methods.message = async function(msg)
 		{
 			functions.log("Searching for: \"" + message[1] + "\" | From: \"" + username + "\"");
 
-			await data.search_youtube(message[1]);
-			var response = data.response;
+			var response = await data.search_youtube(message[1]);
 
 			console.log("Search Finished");
 
@@ -63,20 +63,16 @@ methods.message = async function(msg)
 			}
 			else
 			{
-				console.log(JSON.stringify(response));
-				// msg.reply(
-				// 	"\n**Playing:** \`" + response.title + "\`\n"
-				// 	+ "**Link:** " + response.url  + "\n"
-				// 	+ "**Duration**: " + response.duration  + "s\n"
-				// 	+ "```diff\n"
-				// 	+ "+ Likes " + response.likes  + "\n"
-				// 	+ "- Dislikes " + response.dislikes + "\n"
-				// 	+ "```"
-				// 	, options);
+				var embed = new Discord.RichEmbed();
+				embed.setColor('#FF0000')				// Red
+				.setTitle("YouTube Search Result")
+				.addField('Title', response.title)
+				.addField('Description', response.desc)
+				.addField('Link', response.url)
+				.setImage(response.thumb);
+
+				msg.channel.send(embed);
 			}
-
-			// console.log(config.terminal.info + "Response: " + response.title);
-
 			
 		}
 		msg.channel.stopTyping();
@@ -114,10 +110,18 @@ methods.message = async function(msg)
 
 	if(message[0] === ident + "version")
 	{
+		var embed = new Discord.RichEmbed();
+
+		embed.setColor('#00FF00')
+		.setTitle('Version of RacTrack')
+		.addField('Version ID', config.version.id + " - " + config.version.type)
+		.addField('Current Changes List', config.version.diff);
+
 		msg.channel.startTyping();
 		await functions.human_delay();
 		var version = config.version;
-		msg.channel.send("**Current Version:** \t \`\`\`" + version.id + " - " +  version.type + "\`\`\`\nVersion Information:\n```diff\n" + version.diff + "\n```", options);
+		// msg.channel.send("**Current Version:** \t \`\`\`" + version.id + " - " +  version.type + "\`\`\`\nVersion Information:\n```diff\n" + version.diff + "\n```", options);
+		msg.channel.send(embed);
 		msg.channel.stopTyping();
 		functions.log("Version requested by: \"" + username + "\" | Version: \"" + version.id + version.type + "\"");
 	}
@@ -135,10 +139,21 @@ methods.message = async function(msg)
 	// Sends list of commands
 	else if(message[0] === ident + "help")
 	{
+		var embed = new Discord.RichEmbed();
+
+		embed
+		.setColor('#0000FF')
+		.setTitle('RacTrack Information')
+		.addField('Current Commands', help)
+		.addField('Version ID', config.version.id + " - " + config.version.type)
+		.addField('Current Changes List', config.version.diff);
+		
+		
 		msg.channel.startTyping();
 		await functions.human_delay();
 		var version = config.version;
-		msg.channel.send("**Current Version:** \t \`\`\`" + version.id + " - " + version.type + "\`\`\`\n" + help, options);
+		// msg.channel.send("**Current Version:** \t \`\`\`" + version.id + " - " + version.type + "\`\`\`\n" + help, options);
+		msg.channel.send(embed);
 		msg.channel.stopTyping();
 		functions.log("Help requested by: \"" + username + "\" | Version: \"" + version.id + version.type + "\"");
 	}
