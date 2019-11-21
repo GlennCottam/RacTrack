@@ -1,6 +1,6 @@
 module.exports = 
 {
-	discord_key = "",
-	youtube_api = ""
+	discord_key: "",
+	youtube_api: ""
 }
 
