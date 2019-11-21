@@ -29,14 +29,6 @@ Comments:	File that is meant to be used to access various API's to search though
 const config = require('./config');
 const key = require('./tokens').youtube_api;
 const https = require('https');
-
-// Headers to be sent to YouTube
-const headers = 
-{
-	'User-Agent': 'Super Agent/0.0.1',
-	'Content-Type': 'applications/x-www-form-urlencoded'
-}
-
 var methods = {}
 
 // Put your code below, but before module.exports = methods
@@ -86,7 +78,6 @@ methods.search_youtube = async function(term)
 		}
 	}
 	
-
 	return new Promise(resolve => {resolve(response)});
 }
 
@@ -148,6 +139,5 @@ async function search_channel(id)
 		});
 	});
 }
-
 
 module.exports = methods;
