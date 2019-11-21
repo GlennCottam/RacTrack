@@ -59,6 +59,10 @@ methods.message = async function(msg)
 			{
 				console.log(term.error + "Response is null, something is wrong!");
 			}
+			else if(response.results === null)
+			{
+				msg.reply("No Results Found!")
+			}
 			else if(response.kind === 'channel')
 			{
 				// Reply for Channel

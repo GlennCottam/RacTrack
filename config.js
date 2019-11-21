@@ -1,3 +1,5 @@
+	token: "",
+	key: "",
 /*
 File:		config.js
 Type:		exports
@@ -12,13 +14,11 @@ Note:		If you have problems displaying emoji's in the terminal, set the terminal
 
 module.exports =
 {
-	token: "",
-	key: "",
 	ident: ";",
 	version:
 	{
 		type: "ALPHA",
-		id: "1.0.7",
+		id: "1.0.9",
 		diff: 
 		"```diff\n"
 		+ "+ Basic search functionally added.\n"

@@ -1,12 +1,13 @@
 {
   "name": "ractrack",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "description": "Scraping the trash for music you desire!",
   "main": "RacTrack.js",
   "scripts": {
     "start": "node RacTrack.js",
-    "start-server": "nohup node RackTrack.js &",
-    "kill": "killall node"
+    "start-server": "nohup node RackTrack.js > logs/.log > logs/err.log",
+    "search-app": "ps -aux | grep \"node RacTrack.js\"",
+    "clean": "rm nohup.out *.log"
   },
   "repository": {
     "type": "git",
@@ -29,7 +30,7 @@
   "dependencies": {
     "dependencies": "0.0.1",
     "discord.js": "^11.5.1",
-    "node": "^12.13.0",
-    "request": "^2.88.0"
+    "https": "^1.0.0",
+    "node": "^12.13.0"
   }
 }
