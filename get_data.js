@@ -27,7 +27,7 @@ Comments:	File that is meant to be used to access various API's to search though
 */
 
 const config = require('./config');
-const key = config.key;
+const key = require('./tokens').youtube_api;
 const https = require('https');
 
 // Headers to be sent to YouTube

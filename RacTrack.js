@@ -12,7 +12,7 @@ const config = require('./config');				// Grabs Config File
 const functions = require('./functions');		// Grabs functions
 const term = config.terminal;					// Shortened version for terminal emoji's
 const handle = require('./message_handler');	// Message Handler
-const token = config.token;						// Gets Token
+const token = require('./tokens').discord_key;	// Gets Token
 
 
 // Checks to see if the token is present
