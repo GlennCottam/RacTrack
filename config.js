@@ -18,7 +18,7 @@ module.exports =
 	version:
 	{
 		type: "ALPHA",
-		id: "1.0.8",
+		id: "1.0.1",
 		diff: 
 		"```diff\n"
 		+ "+ Basic search functionally added.\n"
