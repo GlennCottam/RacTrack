@@ -8,6 +8,7 @@ Comments:	Handles messages that the users post.
 const Discord = require('discord.js');			// Discord API (For Embeds and other things)
 const config = require("./config");				// Imports Global Config
 const functions = require('./functions');		// Imports Functions File
+const voice = require('./voice');				// Voice COnnection)
 const client = require('./RacTrack');			// Gets client
 const data = require('./get_data');				// Imports Searching Functions
 const term = config.terminal;					// Terminal Icons
@@ -59,6 +60,10 @@ methods.message = async function(msg)
 			{
 				console.log(term.error + "Response is null, something is wrong!");
 			}
+			else if(response.results === null)
+			{
+				msg.reply(":no_entry: No Results Found!")
+			}
 			else if(response.kind === 'channel')
 			{
 				// Reply for Channel
@@ -109,6 +114,11 @@ methods.message = async function(msg)
 			msg.reply("Status Changed!");
 			functions.log("Status Changed: \"" + status.text + "\" | From : \"" + username + "\"");
 		}
+	}
+
+	if(message[0] === ident + "play")
+	{
+		voice.connect(client.client, msg);
 	}
 
 	// Replies with Uptime

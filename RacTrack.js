@@ -8,11 +8,18 @@ Comments:	Index.js is used as a start-point for the discord bot itself.
 // Variables
 const Discord = require('discord.js');			// Grabs Discord.js API
 const client = new Discord.Client();			// Creates Discord Client
+const ytdl = require('ytdl-core');
+const opus = require('node-opus');				// No idea what it does, something to do with voice connections
 const config = require('./config');				// Grabs Config File
 const functions = require('./functions');		// Grabs functions
+const data = require('./get_data');
+const voice = require('./voice');
 const term = config.terminal;					// Shortened version for terminal emoji's
+const ident = config.ident;						// Default Idenifier
 const handle = require('./message_handler');	// Message Handler
-const token = config.token;						// Gets Token
+const token = require('./tokens').discord_key;	// Gets Token
+const streamOptions = {seek: 0, volume: 1};
+const broadcast = client.createVoiceBroadcast();
 
 
 // Checks to see if the token is present
@@ -34,11 +41,88 @@ client.on('ready', () =>
 });
 
 // Handles all messages in message_handler.js
-client.on('message', msg =>
+client.on('message', async msg =>
+{
+	const voiceChannel = msg.member.voiceChannel;
+	const channel = msg.channel;
+
+	// Stops the voice connection
+	if(msg.content.startsWith(ident + "stop"))
 	{
-		handle.message(msg); 
+		if(!voiceChannel)
+		{
+			msg.reply("Please join a voice channel to enable voice commands!");
+		}
+		else
+		{
+			voiceChannel.leave();
+		}
 	}
-);
+	// RacPlay will search and start a audio connection with user in channel
+	else if(msg.content.startsWith(ident + "RacPlay"))
+	{
+		channel.startTyping();
+		var split = functions.split_message(msg);
+		var response = await data.search_youtube(split[1]);
+
+		functions.log("Searching for: \"" + split[1] + "\" | From: \"" + msg.author.username + "\"");
+
+		if(response === null)
+		{
+			msg.reply("Something Didn't work!");
+		}
+		else if(response.results === null)
+		{
+			msg.reply("No results found!");
+		}
+		else if(response.kind === 'channel')
+		{
+			// Reply for Channel
+			var embed = new Discord.RichEmbed();
+			embed.setColor('#FF0000')
+			.setTitle(response.title)
+			.setDescription(response.desc)
+			.addField('Link', response.url)
+			.setURL(response.url)
+			.setThumbnail(response.thumb)
+			.setFooter('RacTrack - 2019, Version ' + config.version.id + config.version.type);
+			
+			msg.channel.send(embed);
+		}
+		else if(response.kind === 'video')
+		{
+
+			msg.reply(
+				"\n**" + response.title + "**\n"
+				+ "> *" + response.desc + "*\n"
+				+ "> " + response.url  + "\n");
+
+			if(!voiceChannel)
+			{
+				msg.reply("You are not in a channel! Please join one!");
+			}
+			else
+			{
+				voiceChannel.join().then(connection =>
+				{
+					const stream = ytdl(response.url, { filter : 'audioonly' });
+					broadcast.playStream(stream, streamOptions);
+					const dispatcher = connection.playBroadcast(broadcast);
+				}).catch(console.error);
+			}
+		}
+		else
+		{
+			msg.reply("Unknown Search Result. Please send command to Admin.");
+		}
+		channel.stopTyping();
+	}
+	else
+	{
+		handle.message(msg);
+	}
+	
+});
 
 // Scans for input on the command line
 var stdin = process.openStdin();				// Opens console for the node

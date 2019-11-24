@@ -27,80 +27,115 @@ Comments:	File that is meant to be used to access various API's to search though
 */
 
 const config = require('./config');
-const key = config.key;
-const request = require('request');
-
+const key = require('./tokens').youtube_api;
+const https = require('https');
 var methods = {}
 
 // Put your code below, but before module.exports = methods
 // Use this file to grab information from YouTube etc...
-methods.search_youtube = function(term)
+methods.search_youtube = async function(term)
 {
 	var response = null;
+	var data = await pre_search(term);
 
-	return new Promise(resolve => 
+	if(data.pageInfo.totalResults < 1)
 	{
-		// Get Request From YouTube
-		// Headers to be sent to YouTube
-		var headers = 
+		console.log(config.terminal.error + "No results Found for \"" + term + "\",");
+		response = 
 		{
-			'User-Agent': 'Super Agent/0.0.1',
-			'Content-Type': 'applications/x-www-form-urlencoded'
-		}
+			results: null
+		};
+	}
+	else
+	{
+		data = data.items[0];			// Moving JSON object up to information we need
 
-		// Search query
-		var search = "?part=snippet&maxrResults=1&key=" + key  + "&q=" + term;
-
-		// Options to be sent in the GET request to YouTube
-		var options =
+		// Below code will deliver the proper response depending on what the person searched for
+		if(data.id.kind === 'youtube#channel')
 		{
-			url: "https://www.googleapis.com/youtube/v3/search" + search,
-			method: 'GET',
-			headers: headers,
-		}
-
-		// Sending GET request to YouTube
-		request(options, function(err, res, body)
-		{	
-			// On error (no response / invalid response)
-			if(err)
+			data = await search_channel(data.id.channelId);
+			data = data.items[0];
+			response = 
 			{
-				console.log(config.terminal.error + "Error getting data: " + err);
-				resolve(null);
+				kind: 'channel',
+				title: data.snippet.title,
+				desc: data.snippet.description,
+				url: 'https://www.youtube.com/user/' + data.snippet.customUrl,
+				thumb: data.snippet.thumbnails.default.url
 			}
-			else
+		}
+		else if(data.id.kind === 'youtube#video')
+		{
+			// Parses for YouTube Video
+			response =
 			{
-				var data = JSON.parse(body);		// Parses to JSON object
-				data = data.items[0];				// Removes garbage we don't want.
+				kind: 'video',
+				title: data.snippet.title,
+				desc: data.snippet.description,
+				url: 'https://www.youtube.com/watch?v=' + data.id.videoId,
+				thumb: data.snippet.thumbnails.default.url
+			}
+		}
+	}
+	
+	return new Promise(resolve => {resolve(response)});
+}
 
-				// Below code will deliver the proper response depending on what the person searched for
-				if(data.id.kind === 'youtube#channel')
-				{
-					// Parse for YouTube Channel
-					response = 
-					{
-						kind: 'channel',
-						title: data.snippet.title,
-						desc: data.snippet.description,
-						url: 'https://youtube.com/user/' + data.snippet.channelTitle,
-						thumb: data.snippet.thumbnails.default.url
-					}
-				}
-				else if(data.id.kind === 'youtube#video')
-				{
-					// Parses for YouTube Video
-					response =
-					{
-						kind: 'video',
-						title: data.snippet.title,
-						desc: data.snippet.description,
-						url: 'https://www.youtube.com/watch?v=' + data.id.videoId,
-						thumb: data.snippet.thumbnails.default.url
-					}
-				}
+// Gets original Data
+async function pre_search(term)
+{
 
-				resolve(response);
-			}	
+	return new Promise(resolve =>
+	{
+		var data = null;
+		
+		// Url for Searching
+		var url = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&key=" + key + "&q=" + term;
+
+		https.get(url, res =>
+		{
+			res.on('data', body =>
+			{
+				data = body;
+			});
+			
+			res.on('end', () =>
+			{
+				data = JSON.parse(data);
+				resolve(data);
+			});
+		}).on('error', (e) =>
+		{
+			console.log(config.terminal.error + "Error getting data:\n" + e);
+			resolve(null);
+		});
+
+	});
+}
+
+// Searches for Channel Information using ID of channel.
+async function search_channel(id)
+{
+	return new Promise(resolve =>
+	{
+		var data = null;
+		var url = "https://www.googleapis.com/youtube/v3/channels?part=snippet&maxResults=1&id=" + id + "&key=" + key;
+	
+		https.get(url, res =>
+		{
+			res.on('data', body =>
+			{
+				data = body;
+			});
+			res.on('end', () =>
+			{
+				data = JSON.parse(data);
+				resolve(data);
+			});
+		}).on('error', (e) =>
+		{
+			console.log(config.terminal.error + "Error getting data:\n" + e);
+			resolve(null);
 		});
 	});
 }

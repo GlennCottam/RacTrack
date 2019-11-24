@@ -56,3 +56,4 @@ module.exports =
 			+ ";ping 				# Ping the bot\n"
 			+ "```"
 }
+
