@@ -18,7 +18,7 @@ module.exports =
 	version:
 	{
 		type: "ALPHA",
-		id: "1.0.1",
+		id: "1.1.1",
 		diff: 
 		"```diff\n"
 		+ "+ Basic search functionally added.\n"
@@ -48,6 +48,8 @@ module.exports =
 	],
 	help:	"```yaml\n"
 			+ ";help 				# Display This Message\n"
+			+ ";RacPlay				# Searches YouTube and plays result\n"
+			+ ";stop				# Stops current playback\n"
 			+ ";search 			  # Search for sounds / music\n"
 			+ ";version 			 # Sends version information\n"
 			+ ";uptime 			  # Show uptime of Bot in seconds.\n"
