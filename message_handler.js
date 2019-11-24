@@ -116,11 +116,6 @@ methods.message = async function(msg)
 		}
 	}
 
-	if(message[0] === ident + "play")
-	{
-		voice.connect(client.client, msg);
-	}
-
 	// Replies with Uptime
 	if(message[0] === ident + "uptime")
 	{
