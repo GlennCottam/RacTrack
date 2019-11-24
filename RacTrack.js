@@ -44,6 +44,8 @@ client.on('ready', () =>
 client.on('message', async msg =>
 {
 	const voiceChannel = msg.member.voiceChannel;
+	const channel = msg.channel;
+
 	// Stops the voice connection
 	if(msg.content.startsWith(ident + "stop"))
 	{
@@ -59,8 +61,12 @@ client.on('message', async msg =>
 	// RacPlay will search and start a audio connection with user in channel
 	else if(msg.content.startsWith(ident + "RacPlay"))
 	{
+		channel.startTyping();
 		var split = functions.split_message(msg);
 		var response = await data.search_youtube(split[1]);
+
+		functions.log("Searching for: \"" + split[1] + "\" | From: \"" + msg.author.username + "\"");
+
 		if(response === null)
 		{
 			msg.reply("Something Didn't work!");
@@ -109,6 +115,7 @@ client.on('message', async msg =>
 		{
 			msg.reply("Unknown Search Result. Please send command to Admin.");
 		}
+		channel.stopTyping();
 	}
 	else
 	{
