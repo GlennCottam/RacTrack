@@ -43,7 +43,7 @@ module.exports =
 	status: [
 		{
 			status: 'online',
-			text: "1.0.8 - ALPHA"
+			text: "1.1.1 - ALPHA"
 		}
 	],
 	help:	"```yaml\n"
