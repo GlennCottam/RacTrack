@@ -42,13 +42,13 @@ client.on('ready', () =>
 
 // Handles all messages in message_handler.js
 client.on('message', async msg =>
-{
-	const voiceChannel = msg.member.voiceChannel;
+{	
 	const channel = msg.channel;
 
 	// Stops the voice connection
 	if(msg.content.startsWith(ident + "stop"))
 	{
+		var voiceChannel = msg.member.voiceChannel;
 		if(!voiceChannel)
 		{
 			msg.reply("Please join a voice channel to enable voice commands!");
@@ -61,6 +61,8 @@ client.on('message', async msg =>
 	// RacPlay will search and start a audio connection with user in channel
 	else if(msg.content.startsWith(ident + "RacPlay"))
 	{
+		var voiceChannel = msg.member.voiceChannel;
+		
 		channel.startTyping();
 		var split = functions.split_message(msg);
 		var response = await data.search_youtube(split[1]);
