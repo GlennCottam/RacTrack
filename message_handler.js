@@ -40,7 +40,7 @@ methods.message = async function(msg)
 	// Main search function
 	// This is where you want to put in the actual YouTube / service search
 	// Use get_data.js to host the additional functions
-	if(message[0] === ident + "search")
+	if(msg.content.startsWith(ident + "search"))
 	{
 		msg.channel.startTyping();
 		await functions.human_delay();
@@ -97,7 +97,30 @@ methods.message = async function(msg)
 		msg.channel.stopTyping();
 	}
 
-	if(message[0] === ident + "status")
+	// Sends list of commands
+	if(msg.content.startsWith(ident + "help"))
+	{
+		var embed = new Discord.RichEmbed();
+
+		embed
+		.setColor('#0000FF')
+		.setTitle('RacTrack Information')
+		.addField('Current Commands', help)
+		.addField('Version ID', config.version.id + " - " + config.version.type)
+		.addField('Current Changes List', config.version.diff);
+		
+		
+		msg.channel.startTyping();
+		await functions.human_delay();
+		var version = config.version;
+		// msg.channel.send("**Current Version:** \t \`\`\`" + version.id + " - " + version.type + "\`\`\`\n" + help, options);
+		msg.channel.send(embed);
+		msg.channel.stopTyping();
+		functions.log("Help requested by: \"" + username + "\" | Version: \"" + version.id + version.type + "\"");
+	}
+
+	// Status of the Bot
+	if(msg.content.startsWith(ident + "status"))
 	{
 		var value = message[1];
 		var array = value.split(' ');
@@ -117,7 +140,7 @@ methods.message = async function(msg)
 	}
 
 	// Replies with Uptime
-	if(message[0] === ident + "uptime")
+	if(msg.content.startsWith(ident + "uptime"))
 	{
 		msg.channel.startTyping();
 		await functions.human_delay();
@@ -127,7 +150,7 @@ methods.message = async function(msg)
 		functions.log("Requested Uptime: \"" + uptime + "s\" | From: \"" + username + "\"");
 	}
 
-	if(message[0] === ident + "version")
+	if(msg.content.startsWith(ident + "version"))
 	{
 		var embed = new Discord.RichEmbed();
 
@@ -146,7 +169,7 @@ methods.message = async function(msg)
 	}
 
 	// Thank the bot
-	else if(message[0] === ident + "thanks")
+	if(msg.content.startsWith(ident + "thanks"))
 	{
 		msg.channel.startTyping();
 		await functions.human_delay();
@@ -156,7 +179,7 @@ methods.message = async function(msg)
 	}
 
 	// Sends list of commands
-	else if(message[0] === ident + "help")
+	if(msg.content.startsWith(ident + "status"))
 	{
 		var embed = new Discord.RichEmbed();
 
@@ -178,7 +201,7 @@ methods.message = async function(msg)
 	}
 
 	// Current test statement
-	else if(msg.content === ident + 'ping')
+	if(msg.content.startsWith(ident + "ping"))
 	{
 		msg.channel.startTyping();
 		await functions.human_delay();
@@ -186,7 +209,6 @@ methods.message = async function(msg)
 		msg.channel.stopTyping();
 		functions.log("Pinged by: \"" + username + "\"");
 	}
-
 }
 
 module.exports = methods;			// Exports functions for global usage

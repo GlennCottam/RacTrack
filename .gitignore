@@ -73,3 +73,7 @@ token.txt
 # Server Data
 nohup.out
 *.log
+
+
+# remove mac file system
+.DS_Store
