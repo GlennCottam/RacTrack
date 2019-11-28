@@ -105,11 +105,15 @@ client.on('message', async msg =>
 			}
 			else
 			{
+
+				voiceChannel.leave();
+				broadcast.destroy();
+
 				voiceChannel.join().then(connection =>
 				{
-					const stream = ytdl(response.url, { filter : 'audioonly' });
+					var stream = ytdl(response.url, { filter : 'audioonly' });
 					broadcast.playStream(stream, streamOptions);
-					const dispatcher = connection.playBroadcast(broadcast);
+					var dispatcher = connection.playBroadcast(broadcast);
 				}).catch(console.error);
 			}
 		}
