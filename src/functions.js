@@ -87,6 +87,12 @@ methods.log = function(text)
 	console.log(log + text);
 }
 
+methods.log.error = function(text)
+{
+	var log = console.terminal.error + "[" + new Date() + "]:\t";
+	console.log(log + text);
+}
+
 // Exports functions to be used by other programs
 // Check out require('./functions.js') under index.js
 module.exports = methods;

@@ -5,17 +5,18 @@ Comments:	Handles messages that the users post.
 */
 
 // Variables && imported files
-const Discord = require('discord.js');			// Discord API (For Embeds and other things)
-const config = require("./config");				// Imports Global Config
-const functions = require('./functions');		// Imports Functions File
-const voice = require('./voice');				// Voice COnnection)
-const client = require('./RacTrack').client;	// Gets client
-const g_message = require('./RacTrack').message	// Gets Global Message Value export from RacTrack file
-const data = require('./get_data');				// Imports Searching Functions
-const term = config.terminal;					// Terminal Icons
-const ident = config.ident;						// Imports global server command identifer
-const help = config.help;						// Imports help text
-const methods = {};								// Sets global methods for export (check below for export)
+const Discord = require('discord.js');				// Discord API (For Embeds and other things)
+const config = require("./config");					// Imports Global Config
+const functions = require('./functions');			// Imports Functions File
+const voice = require('./voice');					// Voice COnnection)
+const client = require('./RacTrack').client;		// Gets client
+const g_message = require('./RacTrack').message		// Gets Global Message Value export from RacTrack file
+const data = require('./get_data');					// Imports Searching Functions
+const term = config.terminal;						// Terminal Icons
+const ident = config.ident;							// Imports global server command identifer
+const help = config.help;							// Imports help text
+const methods = {};									// Sets global methods for export (check below for export)
+var options = { tts: config.tts }
 
 methods.message = async function(msg)
 {
@@ -24,18 +25,15 @@ methods.message = async function(msg)
 	// Returning array: [0] = command, [1] = argument.
 	var message = functions.split_message(msg);
 	var username = msg.author.username;
-	var options = 
-	{
-		tts: config.tts
-	}
+	
 
 	/*
-		The following if statements do the following:
-			1. msg.channel.startTyping()		This will start the bot typing indicator
-			2. await functions.human_delay() 	will wait for a random time interval
-			3. msg.channel.stopTyping()			This will stop the bot typing indicator
-		These are used to get the bot to appear to be typing a response. You don't have to use these for
-		other if statements, but feel free to do so
+	*	The following if statements do the following:
+	*		1. msg.channel.startTyping()		This will start the bot typing indicator
+	*		2. await functions.human_delay() 	will wait for a random time interval
+	*		3. msg.channel.stopTyping()			This will stop the bot typing indicator
+	*	These are used to get the bot to appear to be typing a response. You don't have to use these for
+	*	other if statements, but feel free to do so
 	*/
 
 	// Main search function
@@ -54,50 +52,13 @@ methods.message = async function(msg)
 		else
 		{
 			functions.log("Searching for: \"" + message[1] + "\" | From: \"" + username + "\"");
-
 			var response = await data.search_youtube(message[1]);
-			
-			if(response === null)
-			{
-				console.log(term.error + "Response is null, something is wrong!");
-			}
-			else if(response.results === null)
-			{
-				msg.reply(":no_entry: No Results Found!")
-			}
-			else if(response.kind === 'channel')
-			{
-				// Reply for Channel
-				var embed = new Discord.RichEmbed();
-				embed.setColor('#FF0000')
-				.setTitle(response.title)
-				.setDescription(response.desc)
-				.addField('Link', response.url)
-				.setURL(response.url)
-				.setThumbnail(response.thumb)
-				.setFooter('RacTrack - 2019, Version ' + config.version.id + config.version.type);
-				
-				msg.channel.send(embed);
-			}
-			else if(response.kind === 'video')
-			{
-
-				msg.reply(
-					"\n**" + response.title + "**\n"
-					+ "> *" + response.desc + "*\n"
-					+ "> " + response.url  + "\n"
-					, options);
-
-			}
-			else
-			{
-				msg.reply("Unknown Search Result. Please send command to Admin.");
-			}
-			
+			search_response(response.kind, response, msg);
 		}
+
 		msg.channel.stopTyping();
 	}
-
+	
 	// Sends list of commands
 	if(msg.content.startsWith(ident + "help"))
 	{
@@ -248,11 +209,39 @@ methods.message = async function(msg)
 	}
 }
 
-module.exports = methods;			// Exports functions for global usage
-
-
-
-function search_response(type, data)
+function search_response(type, data, message)
 {
+	var embed = new Discord.RichEmbed();
 	
+	if(type === null)
+	{
+		functions.log.error("Response is null, something went wrong.");
+	}
+
+	else if(type === 'channel')
+	{
+		embed.setColor('#FF0000')
+		.setTitle(data.title)
+		.setDescription(data.desc)
+		.addField('Link', data.url)
+		.setURL(data.url)
+		.setThumbnail(data.thumb)
+		.setFooter('RacTrack - 2019, Version ' + config.version.id + config.version.type);
+
+		message.channel.send(embed);
+	}
+	else if(type === 'video')
+	{
+		message.reply(
+			"\n**" + data.title + "**\n"
+			+ "> *" + data.desc + "*\n"
+			+ "> " + data.url  + "\n"
+			, options);
+	}
+	else
+	{
+		message.reply("Unknown Search Result. Please send command to Admin.");
+	}
 }
+
+module.exports = methods;			// Exports functions for global usage
