@@ -17,6 +17,8 @@ const ident = config.ident;							// Imports global server command identifer
 const help = config.help;							// Imports help text
 const methods = {};									// Sets global methods for export (check below for export)
 var options = { tts: config.tts }
+const footer = 'RacTrack - 2019, Version ' + config.version.id + config.version.type;
+const rac_url = 'https://github.com/GlennCottam/RacTrack';
 
 methods.message = async function(msg)
 {
@@ -80,9 +82,12 @@ methods.message = async function(msg)
 		embed
 		.setColor('#0000FF')
 		.setTitle('RacTrack Information')
+		.setDescription('**Global Identifier:\t' + ident + '**')
+		.setURL(rac_url)
 		.addField('Current Commands', help)
 		.addField('Version ID', config.version.id + " - " + config.version.type)
-		.addField('Current Changes List', config.version.diff);
+		.addField('Current Changes List', config.version.diff)
+		.setFooter(footer);
 		
 		
 		msg.channel.startTyping();
@@ -129,8 +134,10 @@ methods.message = async function(msg)
 
 		embed.setColor('#00FF00')
 		.setTitle('Version of RacTrack')
+		.setURL(rac_url)
 		.addField('Version ID', config.version.id + " - " + config.version.type)
-		.addField('Current Changes List', config.version.diff);
+		.addField('Current Changes List', config.version.diff)
+		.setFooter(footer);
 
 		msg.channel.startTyping();
 		await functions.human_delay();
@@ -215,7 +222,7 @@ function search_response(type, data, message)
 		.addField('Link', data.url)
 		.setURL(data.url)
 		.setThumbnail(data.thumb)
-		.setFooter('RacTrack - 2019, Version ' + config.version.id + config.version.type);
+		.setFooter(footer);
 
 		message.channel.send(embed);
 	}

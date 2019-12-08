@@ -16,7 +16,7 @@ module.exports =
 	version:
 	{
 		type: "ALPHA",
-		id: "1.1.2",
+		id: "1.1.3",
 		diff: 
 		"```diff\n"
 		+ "+ RacPlay functionality added! Bot will now play music in current channel the user is in\n"
@@ -85,15 +85,15 @@ module.exports =
 		},
 	],
 	help:	"```yaml\n"
-			+ ";help 				# Display This Message\n"
-			+ ";search 			  # Search for sounds / music\n"
-			+ ";RacPlay				# Search term, and play result!\n"
-			+ ";stop				# Stops current playback\n"
-			+ ";version 			 # Sends version information\n"
-			+ ";uptime 			  # Show uptime of Bot in seconds.\n"
-			+ ";status {0-10} 	   # Sets status of bot\n"
-			+ ";thanks 			  # thank the bot\n"
-			+ ";ping 				# Ping the bot\n"
-			+ ";freakout 			# Bot will freakout\n"
+			+ "help 				# Display This Message\n"
+			+ "search 			  # Search for sounds / music\n"
+			+ "RacPlay				# Search term, and play result!\n"
+			+ "stop				# Stops current playback\n"
+			+ "version 			 # Sends version information\n"
+			+ "uptime 			  # Show uptime of Bot in seconds.\n"
+			+ "status {0-10} 	   # Sets status of bot\n"
+			+ "thanks 			  # thank the bot\n"
+			+ "ping 				# Ping the bot\n"
+			+ "freakout 			# Bot will freakout\n"
 			+ "```"
 }
