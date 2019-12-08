@@ -9,7 +9,8 @@ const Discord = require('discord.js');			// Discord API (For Embeds and other th
 const config = require("./config");				// Imports Global Config
 const functions = require('./functions');		// Imports Functions File
 const voice = require('./voice');				// Voice COnnection)
-const client = require('./RacTrack');			// Gets client
+const client = require('./RacTrack').client;	// Gets client
+const g_message = require('./RacTrack').message	// Gets Global Message Value export from RacTrack file
 const data = require('./get_data');				// Imports Searching Functions
 const term = config.terminal;					// Terminal Icons
 const ident = config.ident;						// Imports global server command identifer
@@ -132,8 +133,8 @@ methods.message = async function(msg)
 		}
 		else
 		{
-			client.client.user.setStatus(status.status);
-			client.client.user.setActivity(status.text);
+			client.user.setStatus(status.status);
+			client.user.setActivity(status.text);
 			msg.reply("Status Changed!");
 			functions.log("Status Changed: \"" + status.text + "\" | From : \"" + username + "\"");
 		}
@@ -248,3 +249,10 @@ methods.message = async function(msg)
 }
 
 module.exports = methods;			// Exports functions for global usage
+
+
+
+function search_response(type, data)
+{
+	
+}

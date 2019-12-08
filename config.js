@@ -16,7 +16,7 @@ module.exports =
 	version:
 	{
 		type: "ALPHA",
-		id: "1.1.0",
+		id: "1.1.2",
 		diff: 
 		"```diff\n"
 		+ "+ Basic search functionally added.\n"
@@ -49,11 +49,11 @@ module.exports =
 		},
 		{
 			status: 'online',
-			text: 'NNN'
+			text: 'DDD'
 		},
 		{
 			status: 'online',
-			text: 'Music'
+			text: 'With Itself...'
 		},
 		{
 			status: 'online',
@@ -62,6 +62,10 @@ module.exports =
 		{
 			status: 'online',
 			text: "Daddy?"
+		},
+		{
+			status: 'dnd',
+			text: "Halo Reach"
 		},
 		{
 			status: 'online',

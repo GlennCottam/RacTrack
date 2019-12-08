@@ -9,7 +9,6 @@ Comments:	Index.js is used as a start-point for the discord bot itself.
 const Discord = require('discord.js');			// Grabs Discord.js API
 const client = new Discord.Client();			// Creates Discord Client
 const ytdl = require('ytdl-core');
-const opus = require('node-opus');				// No idea what it does, something to do with voice connections
 const config = require('./config');				// Grabs Config File
 const functions = require('./functions');		// Grabs functions
 const data = require('./get_data');
@@ -20,6 +19,7 @@ const handle = require('./message_handler');	// Message Handler
 const token = require('./tokens').discord_key;	// Gets Token
 const streamOptions = {seek: 0, volume: 1};
 const broadcast = client.createVoiceBroadcast();
+const global_message;
 
 
 // Checks to see if the token is present
@@ -44,6 +44,7 @@ client.on('ready', () =>
 client.on('message', async msg =>
 {	
 	const channel = msg.channel;
+	global_message = msg;
 
 	// Stops the voice connection
 	if(msg.content.startsWith(ident + "stop"))
@@ -201,3 +202,4 @@ function kill_server()
 }
 
 module.exports.client = client;
+module.exports.message = global_message;
