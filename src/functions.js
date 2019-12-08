@@ -12,22 +12,24 @@ const config = require('./config');
 // 		at the beginning of the string.
 methods.split_message = function(msg)
 {
-	var array = [1];
+	var array = [2];
 	var full_message;
 
 	// Splits entire message into an array (divided by spaces)
 	full_message = msg.content.split(' ');
 	array[0] = full_message[0];
+	array[1] = full_message[1];
+	full_message.shift();
 	full_message.shift();
 	full_message = full_message.join(' ');
-	array[1] = full_message;
+	array[2] = full_message;
 	
 	return array;
 }
 
 methods.human_delay = function()
 {
-	var time = this.random_int(100, 500);		// Gets human delay
+	var time = this.random_int(50, 200);		// Gets human delay
 	return new Promise(resolve => 
 	{
 		setTimeout(() => {resolve('resolved');}, time);
@@ -64,7 +66,7 @@ methods.set_status = function(value)
 	var max = Object.keys(config.status).length;
 	if(value > max|| value < 0)
 	{
-		console.log(config.terminal.error + "Invalid Status Value: Please enter a int between 0 and " + max);
+		this.log.error("Invalid Status Value: Please enter a int between 0 and " + max);
 		return null;
 	}
 	else

@@ -9,8 +9,8 @@ const Discord = require('discord.js');				// Discord API (For Embeds and other t
 const config = require("./config");					// Imports Global Config
 const functions = require('./functions');			// Imports Functions File
 const voice = require('./voice');					// Voice COnnection)
-const client = require('./RacTrack').client;		// Gets client
-const g_message = require('./RacTrack').message		// Gets Global Message Value export from RacTrack file
+const client = require('./RacTrack');		// Gets client
+const g_message = require('./RacTrack').message;		// Gets Global Message Value export from RacTrack file
 const data = require('./get_data');					// Imports Searching Functions
 const term = config.terminal;						// Terminal Icons
 const ident = config.ident;							// Imports global server command identifer
@@ -23,6 +23,13 @@ methods.message = async function(msg)
 	// Function that returns an array in order to declare functions
 	// depending on what the discord bot needs to do.
 	// Returning array: [0] = command, [1] = argument.
+
+	/*
+	*	Seperating invoker, from command, from set of arguments
+	*	Going from a 2 value array to a 3 value array:
+	?	array[2] = ["trigger / invoker", "command", "query / arguments"]
+	*/
+
 	var message = functions.split_message(msg);
 	var username = msg.author.username;
 	
@@ -45,18 +52,24 @@ methods.message = async function(msg)
 		await functions.human_delay();
 
 		// If search is empty, post error
-		if(message[1] === "" || message[1] === " ")
+		if(message[2] === "" || message[2] === " ")
 		{
 			msg.reply("\n:no_entry_sign: Please tell me what to search for!");
 		}
 		else
 		{
-			functions.log("Searching for: \"" + message[1] + "\" | From: \"" + username + "\"");
-			var response = await data.search_youtube(message[1]);
+			functions.log("Searching for: \"" + message[2] + "\" | From: \"" + username + "\"");
+			var response = await data.search_youtube(message[2]);
 			search_response(response.kind, response, msg);
 		}
 
 		msg.channel.stopTyping();
+	}
+
+	if(msg.content.startsWith(ident + "RacPlay"))
+	{
+		var voiceChannel = msg.member.voiceChannel;
+		console.log("Success");
 	}
 	
 	// Sends list of commands
@@ -84,9 +97,7 @@ methods.message = async function(msg)
 	// Status of the Bot
 	if(msg.content.startsWith(ident + "status"))
 	{
-		var value = message[1];
-		var array = value.split(' ');
-		var status = functions.set_status(array[0]);
+		var status = functions.set_status(message[2]);
 
 		if(status === null)
 		{
@@ -94,8 +105,8 @@ methods.message = async function(msg)
 		}
 		else
 		{
-			client.user.setStatus(status.status);
-			client.user.setActivity(status.text);
+			client.client.user.setStatus(status.status);
+			client.client.user.setActivity(status.text);
 			msg.reply("Status Changed!");
 			functions.log("Status Changed: \"" + status.text + "\" | From : \"" + username + "\"");
 		}
@@ -138,28 +149,6 @@ methods.message = async function(msg)
 		msg.reply("No probs fam", options);
 		msg.channel.stopTyping();
 		functions.log("Thanked by: \"" + username + "\"");
-	}
-
-	// Sends list of commands
-	if(msg.content.startsWith(ident + "status"))
-	{
-		var embed = new Discord.RichEmbed();
-
-		embed
-		.setColor('#0000FF')
-		.setTitle('RacTrack Information')
-		.addField('Current Commands', help)
-		.addField('Version ID', config.version.id + " - " + config.version.type)
-		.addField('Current Changes List', config.version.diff);
-		
-		
-		msg.channel.startTyping();
-		await functions.human_delay();
-		var version = config.version;
-		// msg.channel.send("**Current Version:** \t \`\`\`" + version.id + " - " + version.type + "\`\`\`\n" + help, options);
-		msg.channel.send(embed);
-		msg.channel.stopTyping();
-		functions.log("Help requested by: \"" + username + "\" | Version: \"" + version.id + version.type + "\"");
 	}
 
 	// Current test statement
@@ -240,7 +229,7 @@ function search_response(type, data, message)
 	}
 	else
 	{
-		message.reply("Unknown Search Result. Please send command to Admin.");
+		message.reply(":no_entry: No results for search query. Please search something else.");
 	}
 }
 

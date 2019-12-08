@@ -12,18 +12,18 @@ Note:		If you have problems displaying emoji's in the terminal, set the terminal
 
 module.exports =
 {
-	ident: ";",
+	ident: "!RT ",
 	version:
 	{
 		type: "ALPHA",
 		id: "1.1.2",
 		diff: 
 		"```diff\n"
-		+ "+ Basic search functionally added.\n"
-		+ "+ Changed message replies to embeds to better looking responses \n"
-		+ "+ Typing indicator with REAL HUMAN delay.\n"
-		+ "+ Squashed some bugs\n"
-		+ "- When searching, only grabs first result."
+		+ "+ RacPlay functionality added! Bot will now play music in current channel the user is in\n"
+		+ "- Issues with RacTrack not delivering a response and continuously typing (try catch not implemented)\n"
+		+ "+ Better optimization for other functions\n"
+		+ "+ TTS support (global config.js file)\n"
+		+ "- When searching, only grabs first result.\n"
 		+ "```"
 
 	},
