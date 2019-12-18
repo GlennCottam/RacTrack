@@ -43,7 +43,6 @@ client.on('ready', () =>
 // Handles all messages in message_handler.js
 client.on('message', async msg =>
 {	
-	const channel = msg.channel;
 	global_message = msg;
 	handle.message(msg);
 	

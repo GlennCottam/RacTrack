@@ -10,12 +10,10 @@ methods.connect = async function(client, message, response)
 {
 	const broadcast = client.createVoiceBroadcast();
 	const voiceChannel = message.member.voiceChannel;
-
-	console.log("voice.js:connect\nVoiceChannel:\t" + voiceChannel);
 	
 	if(!voiceChannel)
 	{
-		msg.reply("You are not in a channel! Please join one!");
+		message.reply("You are not in a channel! Please join one!");
 	}
 	else
 	{

@@ -69,6 +69,7 @@ methods.message = async function(msg)
 		msg.channel.stopTyping();
 	}
 
+	// Starts Playback
 	if(msg.content.startsWith(ident + "RacPlay"))
 	{
 		var voiceChannel = msg.member.voiceChannel;
@@ -87,6 +88,22 @@ methods.message = async function(msg)
 			msg.reply("Not a valid video, please try searching for a video on YouTube.");
 		}
 
+		channel.stopTyping();
+
+	}
+
+	// Stops Playback
+	if(msg.content.startsWith(ident + "stop"))
+	{
+		var voiceChannel = msg.member.voiceChannel;
+		if(!voiceChannel)
+		{
+			msg.reply("Please join a voice channel to enable voice commands!");
+		}
+		else
+		{
+			voiceChannel.leave();
+		}
 	}
 	
 	// Sends list of commands
@@ -253,6 +270,8 @@ function search_response(type, data, message)
 	{
 		message.reply(":no_entry: No results for search query. Please search something else.");
 	}
+
+	functions.log("Search requested by: \"" + message.author.username + "\" | Content Found! Type: \"" + type + "\" | Title: \"" + data.title + "\"");
 }
 
 module.exports = methods;			// Exports functions for global usage
