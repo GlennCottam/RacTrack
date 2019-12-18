@@ -10,7 +10,7 @@ const config = require("./config");					// Imports Global Config
 const functions = require('./functions');			// Imports Functions File
 const voice = require('./voice');					// Voice COnnection)
 const client = require('./RacTrack');		// Gets client
-const g_message = require('./RacTrack').message;		// Gets Global Message Value export from RacTrack file
+const g_message = client.global_message;		// Gets Global Message Value export from RacTrack file
 const data = require('./get_data');					// Imports Searching Functions
 const term = config.terminal;						// Terminal Icons
 const ident = config.ident;							// Imports global server command identifer
@@ -33,6 +33,7 @@ methods.message = async function(msg)
 	*/
 
 	var message = functions.split_message(msg);
+	var channel = msg.channel;
 	var username = msg.author.username;
 	
 
@@ -71,7 +72,21 @@ methods.message = async function(msg)
 	if(msg.content.startsWith(ident + "RacPlay"))
 	{
 		var voiceChannel = msg.member.voiceChannel;
-		console.log("Success");
+		channel.startTyping();
+
+		var response = await data.search_youtube(message[2]);
+		search_response(response.kind, response, msg);
+
+		if(response.kind === 'video')
+		{
+			// Connet To voice and Playback
+			voice.connect(client.client, msg, response);
+		}
+		else
+		{
+			msg.reply("Not a valid video, please try searching for a video on YouTube.");
+		}
+
 	}
 	
 	// Sends list of commands

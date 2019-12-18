@@ -6,66 +6,28 @@ const streamOptions = {seek: 0, volume: 1};
 
 var methods = {};
 
-methods.connect = async function(client, message)
+methods.connect = async function(client, message, response)
 {
 	const broadcast = client.createVoiceBroadcast();
 	const voiceChannel = message.member.voiceChannel;
 
-	console.log(voiceChannel);
-	if(voiceChannel)
+	console.log("voice.js:connect\nVoiceChannel:\t" + voiceChannel);
+	
+	if(!voiceChannel)
+	{
+		msg.reply("You are not in a channel! Please join one!");
+	}
+	else
 	{
 		voiceChannel.leave();
-	}
+		broadcast.destroy();
 
-	message.startTyping();
-
-	// Search for YouTube Video
-	var split = functions.split_message(message);
-	var response = await data.search_youtube(split[1]);
-
-	functions.log("Searching for: \"" + split[1] + "\" | From: \"" + msg.author.username + "\"");
-
-	if(response === null)
-	{
-		message.reply("Something Didn't Work!");
-	}
-	else if(response.results === null)
-	{
-		message.reply("No results found!");
-	}
-	else if(response.kind === 'channel')
-	{
-		var embed = new Discord.RichEmbed();
-		embed.setColor('#FF0000')
-			.setTitle(response.title)
-			.setDescription(response.desc)
-			.addField('Link', response.url)
-			.setURL(response.url)
-			.setThumbnail(response.thumb)
-			.setFooter('RacTrack - 2019, Version ' + config.version.id + config.version.type);
-
-		msg.channel.send(embed);
-	}
-	else if(response.kind === 'video')
-	{
-		msg.reply(
-			"\n**" + response.title + "**\n"
-			+ "> *" + response.desc + "*\n"
-			+ "> " + response.url  + "\n");
-
-		if(!voiceChannel)
+		voiceChannel.join().then(connection =>
 		{
-			msg.reply("You are not in a channel! Please join one!");
-		}
-		else
-		{
-			voiceChannel.join().then(connection =>
-			{
-				const stream = ytdl(response.url, { filter : 'audioonly' });
-				broadcast.playStream(stream, streamOptions);
-				const dispatcher = connection.playBroadcast(broadcast);
-			}).catch(console.error);
-		}
+			var stream = ytdl(response.url, { filter: 'audioonly' });
+			broadcast.playStream(stream, streamOptions);
+			var dispatcher = connection.playBroadcast(broadcast);
+		}).catch(console.error);
 	}
 }
 
