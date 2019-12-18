@@ -5,7 +5,7 @@
   "main": "RacTrack.js",
   "scripts": {
     "start": "node src/RacTrack.js",
-    "start-server": "nohup node src/RackTrack.js &",
+    "start-server": "nohup node src/RacTrack.js &",
     "search-app": "ps -aux | grep \"node RacTrack.js\"",
     "clean": "rm nohup.out *.log"
   },
