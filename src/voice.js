@@ -1,7 +1,4 @@
-const Discord = require('discord.js');
 const ytdl = require('ytdl-core');
-const functions = require('./functions');
-const data = require('./get_data');
 const streamOptions = {seek: 0, volume: 1};
 
 var methods = {};
