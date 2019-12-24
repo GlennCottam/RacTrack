@@ -6,6 +6,7 @@ Comments:	Handles messages that the users post.
 
 // Variables && imported files
 const Discord = require('discord.js');				// Discord API (For Embeds and other things)
+const filesystem = require('fs');					// File System (read write)
 const config = require("./config");					// Imports Global Config
 const functions = require('./functions');			// Imports Functions File
 const voice = require('./voice');					// Voice COnnection)
@@ -248,6 +249,30 @@ methods.message = async function(msg)
 			await functions.human_delay();
 			msg.channel.send("", {files: ["images/meat-ball-man.png"]});
 			msg.channel.stopTyping();
+		}
+
+		// Prints out random copypasta stored in server
+		else if(message[1] === "copypasta")
+		{
+			var data = JSON.parse(filesystem.readFileSync('src/data/copypasta.json'));
+			if(!data)
+			{
+				msg.reply("Something really fucked up...");
+			}
+			else
+			{
+				channel.startTyping();
+				await functions.human_delay();
+
+				var total = Object.keys(data.posts).length;
+				var value = functions.random_int(0, total);
+				var data = data.posts[value];
+
+				msg.reply(data.content + "\n\n> " + data.url);
+				channel.stopTyping();
+
+				functions.log("Sending Copy Pasta: \"" + value + "\" To \"" + msg.author.username + "\"");
+			}
 		}
 
 		else if(message[1] === "fuck" && message[2] === "you" || message[1] === "fuckyou")
