@@ -70,7 +70,7 @@ methods.message = async function(msg)
 		}
 
 		// Starts Playback
-		if(message[1] === "racplay")
+		else if(message[1] === "racplay")
 		{
 			channel.startTyping();
 
@@ -92,21 +92,20 @@ methods.message = async function(msg)
 
 
 		// Stops Playback
-		if(message[1] === "stop")
+		else if(message[1] === "stop")
 		{
-			var voiceChannel = msg.member.voiceChannel;
-			if(!voiceChannel)
+			if(!msg.member)
 			{
 				msg.reply("Please join a voice channel to enable voice commands!");
 			}
 			else
 			{
-				voiceChannel.leave();
+				msg.member.voiceChannel.leave();
 			}
 		}
 
 		// Sends list of commands
-		if(message[1] === "help")
+		else if(message[1] === "help")
 		{
 			var embed = new Discord.RichEmbed();
 
@@ -131,7 +130,7 @@ methods.message = async function(msg)
 		}
 
 		// Replies with Uptime
-		if(message[1] === "uptime")
+		else if(message[1] === "uptime")
 		{
 			msg.channel.startTyping();
 			await functions.human_delay();
@@ -174,7 +173,7 @@ methods.message = async function(msg)
 		}
 
 		// Prints Version Information (similar to help)
-		if(message[1] === "version")
+		else if(message[1] === "version")
 		{
 			var embed = new Discord.RichEmbed();
 
@@ -196,7 +195,7 @@ methods.message = async function(msg)
 
 
 		// Thank the bot
-		if(message[1] === "thanks")
+		else if(message[1] === "thanks")
 		{
 			msg.channel.startTyping();
 			await functions.human_delay();
@@ -206,7 +205,7 @@ methods.message = async function(msg)
 		}
 
 		// Current test statement
-		if(message[1] === "ping")
+		else if(message[1] === "ping")
 		{
 			msg.channel.startTyping();
 			await functions.human_delay();
@@ -216,7 +215,7 @@ methods.message = async function(msg)
 		}
 
 		// Method for testing additional functions
-		if(message[1] === "penis")
+		else if(message[1] === "penis")
 		{
 			msg.channel.startTyping();
 			await functions.human_delay();
@@ -227,7 +226,7 @@ methods.message = async function(msg)
 		}
 
 		// Bot will freak out
-		if(message[1] === "freakout")
+		else if(message[1] === "freakout")
 		{
 			msg.channel.startTyping();
 			await functions.human_delay();
@@ -242,13 +241,33 @@ methods.message = async function(msg)
 			functions.log("Freaking out! Requested by: \"" + username + "\"");
 		}
 
-		if(message[1] === "meatballman")
+		else if(message[1] === "meatballman")
 		{
 			functions.log("Sending The Meat Ball...");
 			msg.channel.startTyping();
 			await functions.human_delay();
 			msg.channel.send("", {files: ["images/meat-ball-man.png"]});
 			msg.channel.stopTyping();
+		}
+
+		else if(message[1] === "fuck" && message[2] === "you" || message[1] === "fuckyou")
+		{
+			functions.log("Some cunt is being a asshole. Burning in progress...");
+			msg.channel.startTyping();
+			await functions.human_delay();
+			msg.reply("Your a fucking cunt you know that right? Why the fuck do you even exist?");
+			msg.channel.stopTyping();
+			await functions.human_delay();
+
+			msg.channel.startTyping();
+			await functions.human_delay();
+			msg.reply("Why don't you get off your fat ass and go outside rather than spend all your fucking time jerking off and playing minecraft " + msg.author.username + "?");
+			msg.channel.stopTyping();
+		}
+		
+		else
+		{
+			msg.reply(":no_entry: Unknown Command! :no_entry:")
 		}
 	}	
 }

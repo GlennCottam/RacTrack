@@ -25,7 +25,7 @@ RacTrack Discord Bot is designed to search though various sources and play sound
 Feel free to invite the bot to your server, it will be kept up-to-date on the latest version of the github Release branch.
 
 <div>
-<a href="https://discordapp.com/api/oauth2/authorize?client_id=629333981778804739&permissions=0&scope=bot">Invite RacTrack</a>
+<a href="https://discordapp.com/api/oauth2/authorize?client_id=629333981778804739&permissions=0&scope=bot" target="_blank">Invite RacTrack</a>
 </div>
 
 
