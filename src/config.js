@@ -20,10 +20,11 @@ module.exports =
 		diff: 
 		"```diff\n"
 		+ "+ RacPlay functionality added! Bot will now play music in current channel the user is in\n"
-		+ "- Issues with RacTrack not delivering a response and continuously typing (try catch not implemented)\n"
-		+ "+ Better optimization for other functions\n"
+		+ "- Removed ability to change status from commands (terminal only)"
+		+ "- Bot will sometimes start typing continuously, there is no timeout function for this, but one is coming.\n"
 		+ "+ TTS support (global config.js file)\n"
 		+ "- When searching, only grabs first result.\n"
+		+ "+ "
 		+ "```"
 
 	},

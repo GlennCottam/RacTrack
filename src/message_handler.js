@@ -130,26 +130,6 @@ methods.message = async function(msg)
 			functions.log("Help requested by: \"" + username + "\" | Version: \"" + version.id + version.type + "\"");
 		}
 
-
-		// Status of the Bot
-		// if(message[1] === "status")
-		// {
-		// 	var status = functions.set_status(message[2]);
-
-		// 	if(status === null)
-		// 	{
-		// 		msg.reply("Status doesn't exist...");
-		// 	}
-		// 	else
-		// 	{
-		// 		client.client.user.setStatus(status.status);
-		// 		client.client.user.setActivity(status.text);
-		// 		msg.reply("Status Changed!");
-		// 		functions.log("Status Changed: \"" + status.text + "\" | From : \"" + username + "\"");
-		// 	}
-		// }
-
-
 		// Replies with Uptime
 		if(message[1] === "uptime")
 		{
