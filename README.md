@@ -1,21 +1,11 @@
-<style>
-button
-{
-	padding: 12px;
-	border-radius: 6px;
-	border-color: #232323;
-	border: none;
-	background-color: #232355;
-	color: white;
-	font-size: 22px;
-}
-</style>
+<link rel="stylesheet" href="css/readme.css">
 
-> # RacTrack Discord Bot
+# RacTrack Discord Bot
 Scraping the trash for music you desire!
 
 RacTrack Discord Bot is designed to search though various sources and play sound though a discord server voice channel.
 
+- [RacTrack Discord Bot](#ractrack-discord-bot)
 - [Invite RacTrack to your Server!](#invite-ractrack-to-your-server)
 - [Global Bot Options (config.js)](#global-bot-options-configjs)
 	- [tts(T/F)](#ttstf)
