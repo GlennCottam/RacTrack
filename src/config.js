@@ -12,11 +12,11 @@ Note:		If you have problems displaying emoji's in the terminal, set the terminal
 
 module.exports =
 {
-	ident: "!RT ",
+	ident: "!RT",
 	version:
 	{
 		type: "ALPHA",
-		id: "1.1.3",
+		id: "1.1.4",
 		diff: 
 		"```diff\n"
 		+ "+ RacPlay functionality added! Bot will now play music in current channel the user is in\n"

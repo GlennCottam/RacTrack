@@ -6,14 +6,14 @@ var methods = {};
 methods.connect = async function(client, message, response)
 {
 	const broadcast = client.createVoiceBroadcast();
-	const voiceChannel = message.member.voiceChannel;
 	
-	if(!voiceChannel)
+	if(!message.member)
 	{
-		message.reply("You are not in a channel! Please join one!");
+		message.reply(":no_entry: You are not in a channel! Please join one! :no_entry:");
 	}
 	else
 	{
+		const voiceChannel = message.member.voiceChannel;
 		voiceChannel.leave();
 		broadcast.destroy();
 

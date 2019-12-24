@@ -47,192 +47,230 @@ methods.message = async function(msg)
 	// Main search function
 	// This is where you want to put in the actual YouTube / service search
 	// Use get_data.js to host the additional functions
-	if(msg.content.startsWith(ident + "search"))
+	if(message[0] === ident)
 	{
-		msg.channel.startTyping();
-		await functions.human_delay();
-
-		// If search is empty, post error
-		if(message[2] === "" || message[2] === " ")
+		if(message[1] === "search")
 		{
-			msg.reply("\n:no_entry_sign: Please tell me what to search for!");
+			msg.channel.startTyping();
+			await functions.human_delay();
+	
+			// If search is empty, post error
+			if(message[2] === "" || message[2] === " ")
+			{
+				msg.reply("\n:no_entry_sign: Please tell me what to search for!");
+			}
+			else
+			{
+				functions.log("Searching for: \"" + message[2] + "\" | From: \"" + username + "\"");
+				var response = await data.search_youtube(message[2]);
+				search_response(response.kind, response, msg);
+			}
+	
+			msg.channel.stopTyping();
 		}
-		else
+
+		// Starts Playback
+		if(message[1] === "racplay")
 		{
-			functions.log("Searching for: \"" + message[2] + "\" | From: \"" + username + "\"");
+			channel.startTyping();
+
 			var response = await data.search_youtube(message[2]);
 			search_response(response.kind, response, msg);
+
+			if(response.kind === 'video')
+			{
+				// Connet To voice and Playback
+				voice.connect(client.client, msg, response);
+			}
+			else
+			{
+				msg.reply("Not a valid video, please try searching for a video on YouTube.");
+			}
+
+			channel.stopTyping();
 		}
 
-		msg.channel.stopTyping();
-	}
 
-	// Starts Playback
-	if(msg.content.startsWith(ident + "RacPlay"))
-	{
-		var voiceChannel = msg.member.voiceChannel;
-		channel.startTyping();
-
-		var response = await data.search_youtube(message[2]);
-		search_response(response.kind, response, msg);
-
-		if(response.kind === 'video')
+		// Stops Playback
+		if(message[1] === "stop")
 		{
-			// Connet To voice and Playback
-			voice.connect(client.client, msg, response);
+			var voiceChannel = msg.member.voiceChannel;
+			if(!voiceChannel)
+			{
+				msg.reply("Please join a voice channel to enable voice commands!");
+			}
+			else
+			{
+				voiceChannel.leave();
+			}
 		}
-		else
+
+		// Sends list of commands
+		if(message[1] === "help")
 		{
-			msg.reply("Not a valid video, please try searching for a video on YouTube.");
+			var embed = new Discord.RichEmbed();
+
+			embed
+			.setColor('#0000FF')
+			.setTitle('RacTrack Information')
+			.setDescription('**Global Identifier:\t' + ident + '**')
+			.setURL(rac_url)
+			.addField('Current Commands', help)
+			.addField('Version ID', config.version.id + " - " + config.version.type)
+			.addField('Current Changes List', config.version.diff)
+			.setFooter(footer);
+			
+			
+			msg.channel.startTyping();
+			await functions.human_delay();
+			var version = config.version;
+			// msg.channel.send("**Current Version:** \t \`\`\`" + version.id + " - " + version.type + "\`\`\`\n" + help, options);
+			msg.channel.send(embed);
+			msg.channel.stopTyping();
+			functions.log("Help requested by: \"" + username + "\" | Version: \"" + version.id + version.type + "\"");
 		}
 
-		channel.stopTyping();
 
-	}
+		// Status of the Bot
+		// if(message[1] === "status")
+		// {
+		// 	var status = functions.set_status(message[2]);
 
-	// Stops Playback
-	if(msg.content.startsWith(ident + "stop"))
-	{
-		var voiceChannel = msg.member.voiceChannel;
-		if(!voiceChannel)
+		// 	if(status === null)
+		// 	{
+		// 		msg.reply("Status doesn't exist...");
+		// 	}
+		// 	else
+		// 	{
+		// 		client.client.user.setStatus(status.status);
+		// 		client.client.user.setActivity(status.text);
+		// 		msg.reply("Status Changed!");
+		// 		functions.log("Status Changed: \"" + status.text + "\" | From : \"" + username + "\"");
+		// 	}
+		// }
+
+
+		// Replies with Uptime
+		if(message[1] === "uptime")
 		{
-			msg.reply("Please join a voice channel to enable voice commands!");
+			msg.channel.startTyping();
+			await functions.human_delay();
+			var uptime = functions.ms_convert(client.client.uptime);
+			var embed = new Discord.RichEmbed();
+
+			embed.setColor('#FFFF00')
+				.setTitle('RacTrack Bot Uptime')
+				.setURL(rac_url);
+
+			if(uptime.years > 0)
+			{
+				embed.addField('Years', uptime.years, true);
+			}
+			if(uptime.months > 0)
+			{
+				embed.addField('Months', uptime.months, true);
+			}
+			if(uptime.days > 0)
+			{
+				embed.addField('Days', uptime.days, true);
+			}
+			if(uptime.hours > 0)
+			{
+				embed.addField('Hours', uptime.hours, true);
+			}
+			if(uptime.mins > 0)
+			{
+				embed.addField('Minutes', uptime.mins, true);
+			}
+
+			embed.addField('Seconds', uptime.sec, true);
+			embed.setFooter(footer);
+			
+			msg.channel.send(embed);
+
+			// msg.reply("Uptime is `" + uptime + "s`", options);
+			msg.channel.stopTyping();
+			functions.log("Requested Uptime: \"" + JSON.stringify(uptime) + "s\" | From: \"" + username + "\"");
 		}
-		else
+
+		// Prints Version Information (similar to help)
+		if(message[1] === "version")
 		{
-			voiceChannel.leave();
+			var embed = new Discord.RichEmbed();
+
+			embed.setColor('#00FF00')
+			.setTitle('Version of RacTrack')
+			.setURL(rac_url)
+			.addField('Version ID', config.version.id + " - " + config.version.type)
+			.addField('Current Changes List', config.version.diff)
+			.setFooter(footer);
+
+			msg.channel.startTyping();
+			await functions.human_delay();
+			var version = config.version;
+			// msg.channel.send("**Current Version:** \t \`\`\`" + version.id + " - " +  version.type + "\`\`\`\nVersion Information:\n```diff\n" + version.diff + "\n```", options);
+			msg.channel.send(embed);
+			msg.channel.stopTyping();
+			functions.log("Version requested by: \"" + username + "\" | Version: \"" + version.id + version.type + "\"");
 		}
-	}
-	
-	// Sends list of commands
-	if(msg.content.startsWith(ident + "help"))
-	{
-		var embed = new Discord.RichEmbed();
 
-		embed
-		.setColor('#0000FF')
-		.setTitle('RacTrack Information')
-		.setDescription('**Global Identifier:\t' + ident + '**')
-		.setURL(rac_url)
-		.addField('Current Commands', help)
-		.addField('Version ID', config.version.id + " - " + config.version.type)
-		.addField('Current Changes List', config.version.diff)
-		.setFooter(footer);
-		
-		
-		msg.channel.startTyping();
-		await functions.human_delay();
-		var version = config.version;
-		// msg.channel.send("**Current Version:** \t \`\`\`" + version.id + " - " + version.type + "\`\`\`\n" + help, options);
-		msg.channel.send(embed);
-		msg.channel.stopTyping();
-		functions.log("Help requested by: \"" + username + "\" | Version: \"" + version.id + version.type + "\"");
-	}
 
-	// Status of the Bot
-	if(msg.content.startsWith(ident + "status"))
-	{
-		var status = functions.set_status(message[2]);
-
-		if(status === null)
+		// Thank the bot
+		if(message[1] === "thanks")
 		{
-			msg.reply("Status doesn't exist...");
+			msg.channel.startTyping();
+			await functions.human_delay();
+			msg.reply("No probs fam", options);
+			msg.channel.stopTyping();
+			functions.log("Thanked by: \"" + username + "\"");
 		}
-		else
+
+		// Current test statement
+		if(message[1] === "ping")
 		{
-			client.client.user.setStatus(status.status);
-			client.client.user.setActivity(status.text);
-			msg.reply("Status Changed!");
-			functions.log("Status Changed: \"" + status.text + "\" | From : \"" + username + "\"");
+			msg.channel.startTyping();
+			await functions.human_delay();
+			msg.reply('pong', options);
+			msg.channel.stopTyping();
+			functions.log("Pinged by: \"" + username + "\"");
 		}
-	}
 
-	// Replies with Uptime
-	if(msg.content.startsWith(ident + "uptime"))
-	{
-		msg.channel.startTyping();
-		await functions.human_delay();
-		var uptime = client.client.uptime;
-		msg.reply("Uptime is `" + uptime + "s`", options);
-		msg.channel.stopTyping();
-		functions.log("Requested Uptime: \"" + uptime + "s\" | From: \"" + username + "\"");
-	}
+		// Method for testing additional functions
+		if(message[1] === "penis")
+		{
+			msg.channel.startTyping();
+			await functions.human_delay();
+			message = functions.get_YouTube_Buddy();		// Grabs "YouTube Buddy" from functions
+			msg.reply(message, options); 							// Replies with YouTube Buddy
+			msg.channel.stopTyping();
+			functions.log("YouTube Buddy Sent to : \"" + username + "\"");
+		}
 
-	if(msg.content.startsWith(ident + "version"))
-	{
-		var embed = new Discord.RichEmbed();
+		// Bot will freak out
+		if(message[1] === "freakout")
+		{
+			msg.channel.startTyping();
+			await functions.human_delay();
+			msg.channel.send("OH GOD NO PLEASE NO GOD NO!", options);
 
-		embed.setColor('#00FF00')
-		.setTitle('Version of RacTrack')
-		.setURL(rac_url)
-		.addField('Version ID', config.version.id + " - " + config.version.type)
-		.addField('Current Changes List', config.version.diff)
-		.setFooter(footer);
+			await functions.human_delay();
+			msg.channel.send("FUCK FUCK FUCK FUCK", options);
 
-		msg.channel.startTyping();
-		await functions.human_delay();
-		var version = config.version;
-		// msg.channel.send("**Current Version:** \t \`\`\`" + version.id + " - " +  version.type + "\`\`\`\nVersion Information:\n```diff\n" + version.diff + "\n```", options);
-		msg.channel.send(embed);
-		msg.channel.stopTyping();
-		functions.log("Version requested by: \"" + username + "\" | Version: \"" + version.id + version.type + "\"");
-	}
+			await functions.human_delay();
+			msg.channel.send("WHY DOES EVERYTHING SUCK?", options)
+			msg.channel.stopTyping();
+			functions.log("Freaking out! Requested by: \"" + username + "\"");
+		}
 
-	// Thank the bot
-	if(msg.content.startsWith(ident + "thanks"))
-	{
-		msg.channel.startTyping();
-		await functions.human_delay();
-		msg.reply("No probs fam", options);
-		msg.channel.stopTyping();
-		functions.log("Thanked by: \"" + username + "\"");
-	}
-
-	// Current test statement
-	if(msg.content.startsWith(ident + "ping"))
-	{
-		msg.channel.startTyping();
-		await functions.human_delay();
-		msg.reply('pong', options);
-		msg.channel.stopTyping();
-		functions.log("Pinged by: \"" + username + "\"");
-	}
-
-	// Method for testing additional functions
-	if(msg.content.startsWith(ident + "penis"))
-	{
-		msg.channel.startTyping();
-		await functions.human_delay();
-		message = functions.get_YouTube_Buddy();		// Grabs "YouTube Buddy" from functions
-		msg.reply(message, options); 							// Replies with YouTube Buddy
-		msg.channel.stopTyping();
-		functions.log("YouTube Buddy Sent to : \"" + username + "\"");
-	}
-
-	// Bot will freak out
-	if(msg.content.startsWith(ident + "freakout"))
-	{
-		msg.channel.startTyping();
-		await functions.human_delay();
-		msg.channel.send("OH GOD NO PLEASE NO GOD NO!", options);
-
-		await functions.human_delay();
-		msg.channel.send("FUCK FUCK FUCK FUCK", options);
-
-		await functions.human_delay();
-		msg.channel.send("WHY DOES EVERYTHING SUCK?", options)
-		msg.channel.stopTyping();
-		functions.log("Freaking out! Requested by: \"" + username + "\"");
-	}
-
-	if(msg.content.startsWith(ident + "meatballman"))
-	{
-		functions.log("Sending The Meat Ball...");
-		msg.channel.startTyping();
-		await functions.human_delay();
-		msg.channel.send("", {files: ["images/meat-ball-man.png"]});
-		msg.channel.stopTyping();
-	}
+		if(message[1] === "meatballman")
+		{
+			functions.log("Sending The Meat Ball...");
+			msg.channel.startTyping();
+			await functions.human_delay();
+			msg.channel.send("", {files: ["images/meat-ball-man.png"]});
+			msg.channel.stopTyping();
+		}
+	}	
 }
 
 function search_response(type, data, message)
