@@ -31,6 +31,36 @@ const key = require('./tokens').youtube_api;
 const https = require('https');
 var methods = {}
 
+
+methods.reddit_copypasta = async function()
+{
+	var data = null;
+	var url = "https://api.reddit.com/r/copypasta/hot/?g=CA";
+
+	return new Promise(resolve =>
+	{
+		https.get(url, res => 
+		{
+			res.on('data', body =>
+			{
+				data = body;
+				console.log("data: " + data);
+			});
+			
+			res.on('end', () =>
+			{
+				console.log("reddit_copypasta:\n" + JSON.stringify(data));
+				data = JSON.parse(data);
+				resolve(data);
+			});
+		}).on('error', (err) =>
+		{
+			functions.error("Error Getting Reddit data:\n" + error);
+			resolve(null);
+		});
+	});
+}
+
 // Put your code below, but before module.exports = methods
 // Use this file to grab information from YouTube etc...
 methods.search_youtube = async function(term)

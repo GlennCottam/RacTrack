@@ -11,7 +11,7 @@ const config = require("./config");					// Imports Global Config
 const functions = require('./functions');			// Imports Functions File
 const voice = require('./voice');					// Voice COnnection)
 const client = require('./RacTrack');				// Gets client
-const data = require('./get_data');					// Imports Searching Functions
+const Data = require('./get_data');					// Imports Searching Functions
 const ident = config.ident;							// Imports global server command identifer
 const help = config.help;							// Imports help text
 const methods = {};									// Sets global methods for export (check below for export)
@@ -268,10 +268,11 @@ methods.message = async function(msg)
 				var value = functions.random_int(0, total);
 				var data = data.posts[value];
 
-				msg.reply(data.content + "\n\n> " + data.url);
+				msg.reply("**" + data.title + "**\n\n" + data.content + "\n\n > " + data.url);
 				channel.stopTyping();
 
 				functions.log("Sending Copy Pasta: \"" + value + "\" To \"" + msg.author.username + "\"");
+
 			}
 		}
 
