@@ -49,8 +49,8 @@ module.exports =
 			text: 'WITH YOUR MOM'
 		},
 		{
-			status: 'online',
-			text: 'DDD'
+			status: 'dnd',
+			text: 'WWIII'
 		},
 		{
 			status: 'online',
