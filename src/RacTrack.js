@@ -8,8 +8,10 @@ Comments:	Index.js is used as a start-point for the discord bot itself.
 // Variables
 const Discord = require('discord.js');			// Grabs Discord.js API
 const client = new Discord.Client();			// Creates Discord Client
+module.exports.client = client;
 const fs = require('fs');			            // File System to pull config file
-const config = JSON.parse(fs.readFileSync('src/data/config.json'));    // Pulls Config Data
+var config = JSON.parse(fs.readFileSync('src/data/config.json'));    // Pulls Config Data
+module.exports.config = config;                 // Exports Config
 const functions = require('./functions');		// Grabs functions
 const term = config.terminal;					// Shortened version for terminal emoji's
 const handle = require('./message_handler');	// Message Handler
@@ -48,6 +50,11 @@ stdin.addListener("data", function(data)		// Adds listener to the terminal
     if(data.toString().trim() === "kill")
     {
         kill_server();
+    }
+
+    if(data.toString().trim() === "update")
+    {
+        update_config();
     }
 
     // JSON array for listener (so reply will work)
@@ -102,6 +109,13 @@ process.on('uncaughtException', err =>
     console.error(config.terminal.error + "Error", err);
 });
 
+function update_config()
+{
+    config = JSON.parse(fs.readFileSync('src/data/config.json'));
+    module.exports.config = config;
+    functions.log("Config File Updated! Ident: " + config.ident);
+}
+
 // Kills server softly
 function kill_server()
 {
@@ -111,5 +125,3 @@ function kill_server()
     process.exit(0);		// Kills Node
 }
 
-module.exports.client = client;
-module.exports.config = config;
