@@ -10,13 +10,14 @@ const filesystem = require('fs');					// File System (read write)
 const functions = require('./functions');			// Imports Functions File
 const voice = require('./voice');					// Voice COnnection)
 const client = require('./RacTrack').client;				// Gets client
-var config = require('./RacTrack').config;		// Gets Config
+var config = require('./RacTrack').config;		    // Gets Config
+var pkg = require('./RacTrack').pkg;
 const Data = require('./get_data');					// Imports Searching Functions
 const ident = config.ident;							// Imports global server command identifer
 const help = config.help;							// Imports help text
 const methods = {};									// Sets global methods for export (check below for export)
 var options = { tts: config.tts }
-const footer = 'RacTrack - 2019, Version ' + config.version.id + config.version.type;
+const footer = 'RacTrack - 2019, Version ' + pkg.version;
 const rac_url = 'https://github.com/GlennCottam/RacTrack';
 
 methods.message = async function(msg)
@@ -33,8 +34,10 @@ methods.message = async function(msg)
 
     var message = functions.split_message(msg);
     var channel = msg.channel;
-    var username = msg.author.username;    
+    var username = msg.author.username;
 
+    // console.log(message);
+    
     /*
     *	The following if statements do the following:
     *		1. msg.channel.startTyping()		This will start the bot typing indicator
@@ -115,7 +118,7 @@ methods.message = async function(msg)
             .setDescription('**Global Identifier:\t' + ident + '**')
             .setURL(rac_url)
             .addField('Current Commands', help)
-            .addField('Version ID', config.version.id + " - " + config.version.type)
+            .addField('Version ID', pkg.version)
             .addField('Current Changes List', config.version.diff)
             .setFooter(footer);
             
@@ -180,7 +183,7 @@ methods.message = async function(msg)
             embed.setColor('#00FF00')
             .setTitle('Version of RacTrack')
             .setURL(rac_url)
-            .addField('Version ID', config.version.id + " - " + config.version.type)
+            .addField('Version ID', pkg.version)
             .addField('Current Changes List', config.version.diff)
             .setFooter(footer);
 
@@ -213,7 +216,12 @@ methods.message = async function(msg)
             msg.channel.stopTyping();
             functions.log("Pinged by: \"" + username + "\"");
         }
-
+        
+        /*
+        !    ░█▀█░█▀▀░█▀▀░█░█
+        !    ░█░█░▀▀█░█▀▀░█▄█
+        !    ░▀░▀░▀▀▀░▀░░░▀░▀
+        */
         // Method for testing additional functions
         else if(message[1] === "penis")
         {
@@ -225,6 +233,11 @@ methods.message = async function(msg)
             functions.log("YouTube Buddy Sent to : \"" + username + "\"");
         }
 
+        /*
+        !    ░█▀█░█▀▀░█▀▀░█░█
+        !    ░█░█░▀▀█░█▀▀░█▄█
+        !    ░▀░▀░▀▀▀░▀░░░▀░▀
+        */
         // Bot will freak out
         else if(message[1] === "freakout")
         {
@@ -275,6 +288,11 @@ methods.message = async function(msg)
             }
         }
 
+        /*
+        !    ░█▀█░█▀▀░█▀▀░█░█
+        !    ░█░█░▀▀█░█▀▀░█▄█
+        !    ░▀░▀░▀▀▀░▀░░░▀░▀
+        */
         else if(message[1] === "fuck" && message[2] === "you" || message[1] === "fuckyou")
         {
             functions.log("Some cunt is being a asshole. Burning in progress...");
@@ -294,7 +312,51 @@ methods.message = async function(msg)
         {
             msg.reply(":no_entry: Unknown Command! :no_entry:")
         }
-    }	
+    }
+
+    else if (message[0] === "based")
+    {
+        var data = JSON.parse(filesystem.readFileSync('src/data/ascii.json'));
+        if(!data)
+        {
+            msg.reply("Couldn't Retrieved \'ascii.json\' File.")
+        }
+        else
+        {
+            functions.log("BASED by: " + username);
+            channel.startTyping();
+            await functions.human_delay();
+
+            var reply = data.based.data;
+            channel.send(reply);
+            channel.stopTyping();
+        }
+    }
+
+    /*
+        !    ░█▀█░█▀▀░█▀▀░█░█
+        !    ░█░█░▀▀█░█▀▀░█▄█
+        !    ░▀░▀░▀▀▀░▀░░░▀░▀
+    */
+    else if (message[0] === "billy")
+    {
+        var data = JSON.parse(filesystem.readFileSync('src/data/ascii.json'));
+        if(!data)
+        {
+            msg.reply("Couldn't Retrieve 'ascii.json' File.");
+            functions.log.error("Unable to open ascii.json");
+        }
+        else
+        {
+            functions.log(username + "IS DOING IT FOR BILLY");
+            channel.startTyping();
+            await functions.human_delay();
+
+            var reply = data.billy.data;
+            channel.send(reply);
+            channel.stopTyping();
+        }
+    }
 }
 
 function search_response(type, data, message)

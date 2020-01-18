@@ -1,8 +1,6 @@
 {
     "ident": "!RTT",
     "version": {
-        "type":"ALPHA",
-        "id": "1.1.5",
         "diff": "```diff\n+ RacPlay functionality added! Bot will now play music in current channel the user is in\n- Removed ability to change status from commands (terminal only)\n- Bot will sometimes start typing continuously, there is no timeout function for this, but one is coming.\n+ TTS support (global config.js file)\n- When searching, only grabs first result.\n```"
     },
     "tts": false,
