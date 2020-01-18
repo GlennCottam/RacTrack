@@ -368,6 +368,11 @@ function search_response(type, data, message)
         functions.log.error("Response is null, something went wrong.");
     }
 
+    else if(data.kind === 'err')
+    {
+        message.reply('Internal Server Error, Unknown Issue. Please report RacTrack Github.');
+    }
+
     else if(type === 'channel')
     {
         embed.setColor('#FF0000')

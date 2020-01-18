@@ -7,6 +7,7 @@
     "start": "node src/RacTrack.js",
     "start-server": "nohup node src/RacTrack.js &",
     "search-app": "ps -aux | grep \"node RacTrack.js\"",
+    "build-docker": "sudo docker build -t ractrack build",
     "clean": "rm nohup.out *.log"
   },
   "repository": {

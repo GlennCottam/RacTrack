@@ -84,14 +84,25 @@ methods.search_youtube = async function(term)
         if(data.id.kind === 'youtube#channel')
         {
             data = await search_channel(data.id.channelId);
-            data = data.items[0];
-            response = 
+
+            if(data)
             {
-                kind: 'channel',
-                title: data.snippet.title,
-                desc: data.snippet.description,
-                url: 'https://www.youtube.com/user/' + data.snippet.customUrl,
-                thumb: data.snippet.thumbnails.default.url
+                data = data.items[0];
+                response = 
+                {
+                    kind: 'channel',
+                    title: data.snippet.title,
+                    desc: data.snippet.description,
+                    url: 'https://www.youtube.com/user/' + data.snippet.customUrl,
+                    thumb: data.snippet.thumbnails.default.url
+                }
+            }
+            else    // Error Detector
+            {
+                response = 
+                {
+                    kind: 'err'
+                }
             }
         }
         else if(data.id.kind === 'youtube#video')
@@ -126,12 +137,7 @@ async function pre_search(term)
         {
             res.on('data', body =>
             {
-                data = body;
-            });
-            
-            res.on('end', () =>
-            {
-                data = JSON.parse(data);
+                data = JSON.parse(body);
                 resolve(data);
             });
         }).on('error', (e) =>
@@ -149,17 +155,14 @@ async function search_channel(id)
     return new Promise(resolve =>
     {
         var data = null;
-        var url = "https://www.googleapis.com/youtube/v3/channels?part=snippet&maxResults=1&id=" + id + "&key=" + key;
+        var url = "https://www.googleapis.com/youtube/v3/channels?part=snippet&maxResults=1&key=" + key + "&id=" + id;
     
         https.get(url, res =>
         {
             res.on('data', body =>
             {
-                data = body;
-            });
-            res.on('end', () =>
-            {
-                data = JSON.parse(data);
+                console.log(data);
+                data = JSON.parse(body);
                 resolve(data);
             });
         }).on('error', (e) =>
