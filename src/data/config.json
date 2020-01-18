@@ -1,5 +1,5 @@
 {
-    "ident": "!RTT",
+    "ident": "!RT",
     "version": {
         "diff": "```diff\n+ RacPlay functionality added! Bot will now play music in current channel the user is in\n- Removed ability to change status from commands (terminal only)\n- Bot will sometimes start typing continuously, there is no timeout function for this, but one is coming.\n+ TTS support (global config.js file)\n- When searching, only grabs first result.\n```"
     },
@@ -60,5 +60,5 @@
 			"text": "Fortnite"
         }
     ],
-    "help": "```yaml\nhelp          # Display This Message\nsearch          # Search for sounds / music\nRacPlay            # Search term, and play result!\nstop           # Stops current playback\nversion           # Sends version information\nuptime             # Show uptime of Bot in seconds.\nstatus {0-10}             # Sets status of bot\nthanks            # thank the bot\nping           # Ping the bot\nfreakout            # Bot will freakout\n```"
+    "help": "```yaml\nhelp          # Display This Message\nsearch          # Search for sounds / music\nRacPlay            # Search term, and play result!\nstop           # Stops current playback\nversion           # Sends version information\nuptime             # Show uptime of Bot in seconds.\nthanks            # thank the bot\nping           # Ping the bot\nfreakout            # Bot will freakout\n```"
 }
