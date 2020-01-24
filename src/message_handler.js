@@ -223,7 +223,16 @@ methods.message = async function(msg)
             msg.channel.startTyping();
             await functions.human_delay();
             var text = await functions.get_text(message[2]);
-            msg.channel.send(text);
+
+            if(text)
+            {
+                msg.channel.send(text);
+            }
+            else
+            {
+                msg.channel.send("Please Enter Some Text:\n> " + ident + " text `text`");
+            }
+            
             msg.channel.stopTyping();
             logs.log("Text Requested By: " + username + "Text: {'" + message[2] + "'}");
         }

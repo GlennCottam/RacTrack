@@ -23,7 +23,7 @@ methods.connect = async function(client, message, response)
 		{
 			var stream = ytdl(response.url, { filter: 'audioonly' });
 			broadcast.playStream(stream, streamOptions);
-			var dispatcher = connection.playBroadcast(broadcast);
+			connection.playBroadcast(broadcast);
 		}).catch(console.error);
 	}
 }
