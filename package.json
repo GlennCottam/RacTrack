@@ -8,7 +8,7 @@
     "start-server": "nohup node src/RacTrack.js &",
     "search-app": "ps -aux | grep \"node RacTrack.js\"",
     "build-docker": "sudo docker build -t ractrack build",
-    "clean": "rm nohup.out *.log"
+    "clean": "rm logs/*.log"
   },
   "repository": {
     "type": "git",
@@ -33,6 +33,7 @@
     "discord.js": "^11.5.1",
     "fs": "0.0.1-security",
     "https": "^1.0.0",
+    "mv": "^2.1.1",
     "node": "^13.6.0",
     "node-opus": "^0.3.3",
     "ytdl-core": "^1.0.1"

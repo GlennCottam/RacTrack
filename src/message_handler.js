@@ -13,6 +13,7 @@ const client = require('./RacTrack').client;				// Gets client
 var config = require('./RacTrack').config;		    // Gets Config
 var pkg = require('./RacTrack').pkg;
 const Data = require('./get_data');					// Imports Searching Functions
+const logs = require('./logs');                      // Logs
 const ident = config.ident;							// Imports global server command identifer
 const help = config.help;							// Imports help text
 const methods = {};									// Sets global methods for export (check below for export)
@@ -64,7 +65,7 @@ methods.message = async function(msg)
             }
             else
             {
-                functions.log("Searching for: \"" + message[2] + "\" | From: \"" + username + "\"");
+                logs.log("Searching for: \"" + message[2] + "\" | From: \"" + username + "\"");
                 var response = await Data.search_youtube(message[2]);
                 search_response(response.kind, response, msg);
             }
@@ -129,7 +130,7 @@ methods.message = async function(msg)
             // msg.channel.send("**Current Version:** \t \`\`\`" + version.id + " - " + version.type + "\`\`\`\n" + help, options);
             msg.channel.send(embed);
             msg.channel.stopTyping();
-            functions.log("Help requested by: \"" + username + "\" | Version: \"" + version.id + version.type + "\"");
+            logs.log("Help requested by: \"" + username + "\" | Version: \"" + version.id + version.type + "\"");
         }
 
         // Replies with Uptime
@@ -172,7 +173,7 @@ methods.message = async function(msg)
 
             // msg.reply("Uptime is `" + uptime + "s`", options);
             msg.channel.stopTyping();
-            functions.log("Requested Uptime: \"" + JSON.stringify(uptime) + "s\" | From: \"" + username + "\"");
+            logs.log("Requested Uptime: \"" + JSON.stringify(uptime) + "s\" | From: \"" + username + "\"");
         }
 
         // Prints Version Information (similar to help)
@@ -193,7 +194,7 @@ methods.message = async function(msg)
             // msg.channel.send("**Current Version:** \t \`\`\`" + version.id + " - " +  version.type + "\`\`\`\nVersion Information:\n```diff\n" + version.diff + "\n```", options);
             msg.channel.send(embed);
             msg.channel.stopTyping();
-            functions.log("Version requested by: \"" + username + "\" | Version: \"" + version.id + version.type + "\"");
+            logs.log("Version requested by: \"" + username + "\" | Version: \"" + version.id + version.type + "\"");
         }
 
 
@@ -204,7 +205,7 @@ methods.message = async function(msg)
             await functions.human_delay();
             msg.reply("No probs fam", options);
             msg.channel.stopTyping();
-            functions.log("Thanked by: \"" + username + "\"");
+            logs.log("Thanked by: \"" + username + "\"");
         }
 
         // Current test statement
@@ -214,7 +215,7 @@ methods.message = async function(msg)
             await functions.human_delay();
             msg.reply('pong', options);
             msg.channel.stopTyping();
-            functions.log("Pinged by: \"" + username + "\"");
+            logs.log("Pinged by: \"" + username + "\"");
         }
         
         /*
@@ -230,7 +231,7 @@ methods.message = async function(msg)
             message = functions.get_YouTube_Buddy();		// Grabs "YouTube Buddy" from functions
             msg.reply(message, options); 							// Replies with YouTube Buddy
             msg.channel.stopTyping();
-            functions.log("YouTube Buddy Sent to : \"" + username + "\"");
+            logs.log("YouTube Buddy Sent to : \"" + username + "\"");
         }
 
         /*
@@ -251,12 +252,12 @@ methods.message = async function(msg)
             await functions.human_delay();
             msg.channel.send("WHY DOES EVERYTHING SUCK?", options)
             msg.channel.stopTyping();
-            functions.log("Freaking out! Requested by: \"" + username + "\"");
+            logs.log("Freaking out! Requested by: \"" + username + "\"");
         }
 
         else if(message[1] === "meatballman")
         {
-            functions.log("Sending The Meat Ball...");
+            logs.log("Sending The Meat Ball...");
             msg.channel.startTyping();
             await functions.human_delay();
             msg.channel.send("", {files: ["images/meat-ball-man.png"]});
@@ -283,7 +284,7 @@ methods.message = async function(msg)
                 msg.reply("**" + data.title + "**\n\n" + data.content + "\n\n > " + data.url);
                 channel.stopTyping();
 
-                functions.log("Sending Copy Pasta: \"" + value + "\" To \"" + msg.author.username + "\"");
+                logs.log("Sending Copy Pasta: \"" + value + "\" To \"" + msg.author.username + "\"");
 
             }
         }
@@ -295,7 +296,7 @@ methods.message = async function(msg)
         */
         else if(message[1] === "fuck" && message[2] === "you" || message[1] === "fuckyou")
         {
-            functions.log("Some cunt is being a asshole. Burning in progress...");
+            logs.log("Some cunt is being a asshole. Burning in progress...");
             msg.channel.startTyping();
             await functions.human_delay();
             msg.reply("Your a fucking cunt you know that right? Why the fuck do you even exist?");
@@ -323,7 +324,7 @@ methods.message = async function(msg)
         }
         else
         {
-            functions.log("BASED by: " + username);
+            logs.log("BASED by: " + username);
             channel.startTyping();
             await functions.human_delay();
 
@@ -344,11 +345,11 @@ methods.message = async function(msg)
         if(!data)
         {
             msg.reply("Couldn't Retrieve 'ascii.json' File.");
-            functions.log.error("Unable to open ascii.json");
+            logs.log.error("Unable to open ascii.json");
         }
         else
         {
-            functions.log(username + "IS DOING IT FOR BILLY");
+            logs.log(username + "IS DOING IT FOR BILLY");
             channel.startTyping();
             await functions.human_delay();
 
@@ -365,7 +366,7 @@ function search_response(type, data, message)
     
     if(type === null)
     {
-        functions.log.error("Response is null, something went wrong.");
+        logs.log.error("Response is null, something went wrong.");
     }
 
     else if(data.kind === 'err')
@@ -398,7 +399,7 @@ function search_response(type, data, message)
         message.reply(":no_entry: No results for search query. Please search something else.");
     }
 
-    functions.log("Search requested by: \"" + message.author.username + "\" | Content Found! Type: \"" + type + "\" | Title: \"" + data.title + "\"");
+    logs.log("Search requested by: \"" + message.author.username + "\" | Content Found! Type: \"" + type + "\" | Title: \"" + data.title + "\"");
 }
 
 module.exports = methods;			// Exports functions for global usage

@@ -18,6 +18,7 @@ const functions = require('./functions');		// Grabs functions
 const term = config.terminal;					// Shortened version for terminal emoji's
 const handle = require('./message_handler');	// Message Handler
 const token = require('./tokens').discord_key;	// Gets Token
+const log = require('./logs');                 // Code to be used in managing logs
 
 
 // Checks to see if the token is present
@@ -30,10 +31,12 @@ if(token === "")
 client.login(token);		// Logs in RacTrack bot
 
 // Prints in console when server is ready
-client.on('ready', () => 
+client.on('ready', async () => 
 {
+    await log.openLogFile();
+    log.log("Server Ready");
     var status = functions.get_random_status();
-    console.log(term.success + 'Logged in as: ' + client.user.tag + '\n' + term.success + 'Bot Ready!');	// Indicates that bot is ready
+    log.log(term.success + 'Logged in as: ' + client.user.tag + '\t' + term.success + 'Bot Ready!');	// Indicates that bot is ready
     client.user.setStatus(status.status);			// Sets status to Online (green dot)
     client.user.setActivity(status.text);		// Sets "Playing: " status
 });
@@ -92,7 +95,7 @@ setInterval(function()
     var date = new Date();
     var status = functions.get_random_status();
     // console.log(term.info + "[" + date + "] Status Changed: { status: \"" + status.status + "\" , Playing \"" + status.text + "\"},  Changing in: " + time/3600000 + "hr(s)");
-    functions.log("Status Changed: { status: \"" + status.status + "\" , Playing \"" + status.text + "\"},  Changing in: " + time/3600000 + "hr(s)");
+    log.log("Status Changed: { status: \"" + status.status + "\" , Playing \"" + status.text + "\"},  Changing in: " + time/3600000 + "hr(s)");
     client.user.setStatus(status.status);			// Sets status to Online (green dot)
     client.user.setActivity(status.text);		// Sets "Playing: " status
 
@@ -115,7 +118,7 @@ function update_config()
 {
     config = JSON.parse(fs.readFileSync('src/data/config.json'));
     module.exports.config = config;
-    functions.log("Config File Updated! Ident: " + config.ident);
+    log.log("Config File Updated! Ident: " + config.ident);
 }
 
 // Kills server softly

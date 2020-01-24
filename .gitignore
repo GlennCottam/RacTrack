@@ -73,6 +73,7 @@ token.txt
 # Server Data
 nohup.out
 *.log
+logs/
 
 
 # remove mac file system
