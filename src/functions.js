@@ -7,6 +7,7 @@ Comments:	Different functions that will be used for the discord bot itself.
 
 var methods = {};
 var config = require('./RacTrack').config;
+var exec = require('child_process').exec;
 
 methods.lowercase = function(str)
 {
@@ -144,17 +145,18 @@ methods.ms_convert = function(value)
     return array;
 }
 
-methods.log = function(text)
+methods.get_text = async function(text)
 {
-    var log = config.terminal.log + "[" + new Date() + "]:\t";
-    console.log(log + text);
+    return new Promise(resolve => {
+        exec('toilet -f pagga "' + text + '"', function(err, stdout, stderr)
+        {
+            // console.log(stdout);
+            resolve(stdout)
+        });
+    });
+    
 }
 
-methods.log.error = function(text)
-{
-    var log = console.terminal.error + "[" + new Date() + "]:\t";
-    console.log(log + text);
-}
 
 // Exports functions to be used by other programs
 // Check out require('./functions.js') under index.js

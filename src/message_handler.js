@@ -217,6 +217,16 @@ methods.message = async function(msg)
             msg.channel.stopTyping();
             logs.log("Pinged by: \"" + username + "\"");
         }
+
+        else if (message[1] === "text")
+        {
+            msg.channel.startTyping();
+            await functions.human_delay();
+            var text = await functions.get_text(message[2]);
+            msg.channel.send(text);
+            msg.channel.stopTyping();
+            logs.log("Text Requested By: " + username + "Text: {'" + message[2] + "'}");
+        }
         
         /*
         !    ░█▀█░█▀▀░█▀▀░█░█

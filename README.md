@@ -8,10 +8,11 @@ RacTrack Discord Bot is designed to search though various sources and play sound
 - [RacTrack Discord Bot](#ractrack-discord-bot)
 - [Invite RacTrack to your Server!](#invite-ractrack-to-your-server)
 - [Global Bot Options (config.js)](#global-bot-options-configjs)
-	- [tts(T/F)](#ttstf)
-	- [ident (string)](#ident-string)
-	- [Status (JSON Objects)](#status-json-objects)
+	- [`tts(T/F)`](#ttstf)
+	- [`ident (string)`](#ident-string)
+	- [`Status (JSON Objects)`](#status-json-objects)
 - [Installing Node and Dependencies](#installing-node-and-dependencies)
+	- [Full List of Dependancies:](#full-list-of-dependancies)
 	- [Windows](#windows)
 	- [Mac OSX](#mac-osx)
 	- [Ubuntu](#ubuntu)
@@ -69,6 +70,25 @@ status:
 
 # Installing Node and Dependencies
 Since we are developing in Node, NPM will be required in order to use node and the packages we will be using for development.
+## Full List of Dependancies:
+
+> List of Dependencies for Node.js
+```json
+"discord.js": "^11.5.1",
+"fs": "0.0.1-security",
+"https": "^1.0.0",
+"mv": "^2.1.1",
+"node": "^13.6.0",
+"node-opus": "^0.3.3",
+"ytdl-core": "^1.0.1"
+
+```
+> List of LINUX dependencies (MUST INSTALL FOR FULL FUNCTIONALITY)
+```json
+"toilet": "required for 'text' function"
+"ffmpeg": "required for streaming youtube videos to channel"
+```
+
 
 ## Windows
 - Visit: https://www.npmjs.com/get-npm for download and setup instructions
