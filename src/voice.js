@@ -8,7 +8,7 @@ methods.connect = async function(client, message, response)
 {
 	const broadcast = client.createVoiceBroadcast();
 	
-	if(!message.member.voiceChannel)
+	if(!message.member)
 	{
 		message.reply(":no_entry: You are not in a channel! Please join one! :no_entry:");
 		log.log("User was not in a channel.");
