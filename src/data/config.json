@@ -1,0 +1,64 @@
+{
+    "ident": "!RTT",
+    "version": {
+        "diff": "```diff\n+ Text Command added!\n+ RacPlay functionality added! Bot will now play music in current channel the user is in\n- Removed ability to change status from commands (terminal only)\n- Bot will sometimes start typing continuously, there is no timeout function for this, but one is coming.\n+ TTS support (global config.js file)\n- When searching, only grabs first result.\n```"
+    },
+    "tts": false,
+    "terminal": {
+        "success": "✅ ",
+        "info": "ℹ️ ",
+        "out": "📩 node> ",
+        "type": "💬 ",
+        "log": "📝 ",
+        "error": "🆘 ",
+        "warn": "🔶 ",
+        "dead": "💀 "
+    },
+    "status": [
+		{
+			"status": "online",
+			"text": ""
+		},
+		{
+			"status": "online",
+			"text": "WITH YOUR MOM"
+		},
+		{
+			"status": "dnd",
+			"text": "WWIII"
+		},
+		{
+			"status": "online",
+			"text": "With Itself..."
+		},
+		{
+			"status": "online",
+			"text": "Node.js"
+		},
+		{
+			"status": "online",
+			"text": "Daddy?"
+		},
+		{
+			"status": "dnd",
+			"text": "Halo Reach"
+		},
+		{
+			"status": "online",
+			"text": "UwU"
+		},
+		{
+			"status": "dnd",
+			"text": "Rainbow Six Siege"
+		},
+		{
+			"status": "dnd",
+			"text": "Minecraft"
+		},
+		{
+			"status": "dnd",
+			"text": "Fortnite"
+        }
+    ],
+    "help": "```yaml\nhelp\t\t# Display This Message\nsearch\t\t# Search for sounds / music\nRacPlay\t\t# Search term, and play result!\nstop\t\t# Stops current playback\nversion\t\t# Sends version information\nuptime\t\t# Show uptime of Bot in seconds.\nthanks\t\t# thank the bot\nping\t\t# Ping the bot\nfreakout\t\t# Bot will freakout\ntext\t\t# Bot will respond with large bold text```"
+}

@@ -1,12 +1,39 @@
-# RacTrack
-RacTrack: Scraping the trash for music you desire!
+<link rel="stylesheet" href="css/readme.css">
 
-# [Invite RacTrack to your Server!](https://discordapp.com/api/oauth2/authorize?client_id=629333981778804739&permissions=0&scope=bot)
+# RacTrack Discord Bot
+Scraping the trash for music you desire!
 
-# Options!
+RacTrack Discord Bot is designed to search though various sources and play sound though a discord server voice channel.
+
+- [RacTrack Discord Bot](#ractrack-discord-bot)
+- [Invite RacTrack to your Server!](#invite-ractrack-to-your-server)
+- [Global Bot Options (config.js)](#global-bot-options-configjs)
+	- [`tts(T/F)`](#ttstf)
+	- [`ident (string)`](#ident-string)
+	- [`Status (JSON Objects)`](#status-json-objects)
+- [Installing Node and Dependencies](#installing-node-and-dependencies)
+	- [Full List of Dependancies:](#full-list-of-dependancies)
+	- [Windows](#windows)
+	- [Mac OSX](#mac-osx)
+	- [Ubuntu](#ubuntu)
+- [Starting and Stopping the Node.](#starting-and-stopping-the-node)
+- [Token Information](#token-information)
+	- [Ok I have the token, now what?](#ok-i-have-the-token-now-what)
+
+
+# Invite RacTrack to your Server!
+
+Feel free to invite the bot to your server, it will be kept up-to-date on the latest version of the github Release branch.
+
+<div>
+<a href="https://discordapp.com/api/oauth2/authorize?client_id=629333981778804739&permissions=0&scope=bot" target="_blank">Invite RacTrack</a>
+</div>
+
+
+# Global Bot Options (config.js)
 Currently, all the options are inside the config.js file. With this being said, here are some examples.
 
-> ## tts (T/F)
+## `tts(T/F)`
 Turns off global text to speech for the bot. When turned on, all messages will be read out loud to the user that is sent from the bot.
 
 Default: `false`
@@ -15,17 +42,17 @@ tts: false 		// Or
 tts: true
 ```
 
-> ## ident (string)
+## `ident (string)`
 Will set the global value of what the bot will listen for. Acts as the command string. Can be set to individual character or any string.
 
-Default: `";"`
+Default: `"!RT"`
 ```json
 ident: ";"		// Or
 ident: "bot"	// Or
 ident: "RacTrack"
 ```
 
-> ## Status (JSON Objects)
+## `Status (JSON Objects)`
 - Various unique status that can be configured.
 - Bot will select one every couple of hours
 - NOTE: Make sure to change total amount in functions file
@@ -34,15 +61,34 @@ Example:
 ```json
 status:
 {
-	{
-		status: "online / idle / dnd / invisible",		// Sets indicator for bot
-		text: "String"									// Sets string of "Playing"
-	}
+	status: "online / idle / dnd / invisible",		// Sets indicator for bot
+	text: "String"									// Sets Playing String
 }
 ```
 
-# Installing Node and Dependencies:
+<hr>
+
+# Installing Node and Dependencies
 Since we are developing in Node, NPM will be required in order to use node and the packages we will be using for development.
+## Full List of Dependancies:
+
+> List of Dependencies for Node.js
+```json
+"discord.js": "^11.5.1",
+"fs": "0.0.1-security",
+"https": "^1.0.0",
+"mv": "^2.1.1",
+"node": "^13.6.0",
+"node-opus": "^0.3.3",
+"ytdl-core": "^1.0.1"
+
+```
+> List of LINUX dependencies (MUST INSTALL FOR FULL FUNCTIONALITY)
+```json
+"toilet": "required for 'text' function"
+"ffmpeg": "required for streaming youtube videos to channel"
+```
+
 
 ## Windows
 - Visit: https://www.npmjs.com/get-npm for download and setup instructions
@@ -77,6 +123,8 @@ $ npm install dependencies
 sudo apt install npm
 ```
 
+<hr>
+
 # Starting and Stopping the Node.
 In order to start the node server, simply use
 ```bash
@@ -99,10 +147,18 @@ To kill the node we have a few options.
   - To find the pid, use `ps -aux | grep node` and it should be the node running index.js
 - If terminal has node running, type in `kill` and it will kill the server.
 
-# Where the hell is the token?
-The token is not being uploaded with the repo since the repo is public. This is cause for a security issue. If you need the token, contact Glenn.
+<hr>
+
+# Token Information
+
+The token itself is not provided by the developer as we want to keep this information secret for the managed bot. Please refer to the discord developers documentation in order to create a bot and retrieve a key located at the [Discord Developer Portal](https://discordapp.com/developers/docs/intro).
+
+You will also need a YouTube API token. This token is provided by Google themselves and you will need to register for Googles Cloud Console in order to obtain a YouTube API key.
+
+If documentation is requested, I will create the documentation.
 
 ## Ok I have the token, now what?
-Simply open the "config.js" file, and place the token inside the "".
 
-NOTE: DO NOT COMMIT ANY CHANGES WITH THE TOKEN IN THAT CONFIG FILE
+Simply open the "tokens.js" file, and place the tokens in the correct places.
+
+**NOTE:** Do not push a commit with the values in token saved!!!!
