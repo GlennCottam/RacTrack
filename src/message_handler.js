@@ -237,42 +237,6 @@ methods.message = async function(msg)
             logs.log("Text Requested By: " + username + "Text: {'" + message[2] + "'}");
         }
         
-        /*
-        !    ░█▀█░█▀▀░█▀▀░█░█
-        !    ░█░█░▀▀█░█▀▀░█▄█
-        !    ░▀░▀░▀▀▀░▀░░░▀░▀
-        */
-        // Method for testing additional functions
-        else if(message[1] === "penis")
-        {
-            msg.channel.startTyping();
-            await functions.human_delay();
-            message = functions.get_YouTube_Buddy();		// Grabs "YouTube Buddy" from functions
-            msg.reply(message, options); 							// Replies with YouTube Buddy
-            msg.channel.stopTyping();
-            logs.log("YouTube Buddy Sent to : \"" + username + "\"");
-        }
-
-        /*
-        !    ░█▀█░█▀▀░█▀▀░█░█
-        !    ░█░█░▀▀█░█▀▀░█▄█
-        !    ░▀░▀░▀▀▀░▀░░░▀░▀
-        */
-        // Bot will freak out
-        else if(message[1] === "freakout")
-        {
-            msg.channel.startTyping();
-            await functions.human_delay();
-            msg.channel.send("OH GOD NO PLEASE NO GOD NO!", options);
-
-            await functions.human_delay();
-            msg.channel.send("FUCK FUCK FUCK FUCK", options);
-
-            await functions.human_delay();
-            msg.channel.send("WHY DOES EVERYTHING SUCK?", options)
-            msg.channel.stopTyping();
-            logs.log("Freaking out! Requested by: \"" + username + "\"");
-        }
 
         else if(message[1] === "meatballman")
         {
@@ -280,51 +244,6 @@ methods.message = async function(msg)
             msg.channel.startTyping();
             await functions.human_delay();
             msg.channel.send("", {files: ["images/meat-ball-man.png"]});
-            msg.channel.stopTyping();
-        }
-
-        // Prints out random copypasta stored in server
-        else if(message[1] === "copypasta")
-        {
-            var data = JSON.parse(filesystem.readFileSync('src/data/copypasta.json'));
-            if(!data)
-            {
-                msg.reply("Something really fucked up...");
-            }
-            else
-            {
-                channel.startTyping();
-                await functions.human_delay();
-
-                var total = Object.keys(data.posts).length;
-                var value = functions.random_int(0, total);
-                var data = data.posts[value];
-
-                msg.reply("**" + data.title + "**\n\n" + data.content + "\n\n > " + data.url);
-                channel.stopTyping();
-
-                logs.log("Sending Copy Pasta: \"" + value + "\" To \"" + msg.author.username + "\"");
-
-            }
-        }
-
-        /*
-        !    ░█▀█░█▀▀░█▀▀░█░█
-        !    ░█░█░▀▀█░█▀▀░█▄█
-        !    ░▀░▀░▀▀▀░▀░░░▀░▀
-        */
-        else if(message[1] === "fuck" && message[2] === "you" || message[1] === "fuckyou")
-        {
-            logs.log("Some cunt is being a asshole. Burning in progress...");
-            msg.channel.startTyping();
-            await functions.human_delay();
-            msg.reply("Your a fucking cunt you know that right? Why the fuck do you even exist?");
-            msg.channel.stopTyping();
-            await functions.human_delay();
-
-            msg.channel.startTyping();
-            await functions.human_delay();
-            msg.reply("Why don't you get off your fat ass and go outside rather than spend all your fucking time jerking off and playing minecraft " + msg.author.username + "?");
             msg.channel.stopTyping();
         }
         
@@ -348,31 +267,6 @@ methods.message = async function(msg)
             await functions.human_delay();
 
             var reply = data.based.data;
-            channel.send(reply);
-            channel.stopTyping();
-        }
-    }
-
-    /*
-        !    ░█▀█░█▀▀░█▀▀░█░█
-        !    ░█░█░▀▀█░█▀▀░█▄█
-        !    ░▀░▀░▀▀▀░▀░░░▀░▀
-    */
-    else if (message[0] === "billy")
-    {
-        var data = JSON.parse(filesystem.readFileSync('src/data/ascii.json'));
-        if(!data)
-        {
-            msg.reply("Couldn't Retrieve 'ascii.json' File.");
-            logs.log.error("Unable to open ascii.json");
-        }
-        else
-        {
-            logs.log(username + "IS DOING IT FOR BILLY");
-            channel.startTyping();
-            await functions.human_delay();
-
-            var reply = data.billy.data;
             channel.send(reply);
             channel.stopTyping();
         }
