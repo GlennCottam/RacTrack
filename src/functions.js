@@ -8,6 +8,7 @@ Comments:	Different functions that will be used for the discord bot itself.
 var methods = {};
 var config = require('./RacTrack').config;
 var exec = require('child_process').exec;
+var logs = require('./logs');
 
 methods.lowercase = function(str)
 {
@@ -157,7 +158,33 @@ methods.get_text = async function(text)
     
 }
 
+/*
+    ? Method: Random Caps
+    *    Method will run though each char of a string and convert it randmoly to capital or lower case
+    *    Method will then return a string with the random capitalized letters
+*/
+methods.random_caps = function(text)
+{
+    var length = text.length;
+    var final_string = "";
 
-// Exports functions to be used by other programs
-// Check out require('./functions.js') under index.js
+    for(var i = 0; i <= length; i++)
+    {
+        var value = this.random_int(1, 2);
+        if(value === 1)     // Don't Cap
+        {
+            final_string += text.charAt(i).toLowerCase();
+        }
+        else if(value === 2)    // Cap
+        {
+            final_string += text.charAt(i).toUpperCase();
+        }
+        else
+        {
+            logs.log.error("Error Within Random_Caps Function")
+        }
+    }
+    return final_string;
+}
+
 module.exports = methods;

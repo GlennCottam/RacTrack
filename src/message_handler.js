@@ -236,6 +236,32 @@ methods.message = async function(msg)
             msg.channel.stopTyping();
             logs.log("Text Requested By: " + username + "Text: {'" + message[2] + "'}");
         }
+
+        else if(message[1] === "mock")
+        {
+            msg.channel.startTyping();
+            await functions.human_delay();
+
+            if(message[2])     // Gets Random Caps from Input
+            {
+                console.log('Getting message from user');
+                var data = functions.random_caps(message[2]);
+                msg.reply(data);
+            }
+            else                // Gets Random Caps from last message in channel
+            {
+                console.log('getting message from channel');
+                channel.fetchMessages({ limit: 2}).then(messages => 
+                {
+                    let lastMessage = messages.last();
+                    var data = functions.random_caps(lastMessage.content);
+                    msg.reply(data);
+                });
+            }
+
+            msg.channel.stopTyping();
+            logs.log("Mocked: " + username + "\tText: " + message[2]);
+        }
         
         /*
         !    ░█▀█░█▀▀░█▀▀░█░█
