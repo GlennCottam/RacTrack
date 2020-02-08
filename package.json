@@ -4,6 +4,7 @@
   "description": "Scraping the trash for music you desire!",
   "main": "RacTrack.js",
   "scripts": {
+    "install-deps-ubuntu": "./scripts/install-deps-ubuntu.sh",
     "start": "node src/RacTrack.js",
     "start-server": "nohup node src/RacTrack.js &",
     "search-app": "ps -aux | grep \"node RacTrack.js\"",
