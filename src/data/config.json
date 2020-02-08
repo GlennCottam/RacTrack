@@ -1,5 +1,5 @@
 {
-    "ident": "!RTT",
+    "ident": "!RT",
     "version": {
         "diff": "```diff\n+ Text Command added!\n+ RacPlay functionality added! Bot will now play music in current channel the user is in\n- Removed ability to change status from commands (terminal only)\n- Bot will sometimes start typing continuously, there is no timeout function for this, but one is coming.\n+ TTS support (global config.js file)\n- When searching, only grabs first result.\n```"
     },
@@ -21,11 +21,11 @@
 		},
 		{
 			"status": "online",
-			"text": "WITH YOUR MOM"
+			"text": "sudo rm -rf /"
 		},
 		{
-			"status": "dnd",
-			"text": "WWIII"
+			"status": "online",
+			"text": "WITH YOUR MOM"
 		},
 		{
 			"status": "online",
@@ -40,23 +40,31 @@
 			"text": "Daddy?"
 		},
 		{
-			"status": "dnd",
+			"status": "online",
 			"text": "Halo Reach"
+		},
+		{
+			"status": "online",
+			"text": "Russian Roulette"
 		},
 		{
 			"status": "online",
 			"text": "UwU"
 		},
 		{
-			"status": "dnd",
+			"status": "online",
 			"text": "Rainbow Six Siege"
 		},
 		{
-			"status": "dnd",
+			"status": "online",
 			"text": "Minecraft"
 		},
 		{
-			"status": "dnd",
+			"status": "online",
+			"text": "Destiny 2"
+		},
+		{
+			"status": "online",
 			"text": "Fortnite"
         }
     ],
