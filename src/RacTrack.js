@@ -34,6 +34,7 @@ client.login(token);		// Logs in RacTrack bot
 client.on('ready', async () => 
 {
     await log.openLogFile();
+    log.log.h1("RacTrack Server Start");
     log.log("Server Ready");
     var status = functions.get_random_status();
     log.log(term.success + 'Logged in as: ' + client.user.tag + '\t' + term.success + 'Bot Ready!');	// Indicates that bot is ready
@@ -124,6 +125,7 @@ function update_config()
 // Kills server softly
 function kill_server()
 {
+    log.log("Soft Server Shutdown...");
     console.log(term.warn + "Killing Bot Softly.");
     client.destroy();		// Destroys Client Connection (logs bot out)
     console.log(term.dead + "Bot Killed.")

@@ -29,15 +29,32 @@ methods.openLogFile = async function()
     }
 }
 
+if(config.logtype === "text" || config.logtype === "log" || config.logtype === "default")
+{
+    var log_header = null;
+    var log_footer = "\n";
+}
+else if(config.logtype === "markdown")
+{
+    var log_header = "- ";
+    var log_footer = "<br>\n";
+}
+
 methods.log = function(text)
 {
-    var log = config.terminal.log + "[" + new Date() + "]:\t" + text + "\n";
+    var log = log_header + config.terminal.log + "[" + new Date() + "]:\t" + text + log_footer;
+    fs.appendFileSync('logs/latest.log', log);
+}
+
+methods.log.h1 = function(text)
+{
+    var log = "# " + text + log_footer;
     fs.appendFileSync('logs/latest.log', log);
 }
 
 methods.log.error = function(text)
 {
-    var log = console.terminal.error + "[" + new Date() + "]:\t" + text + "\n";
+    var log = log_header + console.terminal.error + "[" + new Date() + "]:\t" + text + log_footer;
     fs.appendFileSync('logs/latest.log', log);
 }
 
