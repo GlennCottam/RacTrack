@@ -244,13 +244,11 @@ methods.message = async function(msg)
 
             if(message[2])     // Gets Random Caps from Input
             {
-                console.log('Getting message from user');
                 var data = functions.random_caps(message[2]);
                 msg.reply(data);
             }
             else                // Gets Random Caps from last message in channel
             {
-                console.log('getting message from channel');
                 channel.fetchMessages({ limit: 2}).then(messages => 
                 {
                     let lastMessage = messages.last();
