@@ -65,7 +65,6 @@ methods.message = async function(msg)
             }
             else
             {
-                logs.log("Searching for: \"" + message[2] + "\" | From: \"" + username + "\"");
                 var response = await Data.search_youtube(message[2]);
                 search_response(response.kind, response, msg);
             }

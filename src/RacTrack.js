@@ -18,13 +18,21 @@ const functions = require('./functions');		// Grabs functions
 const term = config.terminal;					// Shortened version for terminal emoji's
 const handle = require('./message_handler');	// Message Handler
 const token = require('./tokens').discord_key;	// Gets Token
-const log = require('./logs');                 // Code to be used in managing logs
+const yt_key = require('./tokens').youtube_api; // Youtube Key
+const log = require('./logs');                  // Code to be used in managing logs
 
 
 // Checks to see if the token is present
 if(token === "")
 {
-    console.log(term.error + "No token in config.js file. Please add token.");
+    console.log(term.error + "No token in tokens.js file. Please add token.");
+    log.log.error("No token in config.js file. Please add token.");
+    process.exit(0);
+}
+if(yt_key === "")
+{
+    console.log(term.error + "No Youtube API Token in tokens.js file. Please add token.");
+    log.log.error("No Youtube API Token in tokens.js file. Please add token.");
     process.exit(0);
 }
 
@@ -34,12 +42,13 @@ client.login(token);		// Logs in RacTrack bot
 client.on('ready', async () => 
 {
     await log.openLogFile();
-    log.log.h1("RacTrack Server Start");
-    log.log("Server Ready");
     var status = functions.get_random_status();
-    log.log(term.success + 'Logged in as: ' + client.user.tag + '\t' + term.success + 'Bot Ready!');	// Indicates that bot is ready
+    start_status_wait();
+    // log.log(term.success + 'Logged in as: ' + client.user.tag + '\t' + term.success + 'Bot Ready!');	// Indicates that bot is ready
     client.user.setStatus(status.status);			// Sets status to Online (green dot)
     client.user.setActivity(status.text);		// Sets "Playing: " status
+    log.log.success("Logged in as: " + client.user.tag);
+    log.log.success("Bot Ready!");
 });
 
 // Handles all messages in message_handler.js
@@ -88,22 +97,27 @@ stdin.addListener("data", function(data)		// Adds listener to the terminal
     // handle.message(data.toString().trim());
 });
 
-// Sets Random Status after a random time (between 1 to 6 hours)
-var time = functions.random_int(1, 4) * 3600000;
-console.log(config.terminal.info + "Waiting for " + time/3600000 + "hr(s) to change status");
-setInterval(function()
+function start_status_wait()
 {
-    var date = new Date();
-    var status = functions.get_random_status();
-    // console.log(term.info + "[" + date + "] Status Changed: { status: \"" + status.status + "\" , Playing \"" + status.text + "\"},  Changing in: " + time/3600000 + "hr(s)");
-    log.log("Status Changed: { status: \"" + status.status + "\" , Playing \"" + status.text + "\"},  Changing in: " + time/3600000 + "hr(s)");
-    client.user.setStatus(status.status);			// Sets status to Online (green dot)
-    client.user.setActivity(status.text);		// Sets "Playing: " status
+    // Sets Random Status after a random time (between 1 to 6 hours)
+    var time = functions.random_int(1, 4) * 3600000;
+    log.log.info(config.terminal.info + "Waiting for " + time/3600000 + "hr(s) to change status");
+    setInterval(function()
+    {
+        var date = new Date();
+        var status = functions.get_random_status();
+        // console.log(term.info + "[" + date + "] Status Changed: { status: \"" + status.status + "\" , Playing \"" + status.text + "\"},  Changing in: " + time/3600000 + "hr(s)");
+        log.log("Status Changed: { status: \"" + status.status + "\" , Playing \"" + status.text + "\"},  Changing in: " + time/3600000 + "hr(s)");
+        client.user.setStatus(status.status);			// Sets status to Online (green dot)
+        client.user.setActivity(status.text);		// Sets "Playing: " status
 
-    time = functions.random_int(1, 4) * 3600000;		// Updates random time value
-    // console.log(config.terminal.info + "Now Waiting for " + time/3600000 + "hr(s) to change status");
+        time = functions.random_int(1, 4) * 3600000;		// Updates random time value
+        // console.log(config.terminal.info + "Now Waiting for " + time/3600000 + "hr(s) to change status");
 
-}, time);
+    }, time);
+}
+
+
 
 process.on('SIGTERM', function() {kill_server();}); 				// Destroys Client on kill
 process.on('SIGINT', () => {console.log("\n"); kill_server();});	// Destroys client on [CTRL-C] / kill commands
@@ -125,10 +139,10 @@ function update_config()
 // Kills server softly
 function kill_server()
 {
-    log.log("Soft Server Shutdown...");
-    console.log(term.warn + "Killing Bot Softly.");
+    log.log.warn("Safe Server Shutdown Start");
+    // console.log(term.warn + "Killing Bot Softly.");
     client.destroy();		// Destroys Client Connection (logs bot out)
-    console.log(term.dead + "Bot Killed.")
+    log.log.dead("Bot Killed.");
+    // console.log(term.dead + "Bot Killed.")
     process.exit(0);		// Kills Node
 }
-

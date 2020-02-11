@@ -1,6 +1,7 @@
 const fs = require('fs');
 const mv = require('mv');
 var config = require('./RacTrack').config;
+var latest_uri = "logs/latest.log";
 var logfile;
 
 
@@ -8,30 +9,31 @@ var methods = {}
 
 methods.openLogFile = async function()
 {
-    if(fs.existsSync("logs/latest.log"))
+    if(fs.existsSync(latest_uri))
     {
-        console.log("Latest Log Exists, Archiving and initializing");
+        console.log("Found '" + latest_uri + "', archiving and creating new file.");
         // Archives File By Adding Date:
-        var date = new Date();
-        date = date.getMonth() + date.getDate() + date.getFullYear() + "-" + date.getHours() + date.getMinutes() + date.getSeconds()
-        await mv("logs/latest.log", "logs/" + date + ".log", function(err)
+        await mv(latest_uri, "logs/" + date_tostring() + ".log", function(err)
         {
-            console.log('');
+            if(err)
+            {
+                methods.log.error("Problem Archiving File: " + err);
+            }
         });
-        fs.openSync("logs/latest.log", 'w');
+        fs.openSync(latest_uri, 'w');
         return new Promise(resolve => {resolve()});
     }
     else
     {
-        console.log("Creating Latest.log File");
-        fs.openSync("logs/latest.log", 'w');
+        console.log("Creating " + latest_uri + " File");
+        fs.openSync(latest_uri, 'w');
         return new Promise(resolve => {resolve()});
     }
 }
 
 if(config.logtype === "text" || config.logtype === "log" || config.logtype === "default")
 {
-    var log_header = null;
+    var log_header = '';
     var log_footer = "\n";
 }
 else if(config.logtype === "markdown")
@@ -42,22 +44,53 @@ else if(config.logtype === "markdown")
 
 methods.log = function(text)
 {
-    var log = log_header + config.terminal.log + "[" + new Date() + "]:\t" + text + log_footer;
-    fs.appendFileSync('logs/latest.log', log);
+    var log = log_header + config.terminal.log + "[" + date_tostring() + "]: " + text + log_footer;
+    fs.appendFileSync(latest_uri, log);
 }
 
 methods.log.h1 = function(text)
 {
     var log = "# " + text + log_footer;
-    fs.appendFileSync('logs/latest.log', log);
+    fs.appendFileSync(latest_uri, log);
+}
+
+methods.log.info = function(text)
+{
+    var log = log_header + " " + config.terminal.info + " [" + date_tostring() + "]: " + text + log_footer;
+    fs.appendFileSync(latest_uri, log);
+}
+
+methods.log.success = function(text)
+{
+    var log = log_header + config.terminal.success + "[" + date_tostring() + "]: " + text + log_footer;
+    fs.appendFileSync(latest_uri, log);
+}
+
+methods.log.warn = function(text)
+{
+
+    var log = log_header + config.terminal.warn + "[" + date_tostring() + "]: " + text + log_footer;
+    fs.appendFileSync(latest_uri, log);
 }
 
 methods.log.error = function(text)
 {
-    var log = log_header + console.terminal.error + "[" + new Date() + "]:\t" + text + log_footer;
-    fs.appendFileSync('logs/latest.log', log);
+    var log = log_header + config.terminal.error + "[" + date_tostring() + "]: " + text + log_footer;
+    fs.appendFileSync(latest_uri, log);
 }
 
+methods.log.dead = function(text)
+{
+    var log = log_header + config.terminal.dead + "[" + date_tostring() + "]: " + text + log_footer;
+    fs.appendFileSync(latest_uri, log);
+}
+
+function date_tostring()
+{
+    var date = new Date();
+    date = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + "_" + date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds()
+    return date;
+}
 
 module.exports = methods;
 
