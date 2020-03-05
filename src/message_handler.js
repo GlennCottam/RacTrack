@@ -225,7 +225,7 @@ methods.message = async function(msg)
 
             if(text)
             {
-                msg.channel.send(text);
+                msg.channel.send("```yaml\n" + text + "\n```");
             }
             else
             {
