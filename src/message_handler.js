@@ -28,16 +28,7 @@ methods.message = async function(msg)
     // Returning array: [0] = command, [1] = argument.
 
     /*
-    *	Seperating invoker, from command, from set of arguments
-    *	Going from a 2 value array to a 3 value array:
-    ?	array[2] = ["trigger / invoker", "command", "query / arguments"]
-    */
-
-    var message = functions.split_message(msg);
-    var channel = msg.channel;
-    var username = msg.author.username;
-
-    // console.log(message);
+    
     
     /*
     *	The following if statements do the following:
@@ -47,6 +38,22 @@ methods.message = async function(msg)
     *	These are used to get the bot to appear to be typing a response. You don't have to use these for
     *	other if statements, but feel free to do so
     */
+
+    if(msg.content.includes("--delete"))
+    {
+        logs.log("User Requested Deletion of Message: " + msg.author.username);
+        msg.content = msg.content.replace("--delete", "");
+        msg.delete();
+    }
+    /*
+    *	Seperating invoker, from command, from set of arguments
+    *	Going from a 2 value array to a 3 value array:
+    ?	array[2] = ["trigger / invoker", "command", "query / arguments"]
+    */
+
+    var message = functions.split_message(msg);
+    var channel = msg.channel;
+    var username = msg.author.username;
 
     // Main search function
     // This is where you want to put in the actual YouTube / service search

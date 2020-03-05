@@ -1,7 +1,7 @@
 {
-    "ident": "!RTT",
+    "ident": "!RT",
     "version": {
-        "diff": "```diff\n+ Text Command added!\n+ RacPlay functionality added! Bot will now play music in current channel the user is in\n- Removed ability to change status from commands (terminal only)\n- Bot will sometimes start typing continuously, there is no timeout function for this, but one is coming.\n+ TTS support (global config.js file)\n- When searching, only grabs first result.\n```"
+        "diff": "```diff\n+ --delete added to bot, use the flag to delete the command message!\n+ Text Command added!\n+ RacPlay functionality added! Bot will now play music in current channel the user is in\n- Removed ability to change status from commands (terminal only)\n- Bot will sometimes start typing continuously, there is no timeout function for this, but one is coming.\n+ TTS support (global config.js file)\n- When searching, only grabs first result.\n```"
     },
     "tts": false,
     "terminal": {
@@ -69,5 +69,5 @@
 			"text": "Fortnite"
         }
     ],
-    "help": "```yaml\nhelp\t\t# Display This Message\nsearch\t\t# Search for sounds / music\nRacPlay\t\t# Search term, and play result!\nstop\t\t# Stops current playback\nversion\t\t# Sends version information\nuptime\t\t# Show uptime of Bot in seconds.\nthanks\t\t# thank the bot\nping\t\t# Ping the bot\nfreakout\t\t# Bot will freakout\ntext\t\t# Bot will respond with large bold text```"
+    "help": "```yaml\nhelp\t\t# Display This Message\nsearch\t\t# Search for sounds / music\nRacPlay\t\t# Search term, and play result!\nstop\t\t# Stops current playback\n--delete\t\t# Delete that message\nversion\t\t# Sends version information\nuptime\t\t# Show uptime of Bot in seconds.\nthanks\t\t# thank the bot\nping\t\t# Ping the bot\nfreakout\t\t# Bot will freakout\ntext\t\t# Bot will respond with large bold text```"
 }
