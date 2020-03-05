@@ -81,3 +81,4 @@ logs/
 
 # Docker Images
 DockerFile
+*.ffs_db

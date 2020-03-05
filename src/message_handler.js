@@ -61,7 +61,16 @@ methods.message = async function(msg)
             // If search is empty, post error
             if(message[2] === "" || message[2] === " ")
             {
-                msg.reply("\n:no_entry_sign: Please tell me what to search for!");
+                var embed = new Discord.RichEmbed();
+
+                embed
+                .setColor('#FF0000')
+                .setTitle('Invalid Search Query')
+                .addField('Error: ', ":no_entry_sign: Invalid Entry, Please tell RacTrack what to search for!")
+                .setFooter(footer);
+                msg.channel.send(embed);
+
+                // msg.reply("\n:no_entry_sign: Please tell me what to search for!");
             }
             else
             {
@@ -87,7 +96,7 @@ methods.message = async function(msg)
             }
             else
             {
-                msg.reply("Not a valid video, please try searching for a video on YouTube.");
+                msg.channel.send(":no_entry_sign: Not a valid video, please try searching for a video on YouTube.");
             }
 
             channel.stopTyping();
@@ -99,7 +108,7 @@ methods.message = async function(msg)
         {
             if(!msg.member)
             {
-                msg.reply("Please join a voice channel to enable voice commands!");
+                msg.channel.send(":no_entry_sign: Please join a voice channel to enable voice commands!");
             }
             else
             {
@@ -202,7 +211,7 @@ methods.message = async function(msg)
         {
             msg.channel.startTyping();
             await functions.human_delay();
-            msg.reply("No probs fam", options);
+            msg.channel.send("No probs fam", options);
             msg.channel.stopTyping();
             logs.log("Thanked by: \"" + username + "\"");
         }
@@ -212,7 +221,7 @@ methods.message = async function(msg)
         {
             msg.channel.startTyping();
             await functions.human_delay();
-            msg.reply('pong', options);
+            msg.channel.send('pong', options);
             msg.channel.stopTyping();
             logs.log("Pinged by: \"" + username + "\"");
         }
@@ -244,7 +253,7 @@ methods.message = async function(msg)
             if(message[2])     // Gets Random Caps from Input
             {
                 var data = functions.random_caps(message[2]);
-                msg.reply(data);
+                msg.channel.send(data);
             }
             else                // Gets Random Caps from last message in channel
             {
@@ -252,7 +261,7 @@ methods.message = async function(msg)
                 {
                     let lastMessage = messages.last();
                     var data = functions.random_caps(lastMessage.content);
-                    msg.reply(data);
+                    msg.channel.send(data);
                 });
             }
 
@@ -271,7 +280,7 @@ methods.message = async function(msg)
             msg.channel.startTyping();
             await functions.human_delay();
             message = functions.get_YouTube_Buddy();		// Grabs "YouTube Buddy" from functions
-            msg.reply(message, options); 							// Replies with YouTube Buddy
+            msg.channel.send(message, options); 							// Replies with YouTube Buddy
             msg.channel.stopTyping();
             logs.log("YouTube Buddy Sent to : \"" + username + "\"");
         }
@@ -312,7 +321,7 @@ methods.message = async function(msg)
             var data = JSON.parse(filesystem.readFileSync('src/data/copypasta.json'));
             if(!data)
             {
-                msg.reply("Something really fucked up...");
+                msg.channel.send("Something really fucked up...");
             }
             else
             {
@@ -323,7 +332,7 @@ methods.message = async function(msg)
                 var value = functions.random_int(0, total);
                 var data = data.posts[value];
 
-                msg.reply("**" + data.title + "**\n\n" + data.content + "\n\n > " + data.url);
+                msg.channel.send("**" + data.title + "**\n\n" + data.content + "\n\n > " + data.url);
                 channel.stopTyping();
 
                 logs.log("Sending Copy Pasta: \"" + value + "\" To \"" + msg.author.username + "\"");
@@ -341,19 +350,19 @@ methods.message = async function(msg)
             logs.log("Some cunt is being a asshole. Burning in progress...");
             msg.channel.startTyping();
             await functions.human_delay();
-            msg.reply("Your a fucking cunt you know that right? Why the fuck do you even exist?");
+            msg.channel.send("Your a fucking cunt you know that right? Why the fuck do you even exist?");
             msg.channel.stopTyping();
             await functions.human_delay();
 
             msg.channel.startTyping();
             await functions.human_delay();
-            msg.reply("Why don't you get off your fat ass and go outside rather than spend all your fucking time jerking off and playing minecraft " + msg.author.username + "?");
+            msg.channel.send("Why don't you get off your fat ass and go outside rather than spend all your fucking time jerking off and playing minecraft " + msg.author.username + "?");
             msg.channel.stopTyping();
         }
         
         else
         {
-            msg.reply(":no_entry: Unknown Command! :no_entry:")
+            msg.channel.send(":no_entry: Unknown Command! :no_entry:")
         }
     }
 
@@ -362,7 +371,7 @@ methods.message = async function(msg)
         var data = JSON.parse(filesystem.readFileSync('src/data/ascii.json'));
         if(!data)
         {
-            msg.reply("Couldn't Retrieved \'ascii.json\' File.")
+            msg.channel.send("Couldn't Retrieved \'ascii.json\' File.")
         }
         else
         {
@@ -386,7 +395,7 @@ methods.message = async function(msg)
         var data = JSON.parse(filesystem.readFileSync('src/data/ascii.json'));
         if(!data)
         {
-            msg.reply("Couldn't Retrieve 'ascii.json' File.");
+            msg.channel.send("Couldn't Retrieve 'ascii.json' File.");
             logs.log.error("Unable to open ascii.json");
         }
         else
@@ -418,7 +427,7 @@ function search_response(type, data, message)
 
     else if(type === 'channel')
     {
-        embed.setColor('#FF0000')
+        embed.setColor('#FFFF00')
         .setTitle(data.title)
         .setDescription(data.desc)
         .addField('Link', data.url)
@@ -430,15 +439,35 @@ function search_response(type, data, message)
     }
     else if(type === 'video')
     {
-        message.reply(
-            "\n**" + data.title + "**\n"
-            + "> *" + data.desc + "*\n"
-            + "> " + data.url  + "\n"
-            , options);
+        embed
+        .setColor('#FFFF00')
+        .setTitle(data.title)
+        .setDescription(data.desc)
+        .addField('URL', data.url)
+        .addField("Want to play this? Join a voice channel and use the command:", "`" + ident + " racplay " + data.title + "`")
+
+        .setFooter(footer);
+
+        message.channel.send(embed);
+
+        // message.reply(
+        //     "\n**" + data.title + "**\n"
+        //     + "> *" + data.desc + "*\n"
+        //     + "> " + data.url  + "\n"
+        //     , options);
     }
     else
     {
-        message.reply(":no_entry: No results for search query. Please search something else.");
+        embed
+        .setColor('#FF0000')
+        .setTitle("No Results")
+        .addField('Problem: ', "No Results Found, please search for something else!")
+        .setFooter(footer);
+
+        message.channel.send(embed);
+
+
+        // message.reply(":no_entry: No results for search query. Please search something else.");
     }
 
     logs.log("Search requested by: \"" + message.author.username + "\" | Content Found! Type: \"" + type + "\" | Title: \"" + data.title + "\"");
