@@ -28,13 +28,13 @@ if(token === "")
     console.log(term.error + "No token in tokens.js file. Please add token.");
     log.log.error("No token in config.js file. Please add token.");
     process.exit(0);
-}
+};
 if(yt_key === "")
 {
     console.log(term.error + "No Youtube API Token in tokens.js file. Please add token.");
     log.log.error("No Youtube API Token in tokens.js file. Please add token.");
     process.exit(0);
-}
+};
 
 client.login(token);		// Logs in RacTrack bot
 
@@ -46,7 +46,7 @@ client.on('ready', async () =>
     start_status_wait();
     // log.log(term.success + 'Logged in as: ' + client.user.tag + '\t' + term.success + 'Bot Ready!');	// Indicates that bot is ready
     client.user.setStatus(status.status);			// Sets status to Online (green dot)
-    client.user.setActivity(status.text);		// Sets "Playing: " status
+    client.user.setActivity(status.text, {type: status.type});		// Sets "Playing: " status
     log.log.success("Logged in as: " + client.user.tag);
     log.log.success("Bot Ready!");
 });
@@ -109,7 +109,7 @@ function start_status_wait()
         // console.log(term.info + "[" + date + "] Status Changed: { status: \"" + status.status + "\" , Playing \"" + status.text + "\"},  Changing in: " + time/3600000 + "hr(s)");
         log.log("Status Changed: { status: \"" + status.status + "\" , Playing \"" + status.text + "\"},  Changing in: " + time/3600000 + "hr(s)");
         client.user.setStatus(status.status);			// Sets status to Online (green dot)
-        client.user.setActivity(status.text);		// Sets "Playing: " status
+        client.user.setActivity(status.text, {type: status.type});		// Sets "Playing: " status
 
         time = functions.random_int(1, 4) * 3600000;		// Updates random time value
         // console.log(config.terminal.info + "Now Waiting for " + time/3600000 + "hr(s) to change status");

@@ -1,5 +1,5 @@
 const ytdl = require('ytdl-core');
-const streamOptions = {seek: 0, volume: 1};
+const streamOptions = {seek: 0, volume: 0.1};
 const log = require('./logs');
 
 var methods = {};

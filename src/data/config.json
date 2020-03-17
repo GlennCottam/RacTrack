@@ -14,59 +14,77 @@
         "warn": "🔶 ",
         "dead": "💀 "
     },
-    "logtype": "default",
+    "logtype": "markdown",
     "status": [
 		{
 			"status": "online",
-			"text": ""
+			"text": "", 
+			"type": null
 		},
 		{
 			"status": "online",
-			"text": "sudo rm -rf /"
+			"text": "#COVID-19", 
+			"type": "WATCHING"
 		},
 		{
 			"status": "online",
-			"text": "WITH YOUR MOM"
+			"text": "sudo rm -rf /", 
+			"type": "PLAYING"
 		},
 		{
 			"status": "online",
-			"text": "With Itself..."
+			"text": "WITH YOUR MOM", 
+			"type": "PLAYING"
 		},
 		{
 			"status": "online",
-			"text": "Node.js"
+			"text": "With Itself...", 
+			"type": "PLAYING"
 		},
 		{
 			"status": "online",
-			"text": "Daddy?"
+			"text": "Node.js", 
+			"type": "PLAYING"
 		},
 		{
 			"status": "online",
-			"text": "Halo: Combat Evolved"
+			"text": "Daddy?", 
+			"type": "STREAMING"
 		},
 		{
 			"status": "online",
-			"text": "Russian Roulette"
+			"text": "Halo: Combat Evolved", 
+			"type": "PLAYING"
 		},
 		{
 			"status": "online",
-			"text": "UwU"
+			"text": "Russian Roulette", 
+			"type": "PLAYING"
 		},
 		{
 			"status": "online",
-			"text": "Rainbow Six Siege"
+			"text": "UwU", 
+			"type": "WATCHING"
 		},
 		{
 			"status": "online",
-			"text": "Minecraft"
+			"text": "Rainbow Six Siege", 
+			"type": "PLAYING"
 		},
 		{
 			"status": "online",
-			"text": "Destiny 2"
+			"text": "Minecraft", 
+			"type": "PLAYING"
 		},
 		{
 			"status": "online",
-			"text": "Fortnite"
+			"text": "Destiny 2", 
+			"type": "PLAYING"
+		},
+		{
+			"status": "online",
+			"text": "Fortnite", 
+			"type": "PLAYING"
         }
     ],
     "help": "```yaml\nhelp\t\t# Display This Message\nsearch\t\t# Search for sounds / music\nRacPlay\t\t# Search term, and play result!\nstop\t\t# Stops current playback\n--delete\t\t# Delete that message\nversion\t\t# Sends version information\nuptime\t\t# Show uptime of Bot in seconds.\nthanks\t\t# thank the bot\nping\t\t# Ping the bot\nfreakout\t\t# Bot will freakout\ntext\t\t# Bot will respond with large bold text```"
