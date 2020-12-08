@@ -6,6 +6,7 @@ Comments:	Index.js is used as a start-point for the discord bot itself.
 */
 
 // Variables
+const child_process = require('child_process');
 const Discord = require('discord.js');			// Grabs Discord.js API
 const client = new Discord.Client();			// Creates Discord Client
 module.exports.client = client;
@@ -38,11 +39,27 @@ if(yt_key === "")
 
 client.login(token);		// Logs in RacTrack bot
 
+async function install_deps()
+{
+    return new Promise(resolve => 
+    {
+        console.log("Starting Install Script");
+        client.user.setStatus("dnd");
+        client.user.setActivity("Starting...", {type: "WATCHING"});
+        child_process.execFile('scripts/install-deps-ubuntu.sh', null, null, (err, stdout, stderr)=>
+        {
+            console.log(stdout);
+            resolve('resolved');
+        });
+    });
+}
+
 // Prints in console when server is ready
 client.on('ready', async () => 
 {
     await log.openLogFile();
     var status = functions.get_random_status();
+    await install_deps();
     start_status_wait();
     // log.log(term.success + 'Logged in as: ' + client.user.tag + '\t' + term.success + 'Bot Ready!');	// Indicates that bot is ready
     client.user.setStatus(status.status);			// Sets status to Online (green dot)

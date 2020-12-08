@@ -149,6 +149,24 @@ methods.ms_convert = function(value)
 methods.get_text = async function(text)
 {
     return new Promise(resolve => {
+        
+        // var array = text.split(' ');
+        // var out;
+
+        // array.forEach(element =>
+        // {
+            
+        //     exec('toilet -f pagga "' + element + '"', function(err, stdout, stderr)
+        //     {
+        //         // console.log(stdout);
+        //         out += stdout + "\n";
+        //         // resolve(stdout)
+        //     });
+        //     console.log(out);
+        // });
+        
+        // resolve(out);
+        
         exec('toilet -f pagga "' + text + '"', function(err, stdout, stderr)
         {
             // console.log(stdout);

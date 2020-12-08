@@ -23,6 +23,11 @@
 		},
 		{
 			"status": "online",
+			"text": "GOD",
+			"type": "PLAYING"
+		},
+		{
+			"status": "online",
 			"text": "#COVID-19", 
 			"type": "WATCHING"
 		},
@@ -53,7 +58,7 @@
 		},
 		{
 			"status": "online",
-			"text": "Halo: Combat Evolved", 
+			"text": "DOOM Eternal", 
 			"type": "PLAYING"
 		},
 		{
