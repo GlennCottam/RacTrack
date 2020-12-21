@@ -26,9 +26,10 @@ methods.message = async function(msg)
     // Function that returns an array in order to declare functions
     // depending on what the discord bot needs to do.
     // Returning array: [0] = command, [1] = argument.
-
-    /*
     
+    
+    // Log Messages (ONLY FOR DEV USE)
+    // console.log(msg);
     
     /*
     *	The following if statements do the following:
@@ -45,6 +46,7 @@ methods.message = async function(msg)
         msg.content = msg.content.replace("--delete", "");
         msg.delete();
     }
+    
     /*
     *	Seperating invoker, from command, from set of arguments
     *	Going from a 2 value array to a 3 value array:
@@ -55,10 +57,37 @@ methods.message = async function(msg)
     var channel = msg.channel;
     var username = msg.author.username;
 
+
+    // New method to handle private messages.
+    // Idea is to notice when the bot is reciving a private message and not rely on the use of the ident in the config file.
+    
+    if(msg.channel.type == "dm")
+    {
+        // console.log("Found Message from DM Channel");
+        if(msg.author.username + "#" + msg.author.discriminator != "RacTrack#4467") // TODO: Need to somehow get this identifier for ractrack into this side of the code.
+        {
+            // TODO: Looks like we gon have to split the message somehow again, as when it does though DM channel, it keeps the remainder into message[2] rather than message[1].
+            
+            // console.log("The bot recieved a private message!");
+            // Switches array to push everything up by one to handle messages.
+            message[2] = message[1];
+            message[1] = message[0];
+            // Handle Messages regardless
+            handle_message();
+        }
+        
+    }
+    else if(message[0] === ident)
+    {
+        // Handle Messages with Ident
+        handle_message();
+    }
+    
+    // Function to handle all messages as long as they pass the required if statements.
     // Main search function
     // This is where you want to put in the actual YouTube / service search
     // Use get_data.js to host the additional functions
-    if(message[0] === ident)
+    async function handle_message()
     {
         if(message[1] === "search")
         {
@@ -367,55 +396,57 @@ methods.message = async function(msg)
             msg.channel.stopTyping();
         }
         
+        else if (message[1] === "based")
+        {
+            var data = JSON.parse(filesystem.readFileSync('src/data/ascii.json'));
+            if(!data)
+            {
+                msg.channel.send("Couldn't Retrieved \'ascii.json\' File.")
+            }
+            else
+            {
+                logs.log("BASED by: " + username);
+                channel.startTyping();
+                await functions.human_delay();
+    
+                var reply = data.based.data;
+                channel.send(reply);
+                channel.stopTyping();
+            }
+        }
+    
+        /*
+            !    ░█▀█░█▀▀░█▀▀░█░█
+            !    ░█░█░▀▀█░█▀▀░█▄█
+            !    ░▀░▀░▀▀▀░▀░░░▀░▀
+        */
+        else if (message[1] === "billy")
+        {
+            var data = JSON.parse(filesystem.readFileSync('src/data/ascii.json'));
+            if(!data)
+            {
+                msg.channel.send("Couldn't Retrieve 'ascii.json' File.");
+                logs.log.error("Unable to open ascii.json");
+            }
+            else
+            {
+                logs.log(username + "IS DOING IT FOR BILLY");
+                channel.startTyping();
+                await functions.human_delay();
+    
+                var reply = data.billy.data;
+                channel.send(reply);
+                channel.stopTyping();
+            }
+        }
+        
         else
         {
             msg.channel.send(":no_entry: Unknown Command! :no_entry:")
         }
     }
 
-    else if (message[0] === "based")
-    {
-        var data = JSON.parse(filesystem.readFileSync('src/data/ascii.json'));
-        if(!data)
-        {
-            msg.channel.send("Couldn't Retrieved \'ascii.json\' File.")
-        }
-        else
-        {
-            logs.log("BASED by: " + username);
-            channel.startTyping();
-            await functions.human_delay();
-
-            var reply = data.based.data;
-            channel.send(reply);
-            channel.stopTyping();
-        }
-    }
-
-    /*
-        !    ░█▀█░█▀▀░█▀▀░█░█
-        !    ░█░█░▀▀█░█▀▀░█▄█
-        !    ░▀░▀░▀▀▀░▀░░░▀░▀
-    */
-    else if (message[0] === "billy")
-    {
-        var data = JSON.parse(filesystem.readFileSync('src/data/ascii.json'));
-        if(!data)
-        {
-            msg.channel.send("Couldn't Retrieve 'ascii.json' File.");
-            logs.log.error("Unable to open ascii.json");
-        }
-        else
-        {
-            logs.log(username + "IS DOING IT FOR BILLY");
-            channel.startTyping();
-            await functions.human_delay();
-
-            var reply = data.billy.data;
-            channel.send(reply);
-            channel.stopTyping();
-        }
-    }
+    
 }
 
 function search_response(type, data, message)

@@ -137,8 +137,6 @@ function start_status_wait()
     }, time);
 }
 
-
-
 process.on('SIGTERM', function() {kill_server();}); 				// Destroys Client on kill
 process.on('SIGINT', () => {console.log("\n"); kill_server();});	// Destroys client on [CTRL-C] / kill commands
 
