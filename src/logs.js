@@ -54,6 +54,12 @@ methods.log.h1 = function(text)
     fs.appendFileSync(latest_uri, log);
 }
 
+methods.log.code = function(text)
+{
+    var log = "```\n" + text + "\n```\n" + log_footer;
+    fs.appendFileSync(latest_uri, log);
+}
+
 methods.log.info = function(text)
 {
     var log = log_header + " " + config.terminal.info + " [" + date_tostring() + "]: " + text + log_footer;

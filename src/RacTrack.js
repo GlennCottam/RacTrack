@@ -39,16 +39,18 @@ if(yt_key === "")
 
 client.login(token);		// Logs in RacTrack bot
 
+// Script to install dependencies for Ubuntu
 async function install_deps()
 {
     return new Promise(resolve => 
     {
-        console.log("Starting Install Script");
         client.user.setStatus("dnd");
-        client.user.setActivity("Starting...", {type: "WATCHING"});
+        client.user.setActivity("Start Script", {type: "PLAYING"});
+        log.log.info("Installing Dependencies... Please stand by.")
         child_process.execFile('scripts/install-deps-ubuntu.sh', null, null, (err, stdout, stderr)=>
         {
-            console.log(stdout);
+            log.log.h1("Dependency Installer Output:");
+            log.log.code(stdout);
             resolve('resolved');
         });
     });
@@ -60,19 +62,19 @@ client.on('ready', async () =>
     await log.openLogFile();
     var status = functions.get_random_status();
     await install_deps();
+    log.log.info("Starting status timer");
     start_status_wait();
     // log.log(term.success + 'Logged in as: ' + client.user.tag + '\t' + term.success + 'Bot Ready!');	// Indicates that bot is ready
     client.user.setStatus(status.status);			// Sets status to Online (green dot)
     client.user.setActivity(status.text, {type: status.type});		// Sets "Playing: " status
     log.log.success("Logged in as: " + client.user.tag);
-    log.log.success("Bot Ready!");
+    log.log.success("Ready.");
 });
 
 // Handles all messages in message_handler.js
 client.on('message', async msg =>
 {	
     handle.message(msg);
-    
 });
 
 // Scans for input on the command line
@@ -119,6 +121,7 @@ function start_status_wait()
     // Sets Random Status after a random time (between 1 to 6 hours)
     var time = functions.random_int(1, 4) * 3600000;
     log.log.info(config.terminal.info + "Waiting for " + time/3600000 + "hr(s) to change status");
+    log.log.success("Status Interval Ready");
     setInterval(function()
     {
         var date = new Date();

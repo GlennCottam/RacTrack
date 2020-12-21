@@ -22,6 +22,30 @@
 			"type": null
 		},
 		{
+			"status": "dnd",
+			"text": "Dead",
+			"type": "PLAYING"
+			
+		},
+		{
+			"status": "online",
+			"text": "Cyberpunk 2077",
+			"type": "PLAYING"
+			
+		},
+		{
+			"status": "online",
+			"text": "Netflix",
+			"type": "WATCHING"
+			
+		},
+		{
+			"status": "dnd",
+			"text": "The Hub",
+			"type": "WATCHING"
+			
+		},
+		{
 			"status": "online",
 			"text": "GOD",
 			"type": "PLAYING"
