@@ -32,13 +32,13 @@
   "devDependencies": {},
   "dependencies": {
     "dependencies": "0.0.1",
-    "discord.js": "^11.5.1",
+    "discord.js": "^11.6.4",
     "fs": "0.0.1-security",
     "https": "^1.0.0",
     "mv": "^2.1.1",
-    "node": "^13.6.0",
+    "node": "^13.14.0",
     "node-opus": "^0.3.3",
-    "ytdl-core": "^1.0.7"
+    "ytdl-core": "^1.0.9"
   },
   "directories": {
     "doc": "docs"
